@@ -1174,8 +1174,7 @@
     <div class="logo-wall-section fade-in">
       <div class="logo-wall-label">Organisations We Have Worked With</div>
       <div class="logo-wall" id="logoWall">
-        <!-- To add a logo: <div class="logo-item"><img src="assets/logos/name.png" alt="Org Name"></div> -->
-        <!-- To use text placeholder: <div class="logo-item"><div class="logo-item-text">Org Name</div></div> -->
+        <!-- CF_LOGOS_PLACEHOLDER -->
         <div class="logo-item"><div class="logo-item-text">Your Organisation</div></div>
         <div class="logo-item"><div class="logo-item-text">Partner Name</div></div>
       </div>
@@ -1562,7 +1561,6 @@
   // ══════════════════════════════════════════════════════
 
   function parseYml(text) {
-    // Handles plain, single-quoted, double-quoted (multi-line), block scalar
     const result = {};
     const lines = text.split('\n');
     let i = 0;
@@ -1571,7 +1569,6 @@
       if (!km) { i++; continue; }
       const key = km[1];
       let raw = (km[2] || '').trim();
-      // Block scalar
       if (raw === '|' || raw === '|-' || raw === '>') {
         const block = [];
         i++;
@@ -1582,7 +1579,6 @@
         result[key] = block.filter(Boolean).join(' ');
         continue;
       }
-      // Quoted string — collect until closing quote
       if (raw.startsWith('"') || raw.startsWith("'")) {
         const q = raw[0];
         let inner = raw.slice(1);

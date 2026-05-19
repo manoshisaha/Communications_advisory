@@ -1,12 +1,11 @@
 // functions/index.js
-// Cloudflare Pages Function — injects CMS data server-side into homepage HTML
-// Handles: hero.yml (subheading etc), settings.yml (email/social), logos.yml (partner logos)
+// Cloudflare Pages Function — injects CMS data server-side
+// Handles: hero.yml, settings.yml, logos.yml, gallery.yml
 
 export async function onRequest(context) {
   const { request, next } = context;
   const url = new URL(request.url);
 
-  // Only handle homepage GET requests
   if (request.method !== 'GET' ||
       (url.pathname !== '/' && url.pathname !== '/index.html')) {
     return next();
@@ -23,13 +22,21 @@ export async function onRequest(context) {
     } catch (e) { return null; }
   }
 
+  function esc(str) {
+    return (str || '').toString()
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  // Extract a single scalar value from YAML text
   function extractVal(text, key) {
     if (!text) return null;
+    // Block scalar
     const blockRe = new RegExp(`^${key}:\\s*[|>]-?\\s*$`, 'm');
     const blockM = text.match(blockRe);
     if (blockM) {
-      const afterIdx = text.indexOf(blockM[0]) + blockM[0].length + 1;
-      const lines = text.slice(afterIdx).split('\n');
+      const after = text.slice(text.indexOf(blockM[0]) + blockM[0].length + 1);
+      const lines = after.split('\n');
       const block = [];
       for (const l of lines) {
         if (!l.startsWith('  ') && l.trim() !== '') break;
@@ -46,7 +53,7 @@ export async function onRequest(context) {
     if (q === '"') {
       let i = 1, result = '';
       while (i < rest.length) {
-        if (rest[i] === '\\' && i + 1 < rest.length) { result += rest[i+1]; i += 2; }
+        if (rest[i] === '\\' && i + 1 < rest.length) { result += rest[i + 1]; i += 2; }
         else if (rest[i] === '"') break;
         else { result += rest[i]; i++; }
       }
@@ -60,50 +67,67 @@ export async function onRequest(context) {
     return (eol > 0 ? rest.slice(0, eol) : rest).trim();
   }
 
-  function parseLogosList(text) {
+  // Parse a YAML list of objects (partners or gallery items)
+  function parseYamlList(text, listKey) {
     if (!text) return [];
-    const logos = [];
-    const partnersIdx = text.indexOf('partners:');
-    if (partnersIdx < 0) return [];
-    const listText = text.slice(partnersIdx);
-    const items = listText.split(/\n- /);
-    for (let i = 1; i < items.length; i++) {
-      const block = items[i];
-      const logo = {};
-      const nameM = block.match(/(?:^|\n)\s*name:\s*(.+)/);
-      if (nameM) logo.name = nameM[1].trim().replace(/^["']|["']$/g, '');
-      const logoM = block.match(/(?:^|\n)\s*logo:\s*(.+)/);
-      if (logoM) {
-        const val = logoM[1].trim().replace(/^["']|["']$/g, '').trim();
-        if (val && val !== '""' && val !== "''") logo.logo = val;
-      }
-      const urlM = block.match(/(?:^|\n)\s*url:\s*(.+)/);
-      if (urlM) {
-        const val = urlM[1].trim().replace(/^["']|["']$/g, '').trim();
-        if (val && val !== '""' && val !== "''") logo.url = val;
-      }
-      if (logo.name) logos.push(logo);
+    const items = [];
+    const listIdx = text.indexOf(`${listKey}:`);
+    if (listIdx < 0) return [];
+    const listText = text.slice(listIdx);
+    const blocks = listText.split(/\n- /);
+    for (let i = 1; i < blocks.length; i++) {
+      const block = '  ' + blocks[i];
+      const item = {};
+      const fields = ['name', 'title', 'subtitle', 'image', 'logo', 'url'];
+      fields.forEach(field => {
+        const m = block.match(new RegExp(`\\n?\\s*${field}:\\s*(.+)`));
+        if (m) {
+          const val = m[1].trim().replace(/^["']|["']$/g, '').trim();
+          if (val && val !== '""' && val !== "''") item[field] = val;
+        }
+      });
+      if (Object.keys(item).length > 0) items.push(item);
     }
-    return logos;
+    return items;
   }
 
+  // Build gallery HTML — items duplicated for seamless loop
+  function buildGalleryItems(items) {
+    if (!items.length) return null;
+    const gradients = ['g1','g2','g3','g4','g5','g6','g7','g8'];
+    const renderItem = (item, i) => {
+      const cls = gradients[i % gradients.length];
+      const imgHtml = item.image
+        ? `<img src="${esc(item.image)}" alt="${esc(item.title || '')}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.75;">`
+        : '';
+      return `<div class="gallery-item ${cls}">
+        ${imgHtml}
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">${esc(item.title || '')}</div>
+          <div class="gallery-caption-sub">${esc(item.subtitle || '')}</div>
+        </div>
+      </div>`;
+    };
+    // Render items + duplicate for seamless CSS scroll loop
+    const rendered = items.map((item, i) => renderItem(item, i)).join('\n      ');
+    const duplicate = items.map((item, i) => renderItem(item, i)).join('\n      ');
+    return rendered + '\n      <!-- Duplicate for seamless loop -->\n      ' + duplicate;
+  }
+
+  // Build logo wall HTML
   function buildLogoWall(logos) {
     if (!logos.length) return null;
     return logos.map(p => {
       const inner = p.logo
-        ? `<img src="${p.logo}" alt="${esc(p.name)}" style="max-width:100%;max-height:48px;object-fit:contain;filter:grayscale(80%);opacity:0.7;transition:filter 0.2s,opacity 0.2s;" onmouseover="this.style.filter='grayscale(0%)';this.style.opacity='1'" onmouseout="this.style.filter='grayscale(80%)';this.style.opacity='0.7'">`
-        : `<div class="logo-item-text">${esc(p.name)}</div>`;
+        ? `<img src="${esc(p.logo)}" alt="${esc(p.name || '')}" style="max-width:100%;max-height:48px;object-fit:contain;filter:grayscale(80%);opacity:0.7;transition:filter 0.2s,opacity 0.2s;" onmouseover="this.style.filter='grayscale(0%)';this.style.opacity='1'" onmouseout="this.style.filter='grayscale(80%)';this.style.opacity='0.7'">`
+        : `<div class="logo-item-text">${esc(p.name || '')}</div>`;
       return p.url
         ? `<a href="${esc(p.url)}" target="_blank" rel="noopener" class="logo-item" style="text-decoration:none;">${inner}</a>`
         : `<div class="logo-item">${inner}</div>`;
     }).join('\n        ');
   }
 
-  function esc(str) {
-    return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-
-  // Inject hero.yml
+  // ── INJECT hero.yml ──────────────────────────────────────────
   const heroYml = await fetchFile('/_data/hero.yml');
   if (heroYml) {
     const headline   = extractVal(heroYml, 'headline');
@@ -116,7 +140,7 @@ export async function onRequest(context) {
     if (btnSecond)  html = html.replace(/(<a[^>]*id="heroBtnSecondary"[^>]*>)([\s\S]*?)(<\/a>)/, `$1${esc(btnSecond)}$3`);
   }
 
-  // Inject settings.yml
+  // ── INJECT settings.yml ──────────────────────────────────────
   const settingsYml = await fetchFile('/_data/settings.yml');
   if (settingsYml) {
     const email    = extractVal(settingsYml, 'email');
@@ -129,15 +153,28 @@ export async function onRequest(context) {
     if (facebook && facebook !== '""') html = html.replace(/(<a[^>]*id="footerFacebook"[^>]*)href="[^"]*"/, `$1href="${esc(facebook)}"`);
   }
 
-  // Inject logos.yml
+  // ── INJECT logos.yml ─────────────────────────────────────────
   const logosYml = await fetchFile('/_data/logos.yml');
   if (logosYml) {
-    const logos = parseLogosList(logosYml);
+    const logos = parseYamlList(logosYml, 'partners');
     const logoHtml = buildLogoWall(logos);
     if (logoHtml) {
       html = html.replace(
         /(<div class="logo-wall" id="logoWall">)([\s\S]*?)(<\/div>)/,
         `$1\n        ${logoHtml}\n      $3`
+      );
+    }
+  }
+
+  // ── INJECT gallery.yml ───────────────────────────────────────
+  const galleryYml = await fetchFile('/_data/gallery.yml');
+  if (galleryYml) {
+    const items = parseYamlList(galleryYml, 'items');
+    const galleryHtml = buildGalleryItems(items);
+    if (galleryHtml) {
+      html = html.replace(
+        /(<div class="gallery-track" id="galleryTrack">)([\s\S]*?)(<\/div>)/,
+        `$1\n      ${galleryHtml}\n    $3`
       );
     }
   }

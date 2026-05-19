@@ -5,8 +5,8 @@ backend:
   base_url: https://communicationsadvisory.com
   auth_endpoint: api/auth
 
-media_folder: assets/blog
-public_folder: /assets/blog
+media_folder: assets/gallery
+public_folder: /assets/gallery
 
 collections:
 
@@ -59,7 +59,7 @@ collections:
         file: _data/about.yml
         fields:
           - { label: Section Label, name: label, widget: string, default: "The Problem" }
-          - { label: Headline, name: headline, widget: string, default: "Most Organizations Have a Clarity Problem" }
+          - { label: Headline, name: headline, widget: string }
           - { label: Pull Quote, name: quote, widget: text }
           - { label: Body Paragraph 1, name: body1, widget: text }
           - { label: Body Paragraph 2, name: body2, widget: text }
@@ -86,3 +86,16 @@ collections:
               - { label: Organisation Name, name: name, widget: string }
               - { label: Logo Image, name: logo, widget: image, required: false }
               - { label: Website URL, name: url, widget: string, required: false }
+
+      - label: Gallery
+        name: gallery
+        file: _data/gallery.yml
+        fields:
+          - label: Gallery Items
+            name: items
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - { label: Title, name: title, widget: string, hint: "Short label shown on the card" }
+              - { label: Subtitle, name: subtitle, widget: string, hint: "Category or event type" }
+              - { label: Photo, name: image, widget: image, required: false, hint: "Landscape photo, min 800x500px recommended" }

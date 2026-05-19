@@ -1,0 +1,8 @@
+/admin/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer-when-downgrade
+
+/api/*
+  Access-Control-Allow-Origin: https://communicationsadvisory.com
+  Content-Type: application/json

@@ -1,9 +1,16 @@
 // Cloudflare Pages Function — GitHub OAuth start
-// This handles the /api/auth route and redirects to GitHub login
+// Route: /api/auth
 export async function onRequest(context) {
   const { request, env } = context;
   const url = new URL(request.url);
   const redirectUri = `${url.origin}/api/auth/callback`;
+
+  if (!env.GITHUB_CLIENT_ID) {
+    return new Response(
+      "GITHUB_CLIENT_ID is not set in Cloudflare environment variables. See SETUP_GUIDE.md Step 2b.",
+      { status: 500, headers: { "Content-Type": "text/plain" } }
+    );
+  }
 
   const githubAuthUrl = new URL("https://github.com/login/oauth/authorize");
   githubAuthUrl.searchParams.set("client_id", env.GITHUB_CLIENT_ID);

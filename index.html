@@ -3,8 +3,69 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Communication Advisory – Turning Evidence into Impactful Stories</title>
+<!-- ── PRIMARY SEO ── -->
+<title>Communication Advisory | Strategic Communications Firm Bangladesh</title>
 <meta name="description" content="Bangladesh's independent strategic communications and reputation firm. We help corporate leaders, institutions, and policymakers communicate with precision, confidence, and credibility.">
+<meta name="keywords" content="strategic communications Bangladesh, reputation management Bangladesh, crisis communications Dhaka, public affairs Bangladesh, corporate communications, leadership branding Bangladesh, media strategy Bangladesh, PR firm Dhaka">
+<meta name="author" content="Communication Advisory">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://communicationsadvisory.com/">
+
+<!-- ── OPEN GRAPH (Facebook, LinkedIn, WhatsApp previews) ── -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://communicationsadvisory.com/">
+<meta property="og:title" content="Communication Advisory | Strategic Communications Firm Bangladesh">
+<meta property="og:description" content="Bangladesh's independent strategic communications and reputation firm. Turning evidence into impactful stories — for corporate leaders, institutions, and policymakers.">
+<meta property="og:image" content="https://communicationsadvisory.com/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Communication Advisory — Strategic Communications Bangladesh">
+<meta property="og:site_name" content="Communication Advisory">
+<meta property="og:locale" content="en_US">
+
+<!-- ── TWITTER / X CARD ── -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://communicationsadvisory.com/">
+<meta name="twitter:title" content="Communication Advisory | Strategic Communications Bangladesh">
+<meta name="twitter:description" content="Bangladesh's independent strategic communications and reputation firm. Turning evidence into impactful stories.">
+<meta name="twitter:image" content="https://communicationsadvisory.com/assets/og-image.jpg">
+
+<!-- ── STRUCTURED DATA (Google Rich Results) ── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Communication Advisory",
+  "description": "Bangladesh's independent strategic communications and reputation firm. We help corporate leaders, institutions, and policymakers communicate with precision, confidence, and credibility.",
+  "url": "https://communicationsadvisory.com",
+  "logo": "https://communicationsadvisory.com/assets/CA_logo.png",
+  "image": "https://communicationsadvisory.com/assets/og-image.jpg",
+  "telephone": "",
+  "email": "commsadvisoryinfo@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Dhaka",
+    "addressCountry": "BD"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Bangladesh"
+  },
+  "serviceType": [
+    "Strategic Communications Advisory",
+    "Reputation and Crisis Management",
+    "Public Affairs and Policy Communication",
+    "Corporate Positioning and Leadership Branding",
+    "Digital and Media Strategy"
+  ],
+  "sameAs": []
+}
+</script>
+
+<!-- ── FAVICON ── -->
+<link rel="icon" type="image/png" href="/assets/CA_logo.png">
+<link rel="apple-touch-icon" href="/assets/CA_logo.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
@@ -856,7 +917,7 @@
 <body>
 
 <!-- NAV -->
-<nav>
+<nav aria-label="Main navigation">
   <div class="nav-inner">
     <a href="#" class="nav-logo">
       <img
@@ -890,7 +951,7 @@
 </div>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" aria-label="Hero">
   <div class="hero-bg"></div>
   <div class="hero-pattern"></div>
   <div class="hero-accent"></div>
@@ -970,6 +1031,7 @@
   </div>
 </section>
 
+<main id="main-content">
 <!-- ABOUT -->
 <section id="about">
   <div class="container">
@@ -1174,7 +1236,8 @@
     <div class="logo-wall-section fade-in">
       <div class="logo-wall-label">Organisations We Have Worked With</div>
       <div class="logo-wall" id="logoWall">
-        <!-- CF_LOGOS_PLACEHOLDER -->
+        <!-- To add a logo: <div class="logo-item"><img src="assets/logos/name.png" alt="Org Name"></div> -->
+        <!-- To use text placeholder: <div class="logo-item"><div class="logo-item-text">Org Name</div></div> -->
         <div class="logo-item"><div class="logo-item-text">Your Organisation</div></div>
         <div class="logo-item"><div class="logo-item-text">Partner Name</div></div>
       </div>
@@ -1416,6 +1479,7 @@
 </section>
 
 <!-- FOOTER -->
+</main>
 <footer>
   <div class="footer-inner">
     <div class="footer-top">
@@ -1563,42 +1627,13 @@
   function parseYml(text) {
     const result = {};
     const lines = text.split('\n');
-    let i = 0;
-    while (i < lines.length) {
-      const km = lines[i].match(/^([\w_]+):\s*(.*)?$/);
-      if (!km) { i++; continue; }
-      const key = km[1];
-      let raw = (km[2] || '').trim();
-      if (raw === '|' || raw === '|-' || raw === '>') {
-        const block = [];
-        i++;
-        while (i < lines.length && (lines[i].startsWith('  ') || lines[i].trim() === '')) {
-          block.push(lines[i].replace(/^  /, '').trim());
-          i++;
-        }
-        result[key] = block.filter(Boolean).join(' ');
-        continue;
+    lines.forEach(line => {
+      const m = line.match(/^([\w_]+):\s*(.*)$/);
+      if (m) {
+        let val = m[2].trim().replace(/^["']|["']$/g, '');
+        result[m[1]] = val;
       }
-      if (raw.startsWith('"') || raw.startsWith("'")) {
-        const q = raw[0];
-        let inner = raw.slice(1);
-        if (inner.endsWith(q)) {
-          result[key] = inner.slice(0, -1);
-        } else {
-          i++;
-          while (i < lines.length) {
-            const chunk = lines[i].trim();
-            if (chunk.endsWith(q)) { inner += ' ' + chunk.slice(0, -1); break; }
-            inner += ' ' + chunk;
-            i++;
-          }
-          result[key] = inner.trim();
-        }
-      } else {
-        result[key] = raw;
-      }
-      i++;
-    }
+    });
     return result;
   }
 

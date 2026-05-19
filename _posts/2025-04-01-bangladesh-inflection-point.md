@@ -1,11 +1,13 @@
 ---
-title: "Bangladesh Is at an Inflection Point. Is Your Communications Strategy Ready?"
-category: "Reputation"
+title: Bangladesh Is at an Inflection Point. Is Your Communications Strategy Ready?
+category: Reputation
 date: 2025-04-01T00:00:00.000Z
-read_time: "8 min read"
+read_time: 8 min read
+excerpt: Growth invites scrutiny. As international standards for governance and
+  accountability rise, Bangladeshi institutions face a new kind of pressure —
+  one that demands a communication strategy equal to the moment.
+image: https://www.worldatlas.com/upload/07/a0/12/bibhags-of-bangladesh-map.png
 featured: false
-excerpt: "Growth invites scrutiny. As international standards for governance and accountability rise, Bangladeshi institutions face a new kind of pressure — one that demands a communication strategy equal to the moment."
-image: ""
 ---
 
 Bangladesh has built something remarkable. Decades of growth have produced a global manufacturing presence, a young and ambitious workforce, and an increasingly prominent role in regional and international affairs.

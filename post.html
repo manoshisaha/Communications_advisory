@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Article – Communication Advisory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #c51a1b; --blue: #004874; --blue-dark: #003459;
+    --cream: #faf8f5; --warm-gray: #f2efe9;
+    --text-dark: #1a1a1a; --text-mid: #4a4a4a; --text-light: #888;
+    --border: rgba(0,0,0,0.09); --nav-h: 72px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Lato', sans-serif; background: var(--cream); color: var(--text-dark); }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--nav-h); background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
+    display: flex; align-items: center;
+  }
+  .nav-inner {
+    max-width: 800px; margin: 0 auto; padding: 0 2rem; width: 100%;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 700; color: var(--blue); text-decoration: none; }
+  .nav-logo span { color: var(--red); }
+  .nav-back { font-size: 0.875rem; color: var(--text-mid); text-decoration: none; font-weight: 500; }
+  .nav-back:hover { color: var(--red); }
+
+  .post-hero {
+    padding-top: calc(var(--nav-h) + 3rem);
+    background: var(--blue-dark); color: #fff;
+    padding-bottom: 3rem;
+  }
+  .post-hero-inner { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
+  .post-category {
+    font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--red); font-weight: 700; margin-bottom: 1rem; display: block;
+  }
+  .post-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 4vw, 2.75rem);
+    font-weight: 700; line-height: 1.2; margin-bottom: 1.5rem;
+  }
+  .post-meta { font-size: 0.8125rem; color: rgba(255,255,255,0.55); }
+
+  .post-image {
+    max-width: 800px; margin: 0 auto;
+  }
+  .post-image img { width: 100%; display: block; max-height: 420px; object-fit: cover; }
+
+  .post-body-wrap { max-width: 800px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+  .post-body {
+    font-size: 1.0625rem; line-height: 1.85; color: var(--text-mid);
+  }
+  .post-body h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 700; color: var(--blue);
+    margin: 2.5rem 0 1rem;
+  }
+  .post-body h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 600; color: var(--blue);
+    margin: 2rem 0 0.75rem;
+  }
+  .post-body p { margin-bottom: 1.25rem; }
+  .post-body strong { font-weight: 700; color: var(--text-dark); }
+  .post-body em { font-style: italic; }
+  .post-body ul, .post-body ol { margin: 1rem 0 1.25rem 1.5rem; }
+  .post-body li { margin-bottom: 0.5rem; }
+  .post-body blockquote {
+    border-left: 3px solid var(--red); padding-left: 1.5rem;
+    font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
+    font-style: italic; color: var(--blue); margin: 2rem 0;
+  }
+
+  .post-cta {
+    background: var(--blue); color: #fff; border-radius: 10px;
+    padding: 2.5rem; margin-top: 3rem; text-align: center;
+  }
+  .post-cta h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; margin-bottom: 0.75rem; }
+  .post-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; }
+  .post-cta a {
+    background: var(--red); color: #fff; text-decoration: none;
+    padding: 0.75rem 2rem; border-radius: 4px; font-weight: 700; font-size: 0.9rem;
+    display: inline-block; transition: background 0.2s;
+  }
+  .post-cta a:hover { background: #a01415; }
+
+  #postLoading { text-align: center; padding: 5rem 2rem; color: var(--text-light); }
+  #postNotFound { text-align: center; padding: 5rem 2rem; display: none; }
+
+  footer { background: #0d1e2e; color: rgba(255,255,255,0.5); padding: 2rem; text-align: center; font-size: 0.8125rem; }
+  footer a { color: rgba(255,255,255,0.35); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><span>C</span>ommunication <span>A</span>dvisory</a>
+    <a href="/blog.html" class="nav-back">← All Articles</a>
+  </div>
+</nav>
+
+<div id="postLoading">Loading article…</div>
+<div id="postNotFound">
+  <h2 style="font-family:'Cormorant Garamond',serif;color:var(--blue);font-size:1.5rem;margin-bottom:1rem;">Article not found</h2>
+  <a href="/blog.html" style="color:var(--red);font-weight:700;">← Back to all articles</a>
+</div>
+
+<div id="postContent" style="display:none;">
+  <div class="post-hero">
+    <div class="post-hero-inner">
+      <span class="post-category" id="postCategory"></span>
+      <h1 class="post-title" id="postTitle"></h1>
+      <div class="post-meta" id="postMeta"></div>
+    </div>
+  </div>
+  <div class="post-image" id="postImageWrap"></div>
+  <div class="post-body-wrap">
+    <div class="post-body" id="postBody"></div>
+    <div class="post-cta">
+      <h3>Ready to have this conversation?</h3>
+      <p>Every engagement begins with understanding your specific context. All initial conversations are confidential.</p>
+      <a href="/#contact">Get in Touch</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="/">communicationsadvisory.com</a> &nbsp;·&nbsp; © 2025 Communication Advisory
+</footer>
+
+<script>
+  function parseFrontmatter(text) {
+    const match = text.match(/^---\n([\s\S]*?)\n---/);
+    if (!match) return { body: text };
+    const fm = {};
+    match[1].split('\n').forEach(line => {
+      const m = line.match(/^([\w_]+):\s*(.*)$/);
+      if (m) fm[m[1].trim()] = m[2].trim().replace(/^["']|["']$/g, '');
+    });
+    fm.body = text.slice(match[0].length).trim();
+    return fm;
+  }
+
+  // Very simple Markdown → HTML converter
+  function mdToHtml(md) {
+    return md
+      .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+      .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')
+      .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
+      .replace(/^- (.+)$/gm, '<li>$1</li>')
+      .replace(/(<li>[\s\S]+?<\/li>)/g, '<ul>$1</ul>')
+      .replace(/^\d+\. (.+)$/gm, '<li>$1</li>')
+      .replace(/\n\n/g, '</p><p>')
+      .replace(/^(?!<[hbup]|<li)(.+)$/gm, '$1')
+      .split('\n').filter(l => l.trim()).join('\n');
+  }
+
+  function formatDate(d) {
+    if (!d) return '';
+    try { return new Date(d).toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'}); }
+    catch(e) { return d; }
+  }
+
+  async function loadPost() {
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get('slug');
+    const loading = document.getElementById('postLoading');
+    const notFound = document.getElementById('postNotFound');
+    const content = document.getElementById('postContent');
+
+    if (!slug) { loading.style.display='none'; notFound.style.display='block'; return; }
+
+    try {
+      const res = await fetch(`/_posts/${slug}.md`);
+      if (!res.ok) throw new Error('Not found');
+      const text = await res.text();
+      const post = parseFrontmatter(text);
+
+      // Update page title
+      document.getElementById('pageTitle').textContent = (post.title||'Article') + ' – Communication Advisory';
+      document.getElementById('postCategory').textContent = post.category || 'Insight';
+      document.getElementById('postTitle').textContent = post.title || '';
+      document.getElementById('postMeta').textContent =
+        formatDate(post.date) + (post.read_time ? ' · ' + post.read_time : '');
+
+      // Hero image
+      if (post.image && post.image !== '""') {
+        document.getElementById('postImageWrap').innerHTML =
+          `<img src="${post.image}" alt="${post.title||''}">`;
+      }
+
+      // Body
+      const bodyHtml = '<p>' + mdToHtml(post.body) + '</p>';
+      document.getElementById('postBody').innerHTML = bodyHtml;
+
+      loading.style.display = 'none';
+      content.style.display = 'block';
+    } catch(e) {
+      loading.style.display = 'none';
+      notFound.style.display = 'block';
+    }
+  }
+
+  loadPost();
+</script>
+</body>
+</html>

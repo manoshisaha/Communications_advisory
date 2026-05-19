@@ -10,29 +10,30 @@ public_folder: /assets/blog
 
 collections:
 
-  # ── BLOG POSTS ──────────────────────────────────────
+  # ── BLOG POSTS ──────────────────────────────────────────────────
   - name: blog
     label: Blog Posts
     label_singular: Blog Post
     folder: _posts
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}} — {{date}}"
     fields:
       - { label: Title, name: title, widget: string }
       - { label: Category, name: category, widget: string, hint: "e.g. Crisis Comms, Reputation, Leadership, Policy" }
-      - { label: Date, name: date, widget: datetime }
+      - { label: Publish Date, name: date, widget: datetime }
       - { label: Read Time, name: read_time, widget: string, default: "5 min read" }
-      - { label: Short Excerpt, name: excerpt, widget: text, hint: "2–3 sentences shown on homepage card" }
-      - { label: Full Article, name: body, widget: markdown }
-      - { label: Thumbnail Image, name: image, widget: image, required: false, hint: "Recommended: 1200x630px" }
+      - { label: Short Excerpt, name: excerpt, widget: text, hint: "2–3 sentences shown on homepage and blog listing" }
+      - { label: Full Article Body, name: body, widget: markdown }
+      - { label: Thumbnail Image, name: image, widget: image, required: false, hint: "Recommended 1200x630px" }
       - { label: Feature on Homepage (large card), name: featured, widget: boolean, default: false }
 
-  # ── SITE SETTINGS ───────────────────────────────────
+  # ── SITE SETTINGS ───────────────────────────────────────────────
   - name: settings
     label: Site Settings
     files:
 
-      - label: General Info
+      - label: General Info (email, social links)
         name: general
         file: _data/settings.yml
         fields:
@@ -42,16 +43,36 @@ collections:
           - { label: LinkedIn URL, name: linkedin, widget: string, required: false }
           - { label: Twitter / X URL, name: twitter, widget: string, required: false }
           - { label: Facebook URL, name: facebook, widget: string, required: false }
-          - { label: Formspree Form ID, name: formspree_id, widget: string, hint: "The short ID from formspree.io e.g. xabcdefg" }
+          - { label: Formspree Form ID, name: formspree_id, widget: string, hint: "Short ID from formspree.io e.g. xabcdefg" }
 
-      - label: Homepage Hero Text
+      - label: Hero Section
         name: hero
         file: _data/hero.yml
         fields:
-          - { label: Main Headline, name: headline, widget: string }
-          - { label: Subheading Paragraph, name: subheading, widget: text }
+          - { label: Main Headline, name: headline, widget: string, hint: "Use <em>word</em> for italic red text" }
+          - { label: Subheading, name: subheading, widget: text }
           - { label: Primary Button Label, name: btn_primary, widget: string, default: "Explore Our Services" }
           - { label: Secondary Button Label, name: btn_secondary, widget: string, default: "Talk to Us" }
+
+      - label: About Section
+        name: about
+        file: _data/about.yml
+        fields:
+          - { label: Section Label, name: label, widget: string, default: "The Problem" }
+          - { label: Headline, name: headline, widget: string, default: "Most Organizations Have a Clarity Problem" }
+          - { label: Pull Quote, name: quote, widget: text }
+          - { label: Body Paragraph 1, name: body1, widget: text }
+          - { label: Body Paragraph 2, name: body2, widget: text }
+          - { label: Body Paragraph 3, name: body3, widget: text }
+
+      - label: Mission Section
+        name: mission
+        file: _data/mission.yml
+        fields:
+          - { label: Mission Statement, name: mission, widget: text }
+          - { label: Supporting Quote, name: quote, widget: text }
+          - { label: Vision Statement, name: vision, widget: text }
+          - { label: CTA Button Label, name: cta, widget: string, default: "Start the Conversation →" }
 
       - label: Partner Logos
         name: logos
@@ -63,5 +84,5 @@ collections:
             summary: "{{fields.name}}"
             fields:
               - { label: Organisation Name, name: name, widget: string }
-              - { label: Logo Image, name: logo, widget: image, required: false, hint: "PNG with transparent background preferred" }
+              - { label: Logo Image, name: logo, widget: image, required: false }
               - { label: Website URL, name: url, widget: string, required: false }

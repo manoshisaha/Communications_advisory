@@ -864,6 +864,7 @@
         alt="Communication Advisory"
         style="height:44px;width:auto;display:block;"
       >
+      <div class="nav-logo-text"><span>C</span>ommunication<br><span>A</span>dvisory</div>
     </a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
@@ -1403,7 +1404,7 @@
             </div>
             <div>
               <div class="contact-info-label">Email</div>
-              <div class="contact-info-value">commsadvisoryinfo@gmail.com</div>
+              <div class="contact-info-value" id="contactEmail">commsadvisoryinfo@gmail.com</div>
             </div>
           </div>
           <div class="contact-info-item">
@@ -1494,10 +1495,10 @@
       <div>
         <div class="footer-col-title">Connect</div>
         <ul class="footer-links">
-          <li><a href="#">LinkedIn</a></li>
-          <li><a href="#">Twitter / X</a></li>
-          <li><a href="#">Facebook</a></li>
-          <li><a href="mailto:commsadvisoryinfo@gmail.com">Email Us</a></li>
+          <li><a href="#" id="footerLinkedIn">LinkedIn</a></li>
+          <li><a href="#" id="footerTwitter">Twitter / X</a></li>
+          <li><a href="#" id="footerFacebook">Facebook</a></li>
+          <li><a href="mailto:commsadvisoryinfo@gmail.com" id="footerEmail">Email Us</a></li>
         </ul>
       </div>
     </div>
@@ -1602,6 +1603,41 @@
     btn.textContent = 'Send Message →';
     btn.disabled = false;
   }
+
+  // Load site settings from _data/settings.yml (updated via CMS)
+  fetch('/_data/settings.yml')
+    .then(r => r.text())
+    .then(text => {
+      const get = (key) => {
+        const match = text.match(new RegExp('^' + key + ':\\s*(.+)$', 'm'));
+        return match ? match[1].trim().replace(/^["']|["']$/g, '') : null;
+      };
+      const email = get('email');
+      const linkedin = get('linkedin');
+      const twitter = get('twitter');
+      const facebook = get('facebook');
+
+      if (email) {
+        const el = document.getElementById('contactEmail');
+        if (el) el.textContent = email;
+        const fe = document.getElementById('footerEmail');
+        if (fe) { fe.href = 'mailto:' + email; fe.textContent = 'Email Us'; }
+        // also update form error messages
+      }
+      if (linkedin) {
+        const el = document.getElementById('footerLinkedIn');
+        if (el && linkedin !== '""' && linkedin !== "''") el.href = linkedin;
+      }
+      if (twitter) {
+        const el = document.getElementById('footerTwitter');
+        if (el && twitter !== '""' && twitter !== "''") el.href = twitter;
+      }
+      if (facebook) {
+        const el = document.getElementById('footerFacebook');
+        if (el && facebook !== '""' && facebook !== "''") el.href = facebook;
+      }
+    })
+    .catch(() => {}); // silently fail — static defaults remain
 
   // Nav shadow on scroll
   window.addEventListener('scroll', () => {

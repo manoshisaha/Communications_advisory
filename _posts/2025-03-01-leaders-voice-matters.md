@@ -6,7 +6,7 @@ read_time: 5 min read
 excerpt: Institutions are often only as credible as the leader who represents
   them. Building thought leadership that commands genuine respect — not
   manufactured image — is the defining communication challenge of this moment.
-image: ""
+image: https://blog.jointhire.com.sg/wp-content/uploads/2024/08/Untitled-design-4.jpg
 featured: false
 ---
 

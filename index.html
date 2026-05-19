@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Communication Advisory – Turning Evidence into Impactful Stories</title>
+<meta name="description" content="Bangladesh's independent strategic communications and reputation firm. We help corporate leaders, institutions, and policymakers communicate with precision, confidence, and credibility.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #c51a1b;
+    --red-dark: #a01415;
+    --red-light: #f5e6e6;
+    --blue: #004874;
+    --blue-dark: #003459;
+    --blue-light: #e6f0f7;
+    --cream: #faf8f5;
+    --warm-gray: #f2efe9;
+    --text-dark: #1a1a1a;
+    --text-mid: #4a4a4a;
+    --text-light: #888;
+    --border: rgba(0,0,0,0.09);
+    --nav-h: 72px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: #fff;
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--nav-h);
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center;
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+    width: 100%;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+  }
+  .nav-logo-icon {
+    width: 40px; height: 40px;
+  }
+  .nav-logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--blue);
+    line-height: 1.1;
+  }
+  .nav-logo-text span { color: var(--red); }
+  .nav-links {
+    display: flex; align-items: center; gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-mid);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--red); }
+  .nav-cta {
+    background: var(--red);
+    color: #fff !important;
+    padding: 0.5rem 1.25rem;
+    border-radius: 4px;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--red-dark) !important; color: #fff !important; }
+  .hamburger {
+    display: none;
+    flex-direction: column; gap: 5px; cursor: pointer;
+    background: none; border: none; padding: 4px;
+  }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--text-dark); border-radius: 2px; transition: 0.3s; }
+  .mobile-menu {
+    display: none;
+    position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 99;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    flex-direction: column; gap: 1.25rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { text-decoration: none; color: var(--text-mid); font-weight: 500; font-size: 1rem; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    padding-top: var(--nav-h);
+    background: var(--blue);
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: center;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #003459 0%, var(--blue) 50%, #1a5c8a 100%);
+  }
+  .hero-pattern {
+    position: absolute; inset: 0; opacity: 0.05;
+    background-image: radial-gradient(circle, #fff 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .hero-accent {
+    position: absolute; bottom: -100px; right: -100px;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(197,26,27,0.25) 0%, transparent 70%);
+  }
+  .hero-inner {
+    max-width: 1200px; margin: 0 auto; padding: 6rem 2rem 5rem;
+    position: relative; z-index: 2;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(197,26,27,0.2);
+    border: 1px solid rgba(197,26,27,0.4);
+    color: #f4a0a0;
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.4rem 1rem; border-radius: 100px;
+    margin-bottom: 1.75rem;
+  }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--red); display: block; }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 700; line-height: 1.15;
+    color: #fff; margin-bottom: 1.5rem;
+  }
+  .hero h1 em { font-style: italic; color: #f4a0a0; }
+  .hero-sub {
+    font-size: 1.05rem; line-height: 1.8;
+    color: rgba(255,255,255,0.72);
+    margin-bottom: 2.5rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--red); color: #fff;
+    padding: 0.875rem 2rem; border-radius: 4px;
+    font-size: 0.9375rem; font-weight: 600; letter-spacing: 0.01em;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent; color: #fff;
+    padding: 0.875rem 2rem; border-radius: 4px;
+    font-size: 0.9375rem; font-weight: 600;
+    border: 1.5px solid rgba(255,255,255,0.4);
+    text-decoration: none; cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.08); transform: translateY(-1px); }
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: rgba(255,255,255,0.1); border-radius: 8px; overflow: hidden;
+    margin-top: 3rem;
+  }
+  .hero-stat {
+    background: rgba(255,255,255,0.06);
+    padding: 1.25rem 1rem; text-align: center;
+  }
+  .hero-stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 700; color: #fff;
+  }
+  .hero-stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.55); margin-top: 2px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .hero-right { position: relative; }
+
+  /* ── PRACTICE PANEL ── */
+  .practice-panel {
+    display: flex; flex-direction: column; gap: 0;
+    border-radius: 14px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .practice-panel-label {
+    font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35); padding: 1rem 1.5rem 0.75rem;
+    background: rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .practice-item {
+    display: flex; align-items: stretch;
+    cursor: pointer;
+    transition: background 0.3s;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: relative; overflow: hidden;
+    background: rgba(255,255,255,0.03);
+  }
+  .practice-item:last-child { border-bottom: none; }
+  .practice-item:hover, .practice-item.active { background: rgba(255,255,255,0.07); }
+  .practice-item-bar {
+    width: 3px; min-width: 3px;
+    background: transparent;
+    transition: background 0.3s;
+    flex-shrink: 0;
+  }
+  .practice-item:hover .practice-item-bar,
+  .practice-item.active .practice-item-bar { background: var(--red); }
+  .practice-item-inner { padding: 1rem 1.25rem 1rem 1rem; flex: 1; }
+  .practice-item-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.25);
+    margin-bottom: 2px; display: block;
+    transition: color 0.3s;
+  }
+  .practice-item:hover .practice-item-num,
+  .practice-item.active .practice-item-num { color: var(--red); }
+  .practice-item-title {
+    font-size: 0.9rem; font-weight: 600; color: rgba(255,255,255,0.75);
+    line-height: 1.3; transition: color 0.3s;
+  }
+  .practice-item:hover .practice-item-title,
+  .practice-item.active .practice-item-title { color: #fff; }
+  .practice-item-hook {
+    font-size: 0.775rem; line-height: 1.6;
+    color: rgba(255,255,255,0.45);
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.35s ease, opacity 0.3s, margin-top 0.3s;
+    opacity: 0; margin-top: 0;
+  }
+  .practice-item:hover .practice-item-hook,
+  .practice-item.active .practice-item-hook {
+    max-height: 60px; opacity: 1; margin-top: 5px;
+    color: rgba(255,255,255,0.6);
+  }
+  .practice-item-arrow {
+    display: flex; align-items: center; padding-right: 1rem;
+    color: rgba(255,255,255,0.15); font-size: 0.85rem;
+    transition: color 0.3s, transform 0.3s;
+  }
+  .practice-item:hover .practice-item-arrow,
+  .practice-item.active .practice-item-arrow { color: var(--red); transform: translateX(3px); }
+
+  /* ── SECTION BASICS ── */
+  section { padding: 6rem 2rem; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700; line-height: 1.2;
+    color: var(--blue);
+  }
+  .section-subtitle {
+    font-size: 1.05rem; line-height: 1.8; color: var(--text-mid);
+    max-width: 620px; margin-top: 1rem;
+  }
+  .section-header { margin-bottom: 3.5rem; }
+  .section-header.centered { text-align: center; }
+  .section-header.centered .section-subtitle { margin: 1rem auto 0; }
+  .divider { width: 48px; height: 3px; background: var(--red); margin-top: 1.25rem; }
+  .divider.centered { margin: 1.25rem auto 0; }
+
+  /* ── ABOUT / PROBLEM ── */
+  #about { background: var(--cream); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .about-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem; font-style: italic; line-height: 1.7;
+    color: var(--blue);
+    border-left: 4px solid var(--red);
+    padding-left: 1.5rem; margin-bottom: 1.75rem;
+  }
+  .about-body { font-size: 0.9875rem; line-height: 1.85; color: var(--text-mid); }
+  .about-body p + p { margin-top: 1.1rem; }
+  .about-visual {
+    background: var(--blue);
+    border-radius: 12px; padding: 2.5rem;
+    color: #fff; position: relative; overflow: hidden;
+  }
+  .about-visual::after {
+    content: '';
+    position: absolute; bottom: -40px; right: -40px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: rgba(197,26,27,0.2);
+  }
+  .about-visual-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; margin-bottom: 1.5rem; }
+  .about-pillar {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px; padding: 1rem 1.25rem;
+    margin-bottom: 0.875rem;
+  }
+  .about-pillar-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); }
+  .about-pillar-value { font-size: 1rem; font-weight: 600; margin-top: 4px; }
+
+  /* ── SERVICES ── */
+  #services { background: #fff; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .service-card {
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 2rem;
+    transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+    cursor: default;
+    position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--red); opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .service-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.08); transform: translateY(-3px); border-color: transparent; }
+  .service-card:hover::before { opacity: 1; }
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem; font-weight: 700;
+    color: var(--red); opacity: 0.15;
+    line-height: 1; margin-bottom: 1rem;
+  }
+  .service-title { font-size: 1.05rem; font-weight: 600; color: var(--blue); margin-bottom: 0.75rem; }
+  .service-body { font-size: 0.875rem; line-height: 1.8; color: var(--text-mid); }
+
+  /* ── WHY DIFFERENT ── */
+  #why { background: var(--blue-dark); color: #fff; padding: 5rem 2rem; }
+  #why .section-title { color: #fff; }
+  #why .section-label { color: rgba(197,26,27,0.9); }
+  #why .section-subtitle { color: rgba(255,255,255,0.6); }
+  #why .divider { background: var(--red); }
+
+  .why-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; margin-top: 3.5rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px; overflow: hidden;
+  }
+  .why-col {
+    padding: 2.75rem 2.25rem 2.5rem;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.03);
+    transition: background 0.35s, border-color 0.35s;
+    position: relative; cursor: pointer;
+    display: flex; flex-direction: column;
+    min-height: 340px;
+  }
+  .why-col:last-child { border-right: none; }
+  .why-col:hover,
+  .why-col.active { background: var(--red); }
+  .why-col:hover { border-color: transparent; }
+
+  /* number */
+  .why-col-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-weight: 700; letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.25);
+    margin-bottom: 2rem;
+    transition: color 0.3s;
+  }
+  .why-col:hover .why-col-num,
+  .why-col.active .why-col-num { color: rgba(255,255,255,0.5); }
+
+  /* accent line */
+  .why-col-line {
+    width: 28px; height: 2px;
+    background: var(--red);
+    margin-bottom: 1.25rem;
+    transition: width 0.35s, background 0.35s;
+  }
+  .why-col:hover .why-col-line,
+  .why-col.active .why-col-line { width: 44px; background: rgba(255,255,255,0.6); }
+
+  /* title */
+  .why-col-title {
+    font-size: 1rem; font-weight: 700; letter-spacing: 0.01em;
+    color: #fff; line-height: 1.35;
+    margin-bottom: 1rem;
+    transition: color 0.3s;
+  }
+
+  /* short teaser — always visible */
+  .why-col-teaser {
+    font-size: 0.8125rem; line-height: 1.75;
+    color: rgba(255,255,255,0.45);
+    transition: color 0.3s, opacity 0.3s;
+    flex: 1;
+  }
+  .why-col:hover .why-col-teaser,
+  .why-col.active .why-col-teaser { color: rgba(255,255,255,0.75); }
+
+  /* full text — hidden by default, expands on hover/click */
+  .why-col-full {
+    font-size: 0.8125rem; line-height: 1.8;
+    color: rgba(255,255,255,0.85);
+    max-height: 0; overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.45s ease, opacity 0.35s ease, margin-top 0.35s;
+    margin-top: 0;
+  }
+  .why-col:hover .why-col-full,
+  .why-col.active .why-col-full {
+    max-height: 200px; opacity: 1; margin-top: 0.875rem;
+  }
+
+  /* hover indicator arrow */
+  .why-col-cta {
+    margin-top: 1.75rem;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    color: rgba(255,255,255,0); display: flex; align-items: center; gap: 6px;
+    transition: color 0.3s, transform 0.3s;
+  }
+  .why-col-cta::after { content: '→'; display: inline-block; transition: transform 0.25s; }
+  .why-col:hover .why-col-cta,
+  .why-col.active .why-col-cta {
+    color: rgba(255,255,255,0.7);
+  }
+  .why-col:hover .why-col-cta::after { transform: translateX(4px); }
+
+  /* Optional background image per card */
+  .why-col-bg {
+    position: absolute; inset: 0; opacity: 0;
+    background-size: cover; background-position: center;
+    transition: opacity 0.45s;
+  }
+  .why-col:hover .why-col-bg,
+  .why-col.active .why-col-bg { opacity: 0.1; }
+  .why-col-content { position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%; }
+
+  /* ── CLIENTS ── */
+  #clients { background: #fff; padding-bottom: 5rem; }
+  .clients-header-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+    align-items: end; margin-bottom: 3.5rem;
+  }
+  .clients-intro-note {
+    font-size: 1rem; line-height: 1.85; color: var(--text-mid);
+    padding-top: 1.5rem; border-top: 1px solid var(--border);
+    font-style: italic;
+  }
+
+  /* Compact two-column org grid */
+  .org-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+    margin-bottom: 3.5rem;
+  }
+  .org-cell {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    transition: background 0.22s;
+    cursor: default;
+    position: relative;
+  }
+  .org-cell:nth-child(2n) { border-right: none; }
+  .org-cell:nth-last-child(-n+2) { border-bottom: none; }
+  .org-cell:hover { background: var(--cream); }
+  .org-cell-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-weight: 600; color: var(--blue);
+    margin-bottom: 0.3rem; transition: color 0.22s;
+  }
+  .org-cell:hover .org-cell-name { color: var(--red); }
+  .org-cell-desc {
+    font-size: 0.78rem; color: var(--text-light); line-height: 1.5; font-style: italic;
+    transition: color 0.22s;
+  }
+  .org-cell:hover .org-cell-desc { color: var(--text-mid); }
+  .org-cell::before {
+    content: '';
+    position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
+    background: var(--red);
+    transform: scaleY(0); transform-origin: center;
+    transition: transform 0.22s;
+  }
+  .org-cell:hover::before { transform: scaleY(1); }
+
+  /* Logo wall */
+  .logo-wall-section { margin-top: 0; }
+  .logo-wall-label {
+    font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-light); margin-bottom: 1.5rem; font-weight: 700;
+  }
+  .logo-wall {
+    display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;
+  }
+  .logo-item {
+    flex: 0 0 auto;
+    min-width: 140px; max-width: 200px;
+    height: 72px;
+    background: var(--warm-gray); border-radius: 8px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    padding: 0.75rem 1.25rem;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    overflow: hidden;
+  }
+  .logo-item:hover { background: var(--blue-light); border-color: rgba(0,72,116,0.2); transform: translateY(-2px); }
+  .logo-item img {
+    max-width: 100%; max-height: 100%;
+    object-fit: contain; filter: grayscale(100%); opacity: 0.6;
+    transition: filter 0.2s, opacity 0.2s;
+  }
+  .logo-item:hover img { filter: grayscale(0%); opacity: 1; }
+  .logo-item-text {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--text-light);
+    text-align: center; line-height: 1.3;
+  }
+  .logo-item:hover .logo-item-text { color: var(--blue); }
+
+  /* ── GALLERY ── */
+  #gallery { background: #fff; overflow: hidden; }
+  .gallery-track-wrap { overflow: hidden; position: relative; margin-top: 3rem; }
+  .gallery-track-wrap::before,
+  .gallery-track-wrap::after {
+    content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2;
+  }
+  .gallery-track-wrap::before { left: 0; background: linear-gradient(to right, #fff, transparent); }
+  .gallery-track-wrap::after { right: 0; background: linear-gradient(to left, #fff, transparent); }
+  .gallery-track {
+    display: flex; gap: 1.25rem;
+    animation: slide 28s linear infinite;
+    width: max-content;
+  }
+  .gallery-track:hover { animation-play-state: paused; }
+  @keyframes slide {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .gallery-item {
+    width: 280px; height: 180px; border-radius: 10px;
+    background: var(--warm-gray);
+    overflow: hidden; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--text-mid);
+  }
+  .gallery-item.g1 { background: linear-gradient(135deg, #003459, #004874); color: rgba(255,255,255,0.7); }
+  .gallery-item.g2 { background: linear-gradient(135deg, #8b0000, #c51a1b); color: rgba(255,255,255,0.7); }
+  .gallery-item.g3 { background: linear-gradient(135deg, #1a3a1a, #2d5a2d); color: rgba(255,255,255,0.7); }
+  .gallery-item.g4 { background: var(--warm-gray); }
+  .gallery-item.g5 { background: linear-gradient(135deg, #1a1a3a, #2d2d6b); color: rgba(255,255,255,0.7); }
+  .gallery-item.g6 { background: linear-gradient(135deg, #3a1a00, #6b3300); color: rgba(255,255,255,0.7); }
+  .gallery-item.g7 { background: linear-gradient(135deg, #1a3040, #004874); color: rgba(255,255,255,0.7); }
+  .gallery-item.g8 { background: linear-gradient(135deg, #3a0000, var(--red)); color: rgba(255,255,255,0.7); }
+  .gallery-caption {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 1.5rem; text-align: center; gap: 6px;
+  }
+  .gallery-caption-icon { display: none; }
+  .gallery-caption-title { font-family: 'Lato', sans-serif; font-size: 0.875rem; font-weight: 700; }
+  .gallery-caption-sub { font-family: 'Lato', sans-serif; font-size: 0.7rem; opacity: 0.7; }
+
+  /* ── BLOG ── */
+  #blog { background: var(--cream); }
+
+  /* CMS NOTE: Edit articles in your CMS under "Insights". The featured article is the first entry. */
+  .blog-editorial {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1.5rem;
+  }
+  /* Featured: large left card spanning 2 rows */
+  .blog-featured {
+    grid-column: 1; grid-row: 1 / 3;
+    text-decoration: none; color: inherit;
+    display: flex; flex-direction: column;
+    background: #fff; border-radius: 10px;
+    border: 1px solid var(--border); overflow: hidden;
+    transition: box-shadow 0.25s, transform 0.2s;
+  }
+  .blog-featured:hover { box-shadow: 0 16px 48px rgba(0,0,0,0.1); transform: translateY(-2px); }
+  .blog-featured .blog-thumb {
+    height: 260px; position: relative; overflow: hidden; flex-shrink: 0;
+  }
+  .blog-featured .blog-thumb img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .blog-featured:hover .blog-thumb img { transform: scale(1.04); }
+  .blog-featured .blog-thumb-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #003459, #004874);
+  }
+  .blog-featured .blog-body {
+    padding: 2rem; flex: 1; display: flex; flex-direction: column;
+  }
+  .blog-featured-label {
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 0.5rem;
+  }
+  .blog-featured .blog-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.45rem; font-weight: 700; line-height: 1.3;
+    color: var(--blue); margin-bottom: 0.875rem;
+  }
+  .blog-featured .blog-excerpt {
+    font-size: 0.875rem; line-height: 1.8; color: var(--text-mid); flex: 1;
+  }
+  .blog-featured .blog-meta { font-size: 0.75rem; color: var(--text-light); margin-bottom: 0.75rem; }
+  .blog-featured .blog-read-more {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.8125rem; font-weight: 700; color: var(--red);
+    margin-top: 1.25rem; text-decoration: none; letter-spacing: 0.02em;
+  }
+  .blog-featured .blog-read-more::after { content: '→'; transition: transform 0.2s; }
+  .blog-featured:hover .blog-read-more::after { transform: translateX(4px); }
+
+  /* Secondary: compact horizontal cards on the right */
+  .blog-secondary {
+    grid-column: 2;
+    text-decoration: none; color: inherit;
+    display: flex; align-items: stretch;
+    background: #fff; border-radius: 10px;
+    border: 1px solid var(--border); overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .blog-secondary:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-2px); }
+  .blog-secondary .blog-thumb {
+    width: 140px; min-width: 140px; position: relative; overflow: hidden; flex-shrink: 0;
+  }
+  .blog-secondary .blog-thumb-bg {
+    position: absolute; inset: 0;
+  }
+  .blog-secondary .blog-thumb img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .blog-secondary .blog-body { padding: 1.25rem 1.5rem; display: flex; flex-direction: column; }
+  .blog-secondary .blog-tag {
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 0.375rem;
+  }
+  .blog-secondary .blog-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; font-weight: 700; line-height: 1.35;
+    color: var(--blue); margin-bottom: 0.375rem; flex: 1;
+  }
+  .blog-secondary .blog-meta { font-size: 0.7rem; color: var(--text-light); margin-top: auto; padding-top: 0.5rem; }
+  .blog-secondary .blog-read-more {
+    font-size: 0.75rem; font-weight: 700; color: var(--red);
+    text-decoration: none; margin-top: 0.625rem; display: inline-block;
+  }
+  .blog-secondary:hover .blog-read-more { text-decoration: underline; }
+
+  /* Thumb colour variants */
+  .bt1 { background: linear-gradient(135deg, #003459, #004874) !important; }
+  .bt2 { background: linear-gradient(135deg, #8b0000, var(--red)) !important; }
+  .bt3 { background: linear-gradient(135deg, #1a3a00, #2d6b00) !important; }
+  .blog-thumb-tag {
+    position: absolute; bottom: 10px; left: 10px;
+    background: rgba(0,0,0,0.5); color: rgba(255,255,255,0.9);
+    font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+    padding: 0.25rem 0.625rem; border-radius: 100px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* ── MISSION ── */
+  #mission {
+    background: var(--red);
+    color: #fff; text-align: center;
+  }
+  #mission .section-title { color: #fff; font-size: clamp(1.6rem, 3vw, 2.2rem); max-width: 700px; margin: 0 auto; }
+  .mission-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+    font-style: italic; line-height: 1.7;
+    color: rgba(255,255,255,0.9);
+    max-width: 750px; margin: 2rem auto 0;
+  }
+  .mission-vision {
+    margin-top: 3rem;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px; padding: 2rem;
+    max-width: 600px; margin: 2rem auto 0;
+  }
+  .mission-vision-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.65; margin-bottom: 0.5rem; }
+  .mission-vision-text { font-size: 1rem; line-height: 1.7; opacity: 0.9; }
+
+  /* ── CONTACT ── */
+  #contact { background: #fff; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: start; }
+  .contact-info-item { display: flex; gap: 1rem; margin-bottom: 1.75rem; align-items: flex-start; }
+  .contact-icon {
+    width: 42px; height: 42px; min-width: 42px; border-radius: 8px;
+    background: var(--blue-light); display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+  .contact-info-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-light); }
+  .contact-info-value { font-size: 0.9375rem; font-weight: 500; color: var(--text-dark); margin-top: 2px; }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-field { display: flex; flex-direction: column; gap: 0.375rem; }
+  .form-field label { font-size: 0.8125rem; font-weight: 500; color: var(--text-mid); }
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    border: 1.5px solid #e0ddd7;
+    border-radius: 6px; padding: 0.75rem 1rem;
+    font-family: 'Lato', sans-serif; font-size: 0.9rem;
+    color: var(--text-dark); background: #fff;
+    outline: none; transition: border-color 0.2s;
+    resize: vertical;
+  }
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus { border-color: var(--blue); }
+  .form-submit {
+    background: var(--blue); color: #fff;
+    border: none; border-radius: 6px; padding: 0.875rem 2rem;
+    font-family: 'Lato', sans-serif; font-size: 0.9375rem; font-weight: 700;
+    cursor: pointer; transition: background 0.2s, transform 0.15s;
+    align-self: flex-start;
+  }
+  .form-submit:hover { background: var(--blue-dark); transform: translateY(-1px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0d1e2e; color: rgba(255,255,255,0.7);
+    padding: 4rem 2rem 2rem;
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-top {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem; margin-bottom: 3rem;
+  }
+  .footer-brand .footer-tagline { font-size: 0.85rem; line-height: 1.7; margin-top: 1rem; color: rgba(255,255,255,0.5); max-width: 300px; }
+  .footer-col-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); margin-bottom: 1.25rem; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+  .footer-links a { text-decoration: none; color: rgba(255,255,255,0.6); font-size: 0.875rem; transition: color 0.2s; }
+  .footer-links a:hover { color: #fff; }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08); padding-top: 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.8125rem;
+  }
+  .footer-bottom a { color: rgba(255,255,255,0.4); text-decoration: none; }
+  .footer-logo-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-weight: 700; color: #fff;
+    margin-top: 0.5rem;
+  }
+  .footer-logo-name span { color: #f4a0a0; }
+
+  /* ── SECTION BACKGROUND IMAGE SUPPORT ── */
+  /* CMS: Add data-bg="assets/your-image.jpg" to any <section> to set a background image */
+  /* Sections that support this: #about, #services, #mission, #contact, #gallery */
+  [data-bg] {
+    position: relative;
+  }
+  [data-bg]::before {
+    content: '';
+    position: absolute; inset: 0; z-index: 0;
+    background-image: var(--section-bg);
+    background-size: cover; background-position: center;
+    opacity: var(--section-bg-opacity, 0.08);
+  }
+  [data-bg] > * { position: relative; z-index: 1; }
+
+  /* Mission section bg tint override — image shows through red */
+  #mission[data-bg]::before { opacity: 0.15; mix-blend-mode: multiply; }
+
+  /* ── BLOG RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .blog-editorial { grid-template-columns: 1fr; }
+    .blog-featured { grid-column: 1; grid-row: auto; }
+    .blog-secondary { flex-direction: row; }
+  }
+  @media (max-width: 600px) {
+    .blog-secondary { flex-direction: column; }
+    .blog-secondary .blog-thumb { width: 100%; min-width: unset; height: 140px; }
+    .why-strip { grid-template-columns: 1fr 1fr; }
+    .org-grid { grid-template-columns: 1fr; }
+    .org-cell:nth-child(2n) { border-right: 1px solid var(--border); }
+    .org-cell:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
+    .org-cell:last-child { border-bottom: none; }
+    .clients-header-row { grid-template-columns: 1fr; gap: 2rem; }
+  }
+  .toast {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+    background: var(--blue); color: #fff;
+    padding: 1rem 1.5rem; border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    font-size: 0.9rem; font-weight: 500;
+    transform: translateY(100px); opacity: 0; transition: all 0.3s;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* ── ANIMATIONS ── */
+  .fade-in {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .why-strip { grid-template-columns: 1fr 1fr; }
+    .why-col:nth-child(2) { border-right: none; }
+    .why-col:nth-child(3) { border-top: 1px solid var(--border); }
+    .why-col:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
+  }
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-right { display: none; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .clients-header-row { grid-template-columns: 1fr; gap: 2rem; }
+    .org-grid { grid-template-columns: 1fr; }
+    .blog-editorial { grid-template-columns: 1fr; }
+    .blog-featured { grid-column: 1; grid-row: auto; }
+    .blog-secondary { flex-direction: row; }
+    .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+  @media (max-width: 600px) {
+    section { padding: 4rem 1.25rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .why-strip { grid-template-columns: 1fr; }
+    .why-col { border-right: none !important; border-top: 1px solid var(--border); }
+    .why-col:first-child { border-top: none; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-stats { grid-template-columns: repeat(3, 1fr); }
+    .footer-top { grid-template-columns: 1fr; }
+    .logo-item { min-width: 120px; }
+    .blog-secondary { flex-direction: column; }
+    .blog-secondary .blog-thumb { width: 100%; min-width: unset; height: 120px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <svg class="nav-logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="20" r="14" stroke="#c51a1b" stroke-width="5" stroke-linecap="round" stroke-dasharray="70 18"/>
+        <circle cx="18" cy="20" r="6" fill="#c51a1b" opacity="0.15"/>
+        <circle cx="18" cy="20" r="1.5" fill="#c51a1b"/>
+        <path d="M20 14 q4 3 4 6 q0 3-4 6" stroke="#c51a1b" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M22 12 q6 4 6 8 q0 4-6 8" stroke="#c51a1b" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.6"/>
+        <text x="27" y="32" font-family="serif" font-size="18" font-weight="900" fill="#004874">A</text>
+      </svg>
+      <div class="nav-logo-text"><span>C</span>ommunication<br><span>A</span>dvisory</div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#clients">Clients</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#blog">Insights</a></li>
+      <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#services" onclick="closeMenu()">Services</a>
+  <a href="#clients" onclick="closeMenu()">Clients</a>
+  <a href="#gallery" onclick="closeMenu()">Gallery</a>
+  <a href="#blog" onclick="closeMenu()">Insights</a>
+  <a href="#contact" onclick="closeMenu()">Get in Touch</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-accent"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <h1>Turning <em>Evidence</em> into<br>Impactful Stories</h1>
+      <p class="hero-sub">We work at the place where business strategy meets public trust — helping corporate leaders, institutions, and policymakers communicate with the precision, confidence, and credibility that the moment demands.</p>
+      <div class="hero-actions">
+        <a href="#services" class="btn-primary">Explore Our Services</a>
+        <a href="#contact" class="btn-outline">Talk to Us</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">5+</div>
+          <div class="hero-stat-label">Service Areas</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">BD</div>
+          <div class="hero-stat-label">Local Experts</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">100%</div>
+          <div class="hero-stat-label">Independent</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="practice-panel">
+        <div class="practice-panel-label">What We Do</div>
+        <div class="practice-item active" onclick="setPractice(this)">
+          <div class="practice-item-bar"></div>
+          <div class="practice-item-inner">
+            <span class="practice-item-num">01</span>
+            <div class="practice-item-title">Strategic Communications Advisory</div>
+            <div class="practice-item-hook">We build the five-year communication architecture — not just the next press release.</div>
+          </div>
+          <div class="practice-item-arrow">→</div>
+        </div>
+        <div class="practice-item" onclick="setPractice(this)">
+          <div class="practice-item-bar"></div>
+          <div class="practice-item-inner">
+            <span class="practice-item-num">02</span>
+            <div class="practice-item-title">Reputation & Crisis Management</div>
+            <div class="practice-item-hook">Crises don't announce themselves. We make sure you're ready when they arrive.</div>
+          </div>
+          <div class="practice-item-arrow">→</div>
+        </div>
+        <div class="practice-item" onclick="setPractice(this)">
+          <div class="practice-item-bar"></div>
+          <div class="practice-item-inner">
+            <span class="practice-item-num">03</span>
+            <div class="practice-item-title">Public Affairs & Policy Communication</div>
+            <div class="practice-item-hook">Your position only matters if it's heard — and trusted — by the right people.</div>
+          </div>
+          <div class="practice-item-arrow">→</div>
+        </div>
+        <div class="practice-item" onclick="setPractice(this)">
+          <div class="practice-item-bar"></div>
+          <div class="practice-item-inner">
+            <span class="practice-item-num">04</span>
+            <div class="practice-item-title">Corporate Positioning & Leadership Branding</div>
+            <div class="practice-item-hook">Institutions are only as credible as the leader who represents them.</div>
+          </div>
+          <div class="practice-item-arrow">→</div>
+        </div>
+        <div class="practice-item" onclick="setPractice(this)">
+          <div class="practice-item-bar"></div>
+          <div class="practice-item-inner">
+            <span class="practice-item-num">05</span>
+            <div class="practice-item-title">Digital & Media Strategy</div>
+            <div class="practice-item-hook">Digital Bangladesh is now. Audiences are fragmented. Misinformation is fast.</div>
+          </div>
+          <div class="practice-item-arrow">→</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="fade-in">
+        <div class="section-label">The Problem</div>
+        <h2 class="section-title">Most Organizations Have a Clarity Problem</h2>
+        <div class="divider"></div>
+        <div style="margin-top:2rem;">
+          <blockquote class="about-quote">"A well-told truth, grounded in evidence, is the most powerful strategic asset any organization can hold."</blockquote>
+          <div class="about-body">
+            <p>They have built real things, grown revenues, created jobs, navigated impossible markets, and served communities. But when it comes time to tell that story — to a regulator, investor, journalist, or skeptical public — the words fail them.</p>
+            <p>In today's Bangladesh, social media spreads information very quickly. International audiences are observing more closely. If someone communicates badly or handles a situation poorly, the negative impact can become serious very quickly.</p>
+            <p>We are not a PR agency. We do not write press releases and disappear. We are the advisors you call when the stakes are real.</p>
+          </div>
+        </div>
+      </div>
+      <div class="fade-in">
+        <div class="about-visual">
+          <div class="about-visual-title">What We Stand For</div>
+          <div style="display:flex;flex-direction:column;gap:1.5rem;margin-top:0.5rem;">
+            <div style="border-left:3px solid var(--red);padding-left:1.25rem;">
+              <div class="about-pillar-label">Approach</div>
+              <div class="about-pillar-value">Evidence-led. Strategy-first.</div>
+            </div>
+            <div style="border-left:3px solid rgba(255,255,255,0.15);padding-left:1.25rem;">
+              <div class="about-pillar-label">Promise</div>
+              <div class="about-pillar-value">Discretion. Integrity. Long-term counsel.</div>
+            </div>
+            <div style="border-left:3px solid rgba(255,255,255,0.15);padding-left:1.25rem;">
+              <div class="about-pillar-label">Focus</div>
+              <div class="about-pillar-value">Trust built over time — not visibility chased overnight.</div>
+            </div>
+          </div>
+          <p style="margin-top:2rem; font-size:0.8125rem; color:rgba(255,255,255,0.45); line-height:1.8; border-top:1px solid rgba(255,255,255,0.08); padding-top:1.5rem;">We are not a PR agency. We do not write press releases and disappear. We are the advisors you call when the stakes are real.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-label">What We Do</div>
+      <h2 class="section-title">Five Practice Areas,<br>One Strategic Direction</h2>
+      <div class="divider"></div>
+      <p class="section-subtitle">We build from the opposite direction — starting with where your organization needs to be, then designing the communication architecture to get you there.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card fade-in">
+        <div class="service-num">01</div>
+        <div class="service-title">Strategic Communications Advisory</div>
+        <div class="service-body">We start with where your organization needs to be in five years and build the communication architecture to get you there. Stakeholder mapping. Narrative frameworks. Positioning that survives pressure. Long-term counsel for leadership teams who understand that communication is a discipline.</div>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-num">02</div>
+        <div class="service-title">Reputation & Crisis Management</div>
+        <div class="service-body">Crises do not announce themselves. Regulatory inquiries, media investigations, labor disputes, governance failures — we help organizations prepare before the crisis, respond during it, and rebuild after it. We stabilize stakeholder confidence when confidence is most fragile.</div>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-num">03</div>
+        <div class="service-title">Public Affairs & Policy Communication</div>
+        <div class="service-body">Bangladesh's regulatory environment is complex and deeply relationship-dependent. Whether engaging with government ministries, navigating compliance frameworks, or building credibility with international development partners — the way you communicate your position matters as much as the position itself.</div>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-num">04</div>
+        <div class="service-title">Corporate Positioning & Leadership Branding</div>
+        <div class="service-body">Institutions are often only as credible as the leader who represents them. We help executives define and own their narrative — building visible, substantive thought leadership that commands respect in boardrooms, the media, and policy circles.</div>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-num">05</div>
+        <div class="service-title">Digital & Media Strategy</div>
+        <div class="service-body">Digital Bangladesh is not the future — it is the present. Audiences are fragmented. Misinformation moves fast. We design integrated media and digital engagement strategies that cut through the noise, reach the right people, and build sustained credibility.</div>
+      </div>
+      <div class="service-card fade-in" style="background:var(--blue);border-color:var(--blue);cursor:pointer;" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})">
+        <div class="service-num" style="color:rgba(255,255,255,0.2);">→</div>
+        <div class="service-title" style="color:#fff;">Start a Conversation</div>
+        <div class="service-body" style="color:rgba(255,255,255,0.65);">Every engagement begins with understanding your specific context. Reach out to discuss how we can help your organization communicate with the credibility it deserves.</div>
+        <div style="margin-top:1.5rem;display:inline-block;background:var(--red);color:#fff;padding:0.625rem 1.25rem;border-radius:4px;font-size:0.8125rem;font-weight:600;">Get in Touch →</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY DIFFERENT -->
+<section id="why">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-label">Why We Are Different</div>
+      <h2 class="section-title">What Sets Us Apart</h2>
+      <div class="divider"></div>
+      <p class="section-subtitle">Built for Bangladesh. Strengthened by international best practice. Uncompromising on evidence.</p>
+    </div>
+    <div class="why-strip fade-in">
+
+      <div class="why-col" onclick="toggleWhy(this)">
+        <div class="why-col-bg" style="background-image:url('assets/why-evidence.jpg');"></div>
+        <div class="why-col-content">
+          <div class="why-col-num">01</div>
+          <div class="why-col-line"></div>
+          <div class="why-col-title">We Lead with Evidence</div>
+          <div class="why-col-teaser">Research before counsel. Truth before narrative.</div>
+          <div class="why-col-full">Everything we do is rooted in research — audience insight, media analysis, stakeholder intelligence, and an honest assessment of where your organization actually stands. We do not start with spin. We start with truth, and we build the most compelling version of it.</div>
+          <div class="why-col-cta">Read more</div>
+        </div>
+      </div>
+
+      <div class="why-col" onclick="toggleWhy(this)">
+        <div class="why-col-bg" style="background-image:url('assets/why-strategy.jpg');"></div>
+        <div class="why-col-content">
+          <div class="why-col-num">02</div>
+          <div class="why-col-line"></div>
+          <div class="why-col-title">We Think Like Strategists</div>
+          <div class="why-col-teaser">Aligned with your objectives. Not our convenience.</div>
+          <div class="why-col-full">Our work is aligned with your business objectives, governance obligations, and long-term institutional goals. We ask uncomfortable questions. We push back when needed. And we give you counsel that serves your organization's interests — not our own.</div>
+          <div class="why-col-cta">Read more</div>
+        </div>
+      </div>
+
+      <div class="why-col" onclick="toggleWhy(this)">
+        <div class="why-col-bg" style="background-image:url('assets/why-market.jpg');"></div>
+        <div class="why-col-content">
+          <div class="why-col-num">03</div>
+          <div class="why-col-line"></div>
+          <div class="why-col-title">We Know This Market</div>
+          <div class="why-col-teaser">Bangladesh is not a generic emerging market.</div>
+          <div class="why-col-full">Bangladesh has its own political texture, media culture, stakeholder dynamics, and pace of transformation. Global frameworks applied without adaptation fail here. Our work is built for this environment — shaped by deep local knowledge and strengthened by international best practices.</div>
+          <div class="why-col-cta">Read more</div>
+        </div>
+      </div>
+
+      <div class="why-col" onclick="toggleWhy(this)">
+        <div class="why-col-bg" style="background-image:url('assets/why-discretion.jpg');"></div>
+        <div class="why-col-content">
+          <div class="why-col-num">04</div>
+          <div class="why-col-line"></div>
+          <div class="why-col-title">We Protect Discretion</div>
+          <div class="why-col-teaser">The most important conversations happen off the record.</div>
+          <div class="why-col-full">Our clients trust us with information that cannot leave the room, and we take that responsibility seriously. We do not trade on client names, manufacture visibility for ourselves, or mistake our own profile for yours.</div>
+          <div class="why-col-cta">Read more</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section id="clients">
+  <div class="container">
+
+    <div class="clients-header-row fade-in">
+      <div>
+        <div class="section-label">Who We Work With</div>
+        <h2 class="section-title">The Organizations<br>We Work With</h2>
+        <div class="divider"></div>
+      </div>
+      <p class="clients-intro-note">
+        We partner with organizations at inflection points — moments when the communication stakes are highest, and the cost of getting it wrong is most severe.
+      </p>
+    </div>
+
+    <div class="org-grid fade-in">
+      <div class="org-cell">
+        <div class="org-cell-name">NGOs &amp; Social Enterprise</div>
+        <div class="org-cell-desc">Storytelling that moves policy, not just people</div>
+      </div>
+      <div class="org-cell">
+        <div class="org-cell-name">Corporate Institutions</div>
+        <div class="org-cell-desc">Growth, governance transitions &amp; reputational pressure</div>
+      </div>
+      <div class="org-cell">
+        <div class="org-cell-name">Family Businesses</div>
+        <div class="org-cell-desc">Professionalising for the next generation</div>
+      </div>
+      <div class="org-cell">
+        <div class="org-cell-name">Multinational Companies</div>
+        <div class="org-cell-desc">Entering or expanding in the Bangladesh market</div>
+      </div>
+      <div class="org-cell">
+        <div class="org-cell-name">Public Sector Institutions</div>
+        <div class="org-cell-desc">Credibility with citizens &amp; international partners</div>
+      </div>
+      <div class="org-cell">
+        <div class="org-cell-name">Leadership Teams</div>
+        <div class="org-cell-desc">Profile outgrown their communication infrastructure</div>
+      </div>
+      <div class="org-cell" style="border-right:none;">
+        <div class="org-cell-name">Financial Institutions</div>
+        <div class="org-cell-desc">Regulatory complexity &amp; investor confidence</div>
+      </div>
+      <div class="org-cell" style="display:flex;align-items:center;background:var(--blue);cursor:pointer;" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})">
+        <div>
+          <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.5);margin-bottom:0.3rem;font-weight:700;">Ready to talk?</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:#fff;">Get in Touch →</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="logo-wall-section fade-in">
+      <div class="logo-wall-label">Organisations We Have Worked With</div>
+      <div class="logo-wall" id="logoWall">
+        <!-- To add a logo: <div class="logo-item"><img src="assets/logos/name.png" alt="Org Name"></div> -->
+        <!-- To use text placeholder: <div class="logo-item"><div class="logo-item-text">Org Name</div></div> -->
+        <div class="logo-item"><div class="logo-item-text">Your Organisation</div></div>
+        <div class="logo-item"><div class="logo-item-text">Partner Name</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="container">
+    <div class="section-header centered fade-in">
+      <div class="section-label">Gallery</div>
+      <h2 class="section-title">Our Work in Action</h2>
+      <div class="divider centered"></div>
+      <p class="section-subtitle">From boardroom briefings to media strategy workshops — a glimpse into how we work.</p>
+    </div>
+  </div>
+  <div class="gallery-track-wrap">
+    <div class="gallery-track" id="galleryTrack">
+      <div class="gallery-item g1">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Leadership Media Training</div>
+          <div class="gallery-caption-sub">Executive Briefing Sessions</div>
+        </div>
+      </div>
+      <div class="gallery-item g2">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Crisis Communications</div>
+          <div class="gallery-caption-sub">Real-time Response Advisory</div>
+        </div>
+      </div>
+      <div class="gallery-item g3">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Policy Advocacy</div>
+          <div class="gallery-caption-sub">Government Stakeholder Engagement</div>
+        </div>
+      </div>
+      <div class="gallery-item g4">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title" style="color:var(--text-mid)">Media Strategy</div>
+          <div class="gallery-caption-sub">Narrative Development</div>
+        </div>
+      </div>
+      <div class="gallery-item g5">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Digital Campaigns</div>
+          <div class="gallery-caption-sub">Integrated Media Engagement</div>
+        </div>
+      </div>
+      <div class="gallery-item g6">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Stakeholder Summits</div>
+          <div class="gallery-caption-sub">Multi-Sector Dialogue Facilitation</div>
+        </div>
+      </div>
+      <div class="gallery-item g7">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Reputation Audits</div>
+          <div class="gallery-caption-sub">Evidence-based Assessment</div>
+        </div>
+      </div>
+      <div class="gallery-item g8">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Thought Leadership</div>
+          <div class="gallery-caption-sub">Content &amp; Publishing Strategy</div>
+        </div>
+      </div>
+      <!-- Duplicate for seamless loop -->
+      <div class="gallery-item g1">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Leadership Media Training</div>
+          <div class="gallery-caption-sub">Executive Briefing Sessions</div>
+        </div>
+      </div>
+      <div class="gallery-item g2">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Crisis Communications</div>
+          <div class="gallery-caption-sub">Real-time Response Advisory</div>
+        </div>
+      </div>
+      <div class="gallery-item g3">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Policy Advocacy</div>
+          <div class="gallery-caption-sub">Government Stakeholder Engagement</div>
+        </div>
+      </div>
+      <div class="gallery-item g4">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title" style="color:var(--text-mid)">Media Strategy</div>
+          <div class="gallery-caption-sub">Narrative Development</div>
+        </div>
+      </div>
+      <div class="gallery-item g5">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Digital Campaigns</div>
+          <div class="gallery-caption-sub">Integrated Media Engagement</div>
+        </div>
+      </div>
+      <div class="gallery-item g6">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Stakeholder Summits</div>
+          <div class="gallery-caption-sub">Multi-Sector Dialogue Facilitation</div>
+        </div>
+      </div>
+      <div class="gallery-item g7">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Reputation Audits</div>
+          <div class="gallery-caption-sub">Evidence-based Assessment</div>
+        </div>
+      </div>
+      <div class="gallery-item g8">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Thought Leadership</div>
+          <div class="gallery-caption-sub">Content &amp; Publishing Strategy</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG / INSIGHTS -->
+<section id="blog">
+  <div class="container">
+    <div class="fade-in" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1.5rem;margin-bottom:3rem;">
+      <div>
+        <div class="section-label">Insights &amp; Ideas</div>
+        <h2 class="section-title">From the Desk of<br>Communication Advisory</h2>
+        <div class="divider"></div>
+      </div>
+      <a href="#" class="btn-primary" style="white-space:nowrap;align-self:flex-end;">View All Articles →</a>
+    </div>
+
+    <!-- CMS: Edit articles in your CMS. First entry = featured (large left). -->
+    <div class="blog-editorial fade-in">
+
+      <!-- FEATURED ARTICLE — large left column -->
+      <a href="#" class="blog-featured">
+        <div class="blog-thumb">
+          <!-- CMS: Replace src with your article image. If no image, the gradient bg shows. -->
+          <div class="blog-thumb-bg bt1"></div>
+          <!-- <img src="assets/blog/article-1.jpg" alt="Crisis Communications"> -->
+          <span class="blog-thumb-tag">Crisis Comms</span>
+        </div>
+        <div class="blog-body">
+          <div class="blog-featured-label">Featured</div>
+          <div class="blog-meta">May 2025 · 6 min read</div>
+          <div class="blog-title">When One News Cycle Can Fracture Decades of Institutional Credibility</div>
+          <div class="blog-excerpt">In Bangladesh's fast-moving media environment, organizations are increasingly vulnerable. Here is what the most resilient institutions do differently — and how communication strategy is the difference between surviving and defining the moment.</div>
+          <span class="blog-read-more">Read Article</span>
+        </div>
+      </a>
+
+      <!-- SECONDARY ARTICLE 1 — top right, horizontal -->
+      <a href="#" class="blog-secondary">
+        <div class="blog-thumb">
+          <div class="blog-thumb-bg bt2"></div>
+          <!-- <img src="assets/blog/article-2.jpg" alt="Reputation"> -->
+          <span class="blog-thumb-tag">Reputation</span>
+        </div>
+        <div class="blog-body">
+          <div class="blog-tag">Reputation</div>
+          <div class="blog-title">Bangladesh Is at an Inflection Point. Is Your Communications Strategy Ready?</div>
+          <div class="blog-meta">April 2025 · 8 min read</div>
+          <span class="blog-read-more">Read →</span>
+        </div>
+      </a>
+
+      <!-- SECONDARY ARTICLE 2 — bottom right, horizontal -->
+      <a href="#" class="blog-secondary">
+        <div class="blog-thumb">
+          <div class="blog-thumb-bg bt3"></div>
+          <!-- <img src="assets/blog/article-3.jpg" alt="Leadership"> -->
+          <span class="blog-thumb-tag">Leadership</span>
+        </div>
+        <div class="blog-body">
+          <div class="blog-tag">Leadership</div>
+          <div class="blog-title">Why the Leader's Voice Has Never Mattered More Than It Does Right Now</div>
+          <div class="blog-meta">March 2025 · 5 min read</div>
+          <span class="blog-read-more">Read →</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section id="mission">
+  <div class="container" style="text-align:center;">
+    <div class="section-label" style="color:rgba(255,255,255,0.6);">Our Purpose</div>
+    <h2 class="section-title" style="color:#fff;max-width:700px;margin:0 auto;">To transform communication from an operational afterthought into an instrument of strategic leadership</h2>
+    <p class="mission-quote">So that the organizations shaping Bangladesh's future can tell that story with the credibility it deserves.</p>
+    <div class="mission-vision">
+      <div class="mission-vision-label">Our Vision</div>
+      <div class="mission-vision-text">To become Bangladesh's most trusted independent strategic communications advisory — the firm that leaders call when the stakes are too high for anything less than the best counsel available.</div>
+    </div>
+    <div style="margin-top:3rem;">
+      <a href="#contact" class="btn-outline" style="border-color:rgba(255,255,255,0.5);">Start the Conversation →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="fade-in">
+        <div class="section-label">Get in Touch</div>
+        <h2 class="section-title">Let's Talk About What's at Stake</h2>
+        <div class="divider"></div>
+        <p style="font-size:0.9375rem;line-height:1.8;color:var(--text-mid);margin-top:1.5rem;">Every engagement begins with understanding your specific context. Tell us about your organization, your challenge, and what you need. All initial conversations are confidential.</p>
+        <div style="margin-top:2.5rem;">
+          <div class="contact-info-item">
+            <div class="contact-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#004874" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <div class="contact-info-label">Location</div>
+              <div class="contact-info-value">Dhaka, Bangladesh</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#004874" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div class="contact-info-label">Email</div>
+              <div class="contact-info-value">hello@communicationsadvisory.com</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#004874" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <div>
+              <div class="contact-info-label">Website</div>
+              <div class="contact-info-value">communicationsadvisory.com</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="fade-in">
+        <div style="background:var(--cream);border-radius:12px;padding:2.5rem;border:1px solid var(--border);">
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:var(--blue);margin-bottom:1.75rem;">Send Us a Message</h3>
+          <div class="contact-form" id="contactForm">
+            <div class="form-row">
+              <div class="form-field">
+                <label>First Name</label>
+                <input type="text" placeholder="Ahmed" id="fname">
+              </div>
+              <div class="form-field">
+                <label>Last Name</label>
+                <input type="text" placeholder="Rahman" id="lname">
+              </div>
+            </div>
+            <div class="form-field">
+              <label>Email Address</label>
+              <input type="email" placeholder="ahmed@organization.com" id="email">
+            </div>
+            <div class="form-field">
+              <label>Organization</label>
+              <input type="text" placeholder="Your Organization" id="org">
+            </div>
+            <div class="form-field">
+              <label>Area of Interest</label>
+              <select id="interest">
+                <option value="">Select a service area…</option>
+                <option>Strategic Communications Advisory</option>
+                <option>Reputation & Crisis Management</option>
+                <option>Public Affairs & Policy Communication</option>
+                <option>Corporate Positioning & Leadership Branding</option>
+                <option>Digital & Media Strategy</option>
+                <option>Other / Not sure yet</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Message</label>
+              <textarea rows="4" placeholder="Tell us about your organization and the challenge you're navigating…" id="message"></textarea>
+            </div>
+            <button class="form-submit" onclick="submitForm()">Send Message →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo-name"><span>C</span>ommunication <span>A</span>dvisory</div>
+        <div class="footer-tagline">Bangladesh's independent strategic communications and reputation firm. We help leaders communicate with the precision and credibility the moment demands.</div>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <ul class="footer-links">
+          <li><a href="#services">Strategic Communications</a></li>
+          <li><a href="#services">Crisis Management</a></li>
+          <li><a href="#services">Public Affairs</a></li>
+          <li><a href="#services">Leadership Branding</a></li>
+          <li><a href="#services">Digital & Media</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#why">Why Us</a></li>
+          <li><a href="#clients">Clients</a></li>
+          <li><a href="#blog">Insights</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Connect</div>
+        <ul class="footer-links">
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">Twitter / X</a></li>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="mailto:hello@communicationsadvisory.com">Email Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Communication Advisory. All rights reserved.</span>
+      <div style="display:flex;gap:1.5rem;">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Disclaimer</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast">✓ Message sent! We'll be in touch shortly.</div>
+
+<script>
+  // Why strip — click to lock/unlock active state
+  function toggleWhy(el) {
+    const wasActive = el.classList.contains('active');
+    document.querySelectorAll('.why-col').forEach(c => c.classList.remove('active'));
+    if (!wasActive) el.classList.add('active');
+  }
+
+  // Section background image support via data-bg attribute
+  // Usage: <section data-bg="assets/hero-bg.jpg"> or add data-bg-opacity="0.12"
+  document.querySelectorAll('[data-bg]').forEach(el => {
+    const img = el.getAttribute('data-bg');
+    const opacity = el.getAttribute('data-bg-opacity') || '0.08';
+    if (img) {
+      el.style.setProperty('--section-bg', `url('${img}')`);
+      el.style.setProperty('--section-bg-opacity', opacity);
+    }
+  });
+
+  // Practice panel interaction + auto-cycle
+  function setPractice(el) {
+    document.querySelectorAll('.practice-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+  }
+  let practiceIdx = 0;
+  const practiceItems = document.querySelectorAll('.practice-item');
+  setInterval(() => {
+    practiceItems.forEach(i => i.classList.remove('active'));
+    practiceIdx = (practiceIdx + 1) % practiceItems.length;
+    practiceItems[practiceIdx].classList.add('active');
+  }, 2800);
+
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Contact form
+  function submitForm() {
+    const fname = document.getElementById('fname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+    if (!fname || !email || !message) {
+      alert('Please fill in at least your name, email, and message.');
+      return;
+    }
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+    document.getElementById('fname').value = '';
+    document.getElementById('lname').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('org').value = '';
+    document.getElementById('interest').value = '';
+    document.getElementById('message').value = '';
+  }
+
+  // Nav shadow on scroll
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.boxShadow = window.scrollY > 20 ? '0 2px 20px rgba(0,0,0,0.08)' : 'none';
+  });
+</script>
+</body>
+</html>

@@ -1562,57 +1562,88 @@
   // ══════════════════════════════════════════════════════
 
   function parseYml(text) {
-    // Handles all YAML formats Decap CMS produces:
-    // plain, single-quoted, double-quoted (inc. multi-line), block scalars (|)
+    // Robust parser: handles plain, quoted, multi-line quoted, block scalar
     const result = {};
     const lines = text.split('\n');
     let i = 0;
     while (i < lines.length) {
-      const keyMatch = lines[i].match(/^([\w_]+):\s*(.*)?$/);
-      if (!keyMatch) { i++; continue; }
-      const key = keyMatch[1];
-      let raw = (keyMatch[2] || '').trim();
+      const km = lines[i].match(/^([\w_]+):\s*(.*)?$/);
+      if (!km) { i++; continue; }
+      const key = km[1];
+      let raw = (km[2] || '').trim();
 
-      // Block scalar: | or |- — following indented lines are the value
+      // Block scalar | or |-
       if (raw === '|' || raw === '|-' || raw === '>') {
         const block = [];
         i++;
         while (i < lines.length && (lines[i].startsWith('  ') || lines[i].trim() === '')) {
-          block.push(lines[i].replace(/^  /, ''));
+          block.push(lines[i].replace(/^  /, '').trim());
           i++;
         }
-        result[key] = block.join(' ').trim();
+        result[key] = block.filter(Boolean).join(' ');
         continue;
       }
 
-      // Quoted string — collect until the closing quote is found
+      // Quoted value
       if (raw.startsWith('"') || raw.startsWith("'")) {
         const q = raw[0];
-        let collected = raw.slice(1);
-        // Check if closing quote already on this line
-        if (collected.endsWith(q)) {
-          result[key] = collected.slice(0, -1).trim();
+        let inner = raw.slice(1);
+        // Closing quote on same line
+        if (inner.endsWith(q)) {
+          result[key] = inner.slice(0, -1);
         } else {
-          // Multi-line: keep collecting until we hit the closing quote
+          // Multi-line: collect until closing quote found
           i++;
           while (i < lines.length) {
-            const next = lines[i].trim();
-            if (next.endsWith(q)) {
-              collected += ' ' + next.slice(0, -1);
+            const chunk = lines[i].trim();
+            if (chunk.endsWith(q)) {
+              inner += ' ' + chunk.slice(0, -1);
               break;
             }
-            collected += ' ' + next;
+            inner += ' ' + chunk;
             i++;
           }
-          result[key] = collected.trim();
+          result[key] = inner.trim();
         }
       } else {
-        // Plain unquoted value
         result[key] = raw;
       }
       i++;
     }
     return result;
+  }
+
+  // Direct single-key extractor — bypasses YAML parsing entirely
+  // Handles any format: plain, quoted single/multi-line, block scalar
+  function extractYmlKey(text, key) {
+    // Block scalar: key: | followed by indented lines
+    const blockRe = new RegExp('^' + key + ':\\s*[|>]-?\\s*\\n((?:  .+\\n?)+)', 'm');
+    const blockM = text.match(blockRe);
+    if (blockM) return blockM[1].replace(/^  /gm, '').replace(/\n/g, ' ').trim();
+
+    // Quoted multi-line: key: "line1\n  continuation"
+    const qStart = new RegExp('^' + key + ':\\s*(["\'])', 'm');
+    const qm = text.match(qStart);
+    if (qm) {
+      const q = qm[1];
+      const startIdx = text.indexOf(qm[0]) + qm[0].length;
+      let endIdx = startIdx;
+      let escaped = false;
+      while (endIdx < text.length) {
+        const ch = text[endIdx];
+        if (!escaped && ch === q) break;
+        escaped = (!escaped && ch === '\\');
+        endIdx++;
+      }
+      return text.slice(startIdx, endIdx).replace(/\s+/g, ' ').trim();
+    }
+
+    // Plain: key: value (single line)
+    const plainRe = new RegExp('^' + key + ':\\s*(.+)$', 'm');
+    const plainM = text.match(plainRe);
+    if (plainM) return plainM[1].trim();
+
+    return null;
   }
 
   // Parse a markdown frontmatter block
@@ -1741,24 +1772,22 @@
     try {
       const res = await fetch('/_data/hero.yml');
       if (!res.ok) return;
-      const d = parseYml(await res.text());
-      if (d.headline) {
-        const el = document.getElementById('heroHeadline');
-        if (el) el.innerHTML = d.headline;
-      }
-      if (d.subheading) {
-        const el = document.getElementById('heroSubheading');
-        if (el) el.textContent = d.subheading;
-      }
-      if (d.btn_primary) {
-        const el = document.getElementById('heroBtnPrimary');
-        if (el) el.textContent = d.btn_primary;
-      }
-      if (d.btn_secondary) {
-        const el = document.getElementById('heroBtnSecondary');
-        if (el) el.textContent = d.btn_secondary;
-      }
-    } catch(e) {}
+      const raw = await res.text();
+
+      // Use extractYmlKey for every field — handles ALL YAML formats
+      const headline   = extractYmlKey(raw, 'headline');
+      const subheading = extractYmlKey(raw, 'subheading');
+      const btnPrimary = extractYmlKey(raw, 'btn_primary');
+      const btnSecond  = extractYmlKey(raw, 'btn_secondary');
+
+      const setEl  = (id, val) => { if (!val) return; const e = document.getElementById(id); if (e) e.textContent = val; };
+      const setHtml = (id, val) => { if (!val) return; const e = document.getElementById(id); if (e) e.innerHTML = val; };
+
+      setHtml('heroHeadline',    headline);
+      setEl('heroSubheading',    subheading);
+      setEl('heroBtnPrimary',    btnPrimary);
+      setEl('heroBtnSecondary',  btnSecond);
+    } catch(e) { console.warn('loadHero error:', e); }
   }
 
   // Load settings.yml

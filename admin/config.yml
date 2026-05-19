@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: manoshisaha/communicationsadvisory-website
+  repo: manoshisaha/Communications_advisory
   branch: main
   base_url: https://communicationsadvisory.com
   auth_endpoint: api/auth

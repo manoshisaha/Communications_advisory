@@ -1,55 +1,57 @@
 backend:
   name: github
-  repo: YOUR_GITHUB_USERNAME/communicationsadvisory
+  repo: manoshisaha/communicationsadvisory-website
   branch: main
+  base_url: https://communicationsadvisory.com
+  auth_endpoint: /api/auth
 
 media_folder: assets/blog
 public_folder: /assets/blog
 
 collections:
+
+  # ── BLOG POSTS ──────────────────────────────────────
   - name: blog
     label: Blog Posts
     label_singular: Blog Post
     folder: _posts
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    preview_path: "#blog"
     fields:
       - { label: Title, name: title, widget: string }
-      - { label: Category, name: category, widget: string, hint: "e.g. Crisis Comms, Reputation, Leadership" }
+      - { label: Category, name: category, widget: string, hint: "e.g. Crisis Comms, Reputation, Leadership, Policy" }
       - { label: Date, name: date, widget: datetime }
-      - { label: Read Time, name: read_time, widget: string, hint: "e.g. 6 min read" }
-      - { label: Excerpt, name: excerpt, widget: text, hint: "Short summary shown on the homepage card" }
-      - { label: Body, name: body, widget: markdown }
-      - { label: Featured Image, name: image, widget: image, required: false, hint: "Upload article thumbnail image" }
-      - { label: Featured (show large on homepage), name: featured, widget: boolean, default: false }
+      - { label: Read Time, name: read_time, widget: string, default: "5 min read" }
+      - { label: Short Excerpt, name: excerpt, widget: text, hint: "2–3 sentences shown on homepage card" }
+      - { label: Full Article, name: body, widget: markdown }
+      - { label: Thumbnail Image, name: image, widget: image, required: false, hint: "Recommended: 1200x630px" }
+      - { label: Feature on Homepage (large card), name: featured, widget: boolean, default: false }
 
+  # ── SITE SETTINGS ───────────────────────────────────
   - name: settings
     label: Site Settings
     files:
-      - label: General
+
+      - label: General Info
         name: general
         file: _data/settings.yml
         fields:
-          - { label: Site Title, name: site_title, widget: string }
-          - { label: Tagline, name: tagline, widget: string }
-          - { label: Email, name: email, widget: string }
-          - { label: Phone, name: phone, widget: string }
-          - { label: Location, name: location, widget: string }
+          - { label: Email Address, name: email, widget: string }
+          - { label: Phone Number, name: phone, widget: string, required: false }
+          - { label: Office Location, name: location, widget: string }
           - { label: LinkedIn URL, name: linkedin, widget: string, required: false }
-          - { label: Twitter/X URL, name: twitter, widget: string, required: false }
+          - { label: Twitter / X URL, name: twitter, widget: string, required: false }
           - { label: Facebook URL, name: facebook, widget: string, required: false }
-          - { label: Formspree Endpoint, name: formspree_id, widget: string, hint: "Your Formspree form ID e.g. xabcdefg" }
+          - { label: Formspree Form ID, name: formspree_id, widget: string, hint: "The short ID from formspree.io e.g. xabcdefg" }
 
-      - label: Homepage Hero
+      - label: Homepage Hero Text
         name: hero
         file: _data/hero.yml
         fields:
-          - { label: Headline Line 1, name: headline1, widget: string }
-          - { label: Headline Line 2 (italic), name: headline2, widget: string }
-          - { label: Subheading, name: subheading, widget: text }
-          - { label: Primary Button Text, name: btn_primary, widget: string }
-          - { label: Secondary Button Text, name: btn_secondary, widget: string }
+          - { label: Main Headline, name: headline, widget: string }
+          - { label: Subheading Paragraph, name: subheading, widget: text }
+          - { label: Primary Button Label, name: btn_primary, widget: string, default: "Explore Our Services" }
+          - { label: Secondary Button Label, name: btn_secondary, widget: string, default: "Talk to Us" }
 
       - label: Partner Logos
         name: logos
@@ -58,7 +60,8 @@ collections:
           - label: Partners
             name: partners
             widget: list
+            summary: "{{fields.name}}"
             fields:
               - { label: Organisation Name, name: name, widget: string }
-              - { label: Logo Image, name: logo, widget: image, required: false }
+              - { label: Logo Image, name: logo, widget: image, required: false, hint: "PNG with transparent background preferred" }
               - { label: Website URL, name: url, widget: string, required: false }

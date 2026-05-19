@@ -3,13 +3,13 @@
 Thumbs.db
 desktop.ini
 
-# Editor files
+# Editor
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# Node (if ever added)
+# Node
 node_modules/
 
 # Logs

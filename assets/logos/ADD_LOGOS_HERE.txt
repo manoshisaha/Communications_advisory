@@ -1,0 +1,9 @@
+Add your partner logo PNG files here.
+
+Naming: lowercase-with-hyphens.png
+Example: brac.png, grameen-bank.png, dutch-bangla.png
+
+Recommended: transparent background PNG, at least 300px wide.
+
+Then in index.html inside <div class="logo-wall">:
+<div class="logo-item"><img src="assets/logos/brac.png" alt="BRAC"></div>

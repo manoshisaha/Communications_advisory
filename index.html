@@ -859,6 +859,11 @@
 <nav>
   <div class="nav-inner">
     <a href="#" class="nav-logo">
+      <!--
+        LOGO SETUP: Place your logo file at assets/CA_logo.png
+        Then uncomment the <img> line below and delete the <svg> block.
+      -->
+      <!-- <img src="assets/CA_logo.png" alt="Communication Advisory" style="height:44px;width:auto;"> -->
       <svg class="nav-logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="18" cy="20" r="14" stroke="#c51a1b" stroke-width="5" stroke-linecap="round" stroke-dasharray="70 18"/>
         <circle cx="18" cy="20" r="6" fill="#c51a1b" opacity="0.15"/>
@@ -1566,24 +1571,45 @@
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  // Contact form
-  function submitForm() {
+  // Contact form — connected to Formspree
+  // SETUP: Replace YOUR_FORMSPREE_ID below with your actual ID from formspree.io
+  async function submitForm() {
     const fname = document.getElementById('fname').value.trim();
+    const lname = document.getElementById('lname').value.trim();
     const email = document.getElementById('email').value.trim();
     const message = document.getElementById('message').value.trim();
     if (!fname || !email || !message) {
-      alert('Please fill in at least your name, email, and message.');
+      alert('Please fill in your name, email, and message.');
       return;
     }
-    const toast = document.getElementById('toast');
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 4000);
-    document.getElementById('fname').value = '';
-    document.getElementById('lname').value = '';
-    document.getElementById('email').value = '';
-    document.getElementById('org').value = '';
-    document.getElementById('interest').value = '';
-    document.getElementById('message').value = '';
+    const btn = document.querySelector('.form-submit');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+    try {
+      const res = await fetch('https://formspree.io/f/mlgvdygj', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          name: fname + ' ' + lname,
+          email: email,
+          organisation: document.getElementById('org').value,
+          interest: document.getElementById('interest').value,
+          message: message
+        })
+      });
+      if (res.ok) {
+        document.getElementById('toast').classList.add('show');
+        setTimeout(() => document.getElementById('toast').classList.remove('show'), 4000);
+        document.querySelectorAll('#contactForm input, #contactForm select, #contactForm textarea')
+          .forEach(el => el.value = '');
+      } else {
+        alert('Something went wrong. Please email us at commsadvisoryinfo@gmail.com');
+      }
+    } catch(e) {
+      alert('Network error. Please email us directly at commsadvisoryinfo@gmail.com');
+    }
+    btn.textContent = 'Send Message →';
+    btn.disabled = false;
   }
 
   // Nav shadow on scroll

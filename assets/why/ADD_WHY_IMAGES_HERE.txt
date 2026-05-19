@@ -1,0 +1,11 @@
+Add these four images for the "What Sets Us Apart" hover effect:
+
+  why-evidence.jpg   — Card 01: We Lead with Evidence
+  why-strategy.jpg   — Card 02: We Think Like Strategists
+  why-market.jpg     — Card 03: We Know This Market
+  why-discretion.jpg — Card 04: We Protect Discretion
+
+Recommended: dark/professional photography, minimum 800x600px.
+They appear at 10% opacity on hover — any subject works.
+
+Place the files directly in the assets/ folder (one level up from here).

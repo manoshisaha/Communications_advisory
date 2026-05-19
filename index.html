@@ -896,11 +896,11 @@
   <div class="hero-accent"></div>
   <div class="hero-inner">
     <div class="hero-left">
-      <h1>Turning <em>Evidence</em> into<br>Impactful Stories</h1>
-      <p class="hero-sub">We work at the place where business strategy meets public trust — helping corporate leaders, institutions, and policymakers communicate with the precision, confidence, and credibility that the moment demands.</p>
+      <h1 id="heroHeadline">Turning <em>Evidence</em> into<br>Impactful Stories</h1>
+      <p class="hero-sub" id="heroSubheading">We work at the place where business strategy meets public trust — helping corporate leaders, institutions, and policymakers communicate with the precision, confidence, and credibility that the moment demands.</p>
       <div class="hero-actions">
-        <a href="#services" class="btn-primary">Explore Our Services</a>
-        <a href="#contact" class="btn-outline">Talk to Us</a>
+        <a href="#services" class="btn-primary" id="heroBtnPrimary">Explore Our Services</a>
+        <a href="#contact" class="btn-outline" id="heroBtnSecondary">Talk to Us</a>
       </div>
       <div class="hero-stats">
         <div class="hero-stat">
@@ -1503,7 +1503,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Communication Advisory. All rights reserved.</span>
+      <span>© 2025 Communication Advisory. All rights reserved.</span>
       <div style="display:flex;gap:1.5rem;">
         <a href="#">Privacy Policy</a>
         <a href="#">Terms of Use</a>
@@ -1604,40 +1604,68 @@
     btn.disabled = false;
   }
 
-  // Load site settings from _data/settings.yml (updated via CMS)
+  // ── CMS DATA LOADER ──────────────────────────────────────────────
+  // Reads _data/hero.yml and _data/settings.yml from the server
+  // and applies values to the page live. Edited via /admin CMS.
+  function parseYml(text) {
+    const result = {};
+    text.split('\n').forEach(line => {
+      const match = line.match(/^(\w+):\s*["']?(.+?)["']?\s*$/);
+      if (match) result[match[1].trim()] = match[2].trim();
+    });
+    return result;
+  }
+
+  // Load hero.yml
+  fetch('/_data/hero.yml')
+    .then(r => r.text())
+    .then(text => {
+      const d = parseYml(text);
+      if (d.headline) {
+        const el = document.getElementById('heroHeadline');
+        if (el) el.innerHTML = d.headline;
+      }
+      if (d.subheading) {
+        const el = document.getElementById('heroSubheading');
+        if (el) el.textContent = d.subheading;
+      }
+      if (d.btn_primary) {
+        const el = document.getElementById('heroBtnPrimary');
+        if (el) el.textContent = d.btn_primary;
+      }
+      if (d.btn_secondary) {
+        const el = document.getElementById('heroBtnSecondary');
+        if (el) el.textContent = d.btn_secondary;
+      }
+    })
+    .catch(() => {});
+
+  // Load settings.yml
   fetch('/_data/settings.yml')
     .then(r => r.text())
     .then(text => {
-      const get = (key) => {
-        const match = text.match(new RegExp('^' + key + ':\\s*(.+)$', 'm'));
-        return match ? match[1].trim().replace(/^["']|["']$/g, '') : null;
-      };
-      const email = get('email');
-      const linkedin = get('linkedin');
-      const twitter = get('twitter');
-      const facebook = get('facebook');
-
-      if (email) {
-        const el = document.getElementById('contactEmail');
-        if (el) el.textContent = email;
+      const d = parseYml(text);
+      if (d.email) {
+        const ce = document.getElementById('contactEmail');
+        if (ce) ce.textContent = d.email;
         const fe = document.getElementById('footerEmail');
-        if (fe) { fe.href = 'mailto:' + email; fe.textContent = 'Email Us'; }
-        // also update form error messages
+        if (fe) fe.href = 'mailto:' + d.email;
       }
-      if (linkedin) {
+      if (d.linkedin && d.linkedin !== '""') {
         const el = document.getElementById('footerLinkedIn');
-        if (el && linkedin !== '""' && linkedin !== "''") el.href = linkedin;
+        if (el) el.href = d.linkedin;
       }
-      if (twitter) {
+      if (d.twitter && d.twitter !== '""') {
         const el = document.getElementById('footerTwitter');
-        if (el && twitter !== '""' && twitter !== "''") el.href = twitter;
+        if (el) el.href = d.twitter;
       }
-      if (facebook) {
+      if (d.facebook && d.facebook !== '""') {
         const el = document.getElementById('footerFacebook');
-        if (el && facebook !== '""' && facebook !== "''") el.href = facebook;
+        if (el) el.href = d.facebook;
       }
     })
-    .catch(() => {}); // silently fail — static defaults remain
+    .catch(() => {});
+  // ─────────────────────────────────────────────────────────────────
 
   // Nav shadow on scroll
   window.addEventListener('scroll', () => {

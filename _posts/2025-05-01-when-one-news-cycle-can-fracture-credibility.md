@@ -1,11 +1,14 @@
 ---
-title: "When One News Cycle Can Fracture Decades of Institutional Credibility"
-category: "Crisis Comms"
+title: When One News Cycle Can Fracture Decades of Institutional Credibility
+category: Crisis Comms
 date: 2025-05-01T00:00:00.000Z
-read_time: "6 min read"
+read_time: 6 min read
+excerpt: In Bangladesh's fast-moving media environment, organizations are
+  increasingly vulnerable. Here is what the most resilient institutions do
+  differently — and how communication strategy is the difference between
+  surviving and defining the moment.
+image: https://www.palletone.com/wp-content/uploads/2023/08/AdobeStock_582019345-scaled.jpeg
 featured: true
-excerpt: "In Bangladesh's fast-moving media environment, organizations are increasingly vulnerable. Here is what the most resilient institutions do differently — and how communication strategy is the difference between surviving and defining the moment."
-image: ""
 ---
 
 In Bangladesh's fast-moving media environment, organizations are increasingly vulnerable to rapid reputation damage. A single news cycle — one poorly handled press conference, one leaked document, one unanswered allegation — can fracture trust that took a decade to build.

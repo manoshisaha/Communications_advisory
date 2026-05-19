@@ -1,11 +1,13 @@
 ---
-title: "Why the Leader's Voice Has Never Mattered More Than It Does Right Now"
-category: "Leadership"
+title: Why the Leader's Voice Has Never Mattered More Than It Does Right Now ?
+category: Leadership
 date: 2025-03-01T00:00:00.000Z
-read_time: "5 min read"
-featured: false
-excerpt: "Institutions are often only as credible as the leader who represents them. Building thought leadership that commands genuine respect — not manufactured image — is the defining communication challenge of this moment."
+read_time: 5 min read
+excerpt: Institutions are often only as credible as the leader who represents
+  them. Building thought leadership that commands genuine respect — not
+  manufactured image — is the defining communication challenge of this moment.
 image: ""
+featured: false
 ---
 
 There is a quiet crisis in Bangladeshi corporate leadership. Organizations have grown. Governance structures have professionalised. But the communication infrastructure around those leaders — the way they are seen, heard, and trusted by the audiences that matter — has not kept pace.

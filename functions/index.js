@@ -28,10 +28,9 @@ export async function onRequest(context) {
       .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
-  // Extract a single scalar value from YAML text
+  // Extract a single scalar value from YAML
   function extractVal(text, key) {
     if (!text) return null;
-    // Block scalar
     const blockRe = new RegExp(`^${key}:\\s*[|>]-?\\s*$`, 'm');
     const blockM = text.match(blockRe);
     if (blockM) {
@@ -67,23 +66,31 @@ export async function onRequest(context) {
     return (eol > 0 ? rest.slice(0, eol) : rest).trim();
   }
 
-  // Parse a YAML list of objects (partners or gallery items)
+  // Parse a YAML list — handles Decap CMS "  - field: value" indented format
   function parseYamlList(text, listKey) {
     if (!text) return [];
     const items = [];
     const listIdx = text.indexOf(`${listKey}:`);
     if (listIdx < 0) return [];
     const listText = text.slice(listIdx);
-    const blocks = listText.split(/\n- /);
+
+    // Decap CMS writes list items as "  - " (2-space indent)
+    // Split on newline + 2 spaces + dash
+    const blocks = listText.split(/\n  - /);
+
     for (let i = 1; i < blocks.length; i++) {
-      const block = '  ' + blocks[i];
+      const block = blocks[i];
       const item = {};
       const fields = ['name', 'title', 'subtitle', 'image', 'logo', 'url'];
       fields.forEach(field => {
-        const m = block.match(new RegExp(`\\n?\\s*${field}:\\s*(.+)`));
+        // Match "field: value" with any indentation
+        const m = block.match(new RegExp(`(?:^|\\n)\\s*${field}:\\s*(.+)`));
         if (m) {
           const val = m[1].trim().replace(/^["']|["']$/g, '').trim();
-          if (val && val !== '""' && val !== "''") item[field] = val;
+          // Only store non-empty, non-placeholder values
+          if (val && val !== '""' && val !== "''" && val !== '') {
+            item[field] = val;
+          }
         }
       });
       if (Object.keys(item).length > 0) items.push(item);
@@ -91,10 +98,11 @@ export async function onRequest(context) {
     return items;
   }
 
-  // Build gallery HTML — items duplicated for seamless loop
+  // Build gallery HTML — items duplicated for seamless CSS scroll loop
   function buildGalleryItems(items) {
     if (!items.length) return null;
     const gradients = ['g1','g2','g3','g4','g5','g6','g7','g8'];
+
     const renderItem = (item, i) => {
       const cls = gradients[i % gradients.length];
       const imgHtml = item.image
@@ -108,8 +116,8 @@ export async function onRequest(context) {
         </div>
       </div>`;
     };
-    // Render items + duplicate for seamless CSS scroll loop
-    const rendered = items.map((item, i) => renderItem(item, i)).join('\n      ');
+
+    const rendered  = items.map((item, i) => renderItem(item, i)).join('\n      ');
     const duplicate = items.map((item, i) => renderItem(item, i)).join('\n      ');
     return rendered + '\n      <!-- Duplicate for seamless loop -->\n      ' + duplicate;
   }

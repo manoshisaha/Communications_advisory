@@ -1562,15 +1562,56 @@
   // ══════════════════════════════════════════════════════
 
   function parseYml(text) {
+    // Handles all YAML formats Decap CMS produces:
+    // plain, single-quoted, double-quoted (inc. multi-line), block scalars (|)
     const result = {};
     const lines = text.split('\n');
-    lines.forEach(line => {
-      const m = line.match(/^([\w_]+):\s*(.*)$/);
-      if (m) {
-        let val = m[2].trim().replace(/^["']|["']$/g, '');
-        result[m[1]] = val;
+    let i = 0;
+    while (i < lines.length) {
+      const keyMatch = lines[i].match(/^([\w_]+):\s*(.*)?$/);
+      if (!keyMatch) { i++; continue; }
+      const key = keyMatch[1];
+      let raw = (keyMatch[2] || '').trim();
+
+      // Block scalar: | or |- — following indented lines are the value
+      if (raw === '|' || raw === '|-' || raw === '>') {
+        const block = [];
+        i++;
+        while (i < lines.length && (lines[i].startsWith('  ') || lines[i].trim() === '')) {
+          block.push(lines[i].replace(/^  /, ''));
+          i++;
+        }
+        result[key] = block.join(' ').trim();
+        continue;
       }
-    });
+
+      // Quoted string — collect until the closing quote is found
+      if (raw.startsWith('"') || raw.startsWith("'")) {
+        const q = raw[0];
+        let collected = raw.slice(1);
+        // Check if closing quote already on this line
+        if (collected.endsWith(q)) {
+          result[key] = collected.slice(0, -1).trim();
+        } else {
+          // Multi-line: keep collecting until we hit the closing quote
+          i++;
+          while (i < lines.length) {
+            const next = lines[i].trim();
+            if (next.endsWith(q)) {
+              collected += ' ' + next.slice(0, -1);
+              break;
+            }
+            collected += ' ' + next;
+            i++;
+          }
+          result[key] = collected.trim();
+        }
+      } else {
+        // Plain unquoted value
+        result[key] = raw;
+      }
+      i++;
+    }
     return result;
   }
 

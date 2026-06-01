@@ -199,17 +199,27 @@
 
   async function loadPosts() {
     const loading = document.getElementById('blogLoading');
-    const knownPosts = [
-      '2025-05-01-when-one-news-cycle-can-fracture-credibility',
-      '2025-04-01-bangladesh-inflection-point',
-      '2025-03-01-leaders-voice-matters'
-    ];
-
-    let slugs = knownPosts;
+    // Dynamic API — auto-discovers all posts, no manual index.json needed
+    let slugs = [];
     try {
-      const idx = await fetch('/_posts/index.json');
-      if (idx.ok) slugs = await idx.json();
+      const apiRes = await fetch('/api/posts');
+      if (apiRes.ok) slugs = await apiRes.json();
     } catch(e) {}
+
+    if (!slugs.length) {
+      try {
+        const idx = await fetch('/_posts/index.json');
+        if (idx.ok) slugs = await idx.json();
+      } catch(e) {}
+    }
+
+    if (!slugs.length) {
+      slugs = [
+        '2025-05-01-when-one-news-cycle-can-fracture-credibility',
+        '2025-04-01-bangladesh-inflection-point',
+        '2025-03-01-leaders-voice-matters'
+      ];
+    }
 
     const posts = [];
     await Promise.all(slugs.map(async slug => {

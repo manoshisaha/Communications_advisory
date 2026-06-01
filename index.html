@@ -1196,7 +1196,103 @@
   </div>
   <div class="gallery-track-wrap">
     <div class="gallery-track" id="galleryTrack">
-      <!-- CF_GALLERY_PLACEHOLDER -->
+      <div class="gallery-item g1">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Leadership Media Training</div>
+          <div class="gallery-caption-sub">Executive Briefing Sessions</div>
+        </div>
+      </div>
+      <div class="gallery-item g2">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Crisis Communications</div>
+          <div class="gallery-caption-sub">Real-time Response Advisory</div>
+        </div>
+      </div>
+      <div class="gallery-item g3">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Policy Advocacy</div>
+          <div class="gallery-caption-sub">Government Stakeholder Engagement</div>
+        </div>
+      </div>
+      <div class="gallery-item g4">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title" style="color:var(--text-mid)">Media Strategy</div>
+          <div class="gallery-caption-sub">Narrative Development</div>
+        </div>
+      </div>
+      <div class="gallery-item g5">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Digital Campaigns</div>
+          <div class="gallery-caption-sub">Integrated Media Engagement</div>
+        </div>
+      </div>
+      <div class="gallery-item g6">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Stakeholder Summits</div>
+          <div class="gallery-caption-sub">Multi-Sector Dialogue Facilitation</div>
+        </div>
+      </div>
+      <div class="gallery-item g7">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Reputation Audits</div>
+          <div class="gallery-caption-sub">Evidence-based Assessment</div>
+        </div>
+      </div>
+      <div class="gallery-item g8">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Thought Leadership</div>
+          <div class="gallery-caption-sub">Content &amp; Publishing Strategy</div>
+        </div>
+      </div>
+      <!-- Duplicate for seamless loop -->
+      <div class="gallery-item g1">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Leadership Media Training</div>
+          <div class="gallery-caption-sub">Executive Briefing Sessions</div>
+        </div>
+      </div>
+      <div class="gallery-item g2">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Crisis Communications</div>
+          <div class="gallery-caption-sub">Real-time Response Advisory</div>
+        </div>
+      </div>
+      <div class="gallery-item g3">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Policy Advocacy</div>
+          <div class="gallery-caption-sub">Government Stakeholder Engagement</div>
+        </div>
+      </div>
+      <div class="gallery-item g4">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title" style="color:var(--text-mid)">Media Strategy</div>
+          <div class="gallery-caption-sub">Narrative Development</div>
+        </div>
+      </div>
+      <div class="gallery-item g5">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Digital Campaigns</div>
+          <div class="gallery-caption-sub">Integrated Media Engagement</div>
+        </div>
+      </div>
+      <div class="gallery-item g6">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Stakeholder Summits</div>
+          <div class="gallery-caption-sub">Multi-Sector Dialogue Facilitation</div>
+        </div>
+      </div>
+      <div class="gallery-item g7">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Reputation Audits</div>
+          <div class="gallery-caption-sub">Evidence-based Assessment</div>
+        </div>
+      </div>
+      <div class="gallery-item g8">
+        <div class="gallery-caption">
+          <div class="gallery-caption-title">Thought Leadership</div>
+          <div class="gallery-caption-sub">Content &amp; Publishing Strategy</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1564,21 +1660,29 @@
   // Fetch the post index (list of slugs) then fetch each post
   async function loadBlogPosts() {
     try {
-      // Try fetching the post index file first
+      // Use dynamic API endpoint — auto-discovers all posts from GitHub
+      // Falls back to static index.json, then to known posts
       let slugs = [];
       try {
-        const indexRes = await fetch('/_posts/index.json');
-        if (indexRes.ok) slugs = await indexRes.json();
+        const apiRes = await fetch('/api/posts');
+        if (apiRes.ok) slugs = await apiRes.json();
       } catch(e) {}
 
-      // Fallback: try known post filenames from _posts/
+      // Fallback: static index.json
       if (!slugs.length) {
-        const knownPosts = [
+        try {
+          const indexRes = await fetch('/_posts/index.json');
+          if (indexRes.ok) slugs = await indexRes.json();
+        } catch(e) {}
+      }
+
+      // Final fallback: hardcoded known posts
+      if (!slugs.length) {
+        slugs = [
           '2025-05-01-when-one-news-cycle-can-fracture-credibility',
           '2025-04-01-bangladesh-inflection-point',
           '2025-03-01-leaders-voice-matters'
         ];
-        slugs = knownPosts;
       }
 
       const posts = [];

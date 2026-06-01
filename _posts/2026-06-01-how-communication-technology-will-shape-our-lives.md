@@ -36,21 +36,21 @@ New experience paves the way to get acquainted with new communication technologi
 
 Even many people around the world have had crash courses in Zoom these past few months to learn zoom etiquette to make them best fit in. It is a salient positivity that we are pushed to be fit in modern technologies and become better at using it, which may be more beneficial moving forward.
 
-If we look back at the pre Covid-19 period, people barely thought about using those mediums frequently: home office, distance learning, virtual conference, workshop, and so on. Covid-19 has given a new nuance of communication strategies; the medium also has been changed recently. Though we cannot overlook the constraints virtual communication has. 
+If we look back at the pre Covid-19 period, people barely thought about using those mediums frequently: home office, distance learning, virtual conference, workshop, and so on. Covid-19 has given a new nuance to communication strategies; the medium has also been changed recently. Though we cannot overlook the constraints virtual communication has. 
 
-As new adapters are shared, interaction from a distance is not an easy rather the hardest, especially for novices, there are always plenty of noises, barriers in terms of encode and decode messages from senders to receivers, but this distance communication has been adding more noise than earlier. Long screen time causes eye problems as well as hearing issues.
+As new adapters are shared, interaction from a distance is not easy, rather the hardest, especially for novices; there are always plenty of noises, barriers in terms of encoding and decoding messages from senders to receivers, but this distance communication has been adding more noise than earlier. Long screen time causes eye problems as well as hearing issues.
 
 Moreover, people are tending to be more isolated individuals due to the distance communication. As humans we need to be touched, to see and feel the emotion more acutely. Still in the era of modern communication technologies, adaptation and learning new technologies is undoubtedly necessary. 
 
-Despite having some barriers and noise of virtual or distance communication, it has been accepted remarkably. Most of the obstacles are technical and people worldwide are overcoming them gradually by adapting with the modern technologies.
+Despite having some barriers and noise of virtual or distance communication, it has been remarkably accepted. Most of the obstacles are technical, and people worldwide are overcoming them gradually by adapting to modern technologies.
 
-It is always human need and necessity that push us to invent, to discover new technologies. Covid-19 has pushed the world to adapt with modern communication technologies. Human interactions with others have been getting a new form and shape. Over the time, we have been exploring new strategies of communications, new channels, modern media and technologies around the world. 
+It is always human need and necessity that push us to invent and to discover new technologies. Covid-19 has pushed the world to adapt with modern communication technologies. Human interactions with others have been getting a new form and shape. Over time, we have been exploring new strategies of communication, new channels, modern media and technologies around the world. 
 
-The day is not that far when machines will dominate the world and the prediction of futurism will come true. We may also expect computer brain communication technology through which thoughts in the mind can be directly shared from person to person.
+The day is not that far when machines will dominate the world, the prediction of futurism will come true. We may also expect computer brain communication technology, through which thoughts in the mind can be directly shared from person to person.
 
-We see the advances happening in communication technologies, and it’s becoming evident that computers, machines, robots, and algorithms are going to be able to do most of the routine, repetitive types of jobs as a way of communication. Possibly future communication technologies might be too costly, and it will include both virtual and physical modes. It includes audio and video systems with robots, smell release devices, etc.
+We see the advances happening in communication technologies, and it’s becoming evident that computers, machines, robots, and algorithms are going to be able to do most of the routine, repetitive types of jobs as a way of communication. Possibly, future communication technologies might be too costly, and it will include both virtual and physical modes. It includes audio and video systems with robots, smell release devices, etc.
 
-It is anticipated that the skeleton of communication may remain the same as text, speech, video, taste, feel, smell, emotions etc. Even if it’s physical communications, devices and machines will operate the entire communication system. Robots are evolving emotions, and they will be much closer to humans in near future. 
+It is anticipated that the skeleton of communication may remain the same as text, speech, video, taste, feel, smell, emotions, etc. Even if it’s physical communications, devices and machines will operate the entire communication system. Robots are evolving emotions, and they will be much closer to humans in the near future. 
 
 Taslima Akter Shikha, Founder, Communications Advisory
 

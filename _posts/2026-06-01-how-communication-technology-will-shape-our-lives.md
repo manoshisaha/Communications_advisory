@@ -53,3 +53,5 @@ It is anticipated that the skeleton of communication may remain the same as text
 Taslima Akter Shikha, Founder, Communications Advisory
 
 *[Click ](https://en.prothomalo.com/amp/story/opinion/hj6y1bb7hl?shem=rimspwouoe,)here to read the original article.*
+
+![](/assets/gallery/how-communication-technology-will-shape-our-lives.jpg)

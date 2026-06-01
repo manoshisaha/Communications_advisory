@@ -1,13 +1,13 @@
 ---
-title: How communication technology will shape our lives
+title: How communication technology will shape our lives!
 category: Crisis Comms
-date: 2026-06-01T19:23:00.000Z
+date: 2026-06-01T20:29:00.000Z
 read_time: 8 min read
 excerpt: "People are tending to be more isolated individuals due to the distance
   communication. As humans, we need to be touched, to see, and to feel the
   emotion more acutely. Still in the era of modern communication technologies,
   adapting and learning new technologies is undoubtedly necessary. "
-image: /assets/gallery/how-communication-technology-will-shape-our-lives.jpg
+image: /assets/gallery/trendovi-koji-definiraju-buducnost-komunikacijske-industrije.jpg
 featured: true
 ---
 ‘Communication’. Sounds like we all know it, right? We talk, we write, we exchange information, we share views, we negotiate. Is this all about communication? 
@@ -50,7 +50,6 @@ We see the advances happening in communication technologies and it’s becoming 
 
 It is anticipated that the skeleton of communication may remain the same as text, speech, video, taste, feel, smell, emotions etc. Even if it’s physical communications, devices and machines will operate the entire communication system. Robots are evolving at emotions and they will be much closer to humans in near future. 
 
-\*Taslima Akter Shikha, Founder, Communications Advisory
+Taslima Akter Shikha, Founder, Communications Advisory
 
-\
-*[Click here to read the original article](https://en.prothomalo.com/amp/story/opinion/hj6y1bb7hl?shem=rimspwouoe,)*
+*[Click ](https://en.prothomalo.com/amp/story/opinion/hj6y1bb7hl?shem=rimspwouoe,)here to read the original article*

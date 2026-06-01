@@ -8,7 +8,7 @@ excerpt: "People are tending to be more isolated individuals due to the distance
   emotion more acutely. Still in the era of modern communication technologies,
   adapting and learning new technologies is undoubtedly necessary. "
 image: /assets/gallery/how-communication-technology-will-shape-our-lives_20260601_183057_0000.png
-featured: false
+featured: true
 ---
 ‘Communication’. Sounds like we all know it, right? We talk, we write, we exchange information, we share views, we negotiate. Is this all about communication? 
 

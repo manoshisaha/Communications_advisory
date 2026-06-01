@@ -56,6 +56,17 @@
   .post-body-wrap { max-width: 800px; margin: 0 auto; padding: 3rem 2rem 5rem; }
   .post-body {
     font-size: 1.0625rem; line-height: 1.85; color: var(--text-mid);
+    text-align: justify; text-justify: inter-word;
+  }
+  .post-body p {
+    margin-bottom: 1.25rem; text-align: justify;
+  }
+  .post-body a {
+    color: var(--red); text-decoration: underline; font-weight: 500;
+  }
+  .post-body a:hover { color: var(--red-dark); }
+  .post-body img {
+    max-width: 100%; border-radius: 8px; margin: 1.5rem 0; display: block;
   }
   .post-body h2 {
     font-family: 'Cormorant Garamond', serif;
@@ -149,20 +160,83 @@
     return fm;
   }
 
-  // Very simple Markdown → HTML converter
+  // Full Markdown → HTML converter
+  // Handles: headings, bold, italic, links, images, blockquotes,
+  //          ordered + unordered lists, horizontal rules, line breaks,
+  //          inline code, code blocks, paragraphs
   function mdToHtml(md) {
-    return md
-      .replace(/^## (.+)$/gm, '<h2>$1</h2>')
-      .replace(/^### (.+)$/gm, '<h3>$1</h3>')
-      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.+?)\*/g, '<em>$1</em>')
-      .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
-      .replace(/^- (.+)$/gm, '<li>$1</li>')
-      .replace(/(<li>[\s\S]+?<\/li>)/g, '<ul>$1</ul>')
-      .replace(/^\d+\. (.+)$/gm, '<li>$1</li>')
-      .replace(/\n\n/g, '</p><p>')
-      .replace(/^(?!<[hbup]|<li)(.+)$/gm, '$1')
-      .split('\n').filter(l => l.trim()).join('\n');
+    if (!md) return '';
+    let html = md;
+
+    // Escape any raw HTML that isn't intended (protect against XSS from CMS)
+    // But we DO want to allow intentional HTML from the CMS rich text editor
+    // so only escape bare < that aren't part of a tag
+    // (Decap CMS rich text already outputs clean HTML, so pass it through)
+
+    // Code blocks (``` ... ```) — process first before anything else
+    html = html.replace(/```[\w]*\n?([\s\S]*?)```/g, (_, code) => {
+      return `<pre style="background:var(--warm-gray);border-radius:6px;padding:1.25rem;overflow-x:auto;margin:1.5rem 0;font-size:0.875rem;line-height:1.6;"><code>${code.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</code></pre>`;
+    });
+
+    // Inline code
+    html = html.replace(/`([^`]+)`/g, '<code style="background:var(--warm-gray);padding:2px 6px;border-radius:3px;font-size:0.875em;">$1</code>');
+
+    // Headings
+    html = html.replace(/^#### (.+)$/gm, '<h4 style="font-family:\'Cormorant Garamond\',serif;font-size:1.1rem;font-weight:700;color:var(--blue);margin:1.5rem 0 0.5rem;">$1</h4>');
+    html = html.replace(/^### (.+)$/gm, '<h3 style="font-family:\'Cormorant Garamond\',serif;font-size:1.25rem;font-weight:700;color:var(--blue);margin:2rem 0 0.75rem;">$1</h3>');
+    html = html.replace(/^## (.+)$/gm, '<h2 style="font-family:\'Cormorant Garamond\',serif;font-size:1.5rem;font-weight:700;color:var(--blue);margin:2.5rem 0 1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);">$1</h2>');
+    html = html.replace(/^# (.+)$/gm, '<h1 style="font-family:\'Cormorant Garamond\',serif;font-size:2rem;font-weight:700;color:var(--blue);margin:2.5rem 0 1rem;">$1</h1>');
+
+    // Horizontal rule
+    html = html.replace(/^---+$/gm, '<hr style="border:none;border-top:1px solid var(--border);margin:2rem 0;">');
+
+    // Images: ![alt](url) or ![alt](url "title")
+    html = html.replace(/!\[([^\]]*)\]\(([^)"]+)(?:\s+"[^"]*")?\)/g,
+      '<figure style="margin:2rem 0;"><img src="$2" alt="$1" style="width:100%;border-radius:8px;display:block;"><figcaption style="font-size:0.8rem;color:var(--text-light);text-align:center;margin-top:0.5rem;">$1</figcaption></figure>');
+
+    // Links: [text](url) — must come AFTER images
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g,
+      '<a href="$2" target="_blank" rel="noopener" style="color:var(--red);text-decoration:underline;font-weight:500;">$1</a>');
+
+    // Bold + italic
+    html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
+    html = html.replace(/__(.+?)__/g, '<strong>$1</strong>');
+    html = html.replace(/_([^_\n]+)_/g, '<em>$1</em>');
+
+    // Blockquotes
+    html = html.replace(/^> (.+)$/gm, '<blockquote style="border-left:3px solid var(--red);padding-left:1.5rem;font-family:\'Cormorant Garamond\',serif;font-size:1.2rem;font-style:italic;color:var(--blue);margin:2rem 0;">$1</blockquote>');
+
+    // Unordered lists — collect consecutive lines
+    html = html.replace(/((?:^[*\-+] .+\n?)+)/gm, (match) => {
+      const items = match.trim().split('\n')
+        .map(l => `<li style="margin-bottom:0.4rem;">${l.replace(/^[*\-+] /, '')}</li>`)
+        .join('');
+      return `<ul style="margin:1rem 0 1.25rem 1.5rem;line-height:1.8;">${items}</ul>`;
+    });
+
+    // Ordered lists
+    html = html.replace(/((?:^\d+\. .+\n?)+)/gm, (match) => {
+      const items = match.trim().split('\n')
+        .map(l => `<li style="margin-bottom:0.4rem;">${l.replace(/^\d+\. /, '')}</li>`)
+        .join('');
+      return `<ol style="margin:1rem 0 1.25rem 1.5rem;line-height:1.8;">${items}</ol>`;
+    });
+
+    // Paragraphs — split on double newlines
+    const blocks = html.split(/\n\n+/);
+    html = blocks.map(block => {
+      block = block.trim();
+      if (!block) return '';
+      // Don't wrap block elements in <p>
+      if (/^<(h[1-6]|ul|ol|li|blockquote|pre|figure|hr|div)/.test(block)) return block;
+      // Replace single newlines with <br> within a paragraph
+      block = block.replace(/\n/g, '<br>');
+      return `<p>${block}</p>`;
+    }).join('\n');
+
+    return html;
   }
 
   function formatDate(d) {
@@ -199,8 +273,8 @@
           `<img src="${post.image}" alt="${post.title||''}">`;
       }
 
-      // Body
-      const bodyHtml = '<p>' + mdToHtml(post.body) + '</p>';
+      // Body — mdToHtml handles all paragraph wrapping
+      const bodyHtml = mdToHtml(post.body);
       document.getElementById('postBody').innerHTML = bodyHtml;
 
       loading.style.display = 'none';

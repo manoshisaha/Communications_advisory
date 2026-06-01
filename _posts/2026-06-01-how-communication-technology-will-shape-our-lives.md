@@ -46,10 +46,10 @@ It is always human need and necessity that push us to invent, to discover new te
 
 The day is not that far when machines will dominate the world and the prediction of futurism will come true. We may also expect computer brain communication technology through which transactions of thoughts in mind can be directly shared from person to person.
 
-We see the advances happening in communication technologies and it’s becoming evident that computers, machines, robots, and algorithms are going to be able to do most of the routine, repetitive types of jobs as a way of communication. Possibly future communication technologies might be too costly and it will include both virtual and physical modes. It includes audio, video systems with robots, smell release devices, etc.
+We see the advances happening in communication technologies and it’s becoming evident that computers, machines, robots, and algorithms are going to be able to do most of the routine, repetitive types of jobs as a way of communication. Possibly future communication technologies might be too costly and it will include both virtual and physical modes. It includes audio and video systems with robots, smell release devices, etc.
 
 It is anticipated that the skeleton of communication may remain the same as text, speech, video, taste, feel, smell, emotions etc. Even if it’s physical communications, devices and machines will operate the entire communication system. Robots are evolving at emotions and they will be much closer to humans in near future. 
 
 Taslima Akter Shikha, Founder, Communications Advisory
 
-*[Click ](https://en.prothomalo.com/amp/story/opinion/hj6y1bb7hl?shem=rimspwouoe,)here to read the original article*
+*[Click ](https://en.prothomalo.com/amp/story/opinion/hj6y1bb7hl?shem=rimspwouoe,)here to read the original article.*

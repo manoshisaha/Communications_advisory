@@ -6,7 +6,7 @@ read_time: 8 min read
 excerpt: Growth invites scrutiny. As international standards for governance and
   accountability rise, Bangladeshi institutions face a new kind of pressure —
   one that demands a communication strategy equal to the moment.
-image: https://www.worldatlas.com/upload/07/a0/12/bibhags-of-bangladesh-map.png
+image: /assets/gallery/large-2024_09_cti_blog-optimization-_14.jpeg
 featured: false
 ---
 

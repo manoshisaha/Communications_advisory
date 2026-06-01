@@ -1,7 +1,7 @@
 ---
-title: How communication technology will shape our lives
+title: How communication technology will shape our lives!
 category: Crisis Comms
-date: 2026-06-01T19:23:00.000Z
+date: 2026-06-01T20:29:00.000Z
 read_time: 8 min read
 excerpt: "People are tending to be more isolated individuals due to the distance
   communication. As humans, we need to be touched, to see, and to feel the

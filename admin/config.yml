@@ -5,8 +5,8 @@ backend:
   base_url: https://communicationsadvisory.com
   auth_endpoint: api/auth
 
-media_folder: assets/gallery
-public_folder: /assets/gallery
+media_folder: assets/blog
+public_folder: /assets/blog
 
 collections:
 

@@ -1,5 +1,5 @@
 ---
-title: How communication technology will shape our lives!
+title: How communication technology will shape our lives
 category: Crisis Comms
 date: 2026-06-01T21:22:00.000Z
 read_time: 8 min read

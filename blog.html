@@ -4,102 +4,56 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insights – Communication Advisory</title>
+<link rel="icon" href="/assets/CA_logo.png">
+<meta name="description" content="Evidence-led thinking on communications, reputation, and leadership in Bangladesh.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --red: #c51a1b; --blue: #004874; --blue-dark: #003459;
-    --cream: #faf8f5; --warm-gray: #f2efe9;
-    --text-dark: #1a1a1a; --text-mid: #4a4a4a; --text-light: #888;
-    --border: rgba(0,0,0,0.09); --nav-h: 72px;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'Lato', sans-serif; background: #fff; color: var(--text-dark); }
-
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    height: var(--nav-h); background: rgba(255,255,255,0.97);
-    backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
-    display: flex; align-items: center;
-  }
-  .nav-inner {
-    max-width: 1200px; margin: 0 auto; padding: 0 2rem; width: 100%;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-  .nav-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 700; color: var(--blue); line-height: 1.1; }
-  .nav-logo-text span { color: var(--red); }
-  .nav-back { font-size: 0.875rem; color: var(--text-mid); text-decoration: none; font-weight: 500; }
-  .nav-back:hover { color: var(--red); }
-
-  .page-hero {
-    background: var(--blue-dark); color: #fff;
-    padding: calc(var(--nav-h) + 4rem) 2rem 4rem;
-  }
-  .page-hero-inner { max-width: 1200px; margin: 0 auto; }
-  .page-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 1rem; }
-  .page-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; line-height: 1.2; }
-  .page-sub { font-size: 1rem; color: rgba(255,255,255,0.65); margin-top: 1rem; max-width: 500px; line-height: 1.7; }
-
-  .blog-page { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
-
-  /* Filter tabs */
-  .blog-filters { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 3rem; }
-  .filter-btn {
-    background: var(--warm-gray); border: 1px solid var(--border);
-    border-radius: 100px; padding: 0.5rem 1.25rem;
-    font-size: 0.8125rem; font-weight: 600; cursor: pointer;
-    font-family: 'Lato', sans-serif; transition: all 0.2s;
-    color: var(--text-mid);
-  }
-  .filter-btn.active, .filter-btn:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
-
-  .blog-grid-full {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
-  }
-  .blog-card {
-    background: #fff; border-radius: 10px; border: 1px solid var(--border);
-    overflow: hidden; text-decoration: none; color: inherit;
-    transition: box-shadow 0.2s, transform 0.2s; display: block;
-  }
-  .blog-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.08); transform: translateY(-3px); }
-  .blog-card-thumb {
-    height: 180px; position: relative; overflow: hidden;
-  }
-  .blog-card-thumb img { width: 100%; height: 100%; object-fit: cover; }
-  .bt1 { background: linear-gradient(135deg, #003459, #004874); }
-  .bt2 { background: linear-gradient(135deg, #8b0000, #c51a1b); }
-  .bt3 { background: linear-gradient(135deg, #1a3a00, #2d6b00); }
-  .blog-card-tag {
-    position: absolute; bottom: 10px; left: 10px;
-    background: rgba(0,0,0,0.5); color: rgba(255,255,255,0.9);
-    font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
-    padding: 0.25rem 0.625rem; border-radius: 100px; backdrop-filter: blur(4px);
-  }
-  .blog-card-body { padding: 1.5rem; }
-  .blog-card-meta { font-size: 0.75rem; color: var(--text-light); margin-bottom: 0.5rem; }
-  .blog-card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 700; line-height: 1.35; color: var(--blue); margin-bottom: 0.625rem; }
-  .blog-card-excerpt { font-size: 0.8125rem; line-height: 1.75; color: var(--text-mid); }
-  .blog-card-link { display: inline-block; font-size: 0.8rem; font-weight: 700; color: var(--red); margin-top: 1rem; text-decoration: none; }
-
-  #blogLoading { color: var(--text-light); padding: 3rem 0; text-align: center; }
-  #noPosts { display: none; text-align: center; padding: 4rem; color: var(--text-light); }
-
-  footer { background: #0d1e2e; color: rgba(255,255,255,0.6); padding: 2rem; text-align: center; font-size: 0.8125rem; }
-  footer a { color: rgba(255,255,255,0.4); text-decoration: none; }
-
-  @media (max-width: 900px) { .blog-grid-full { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 600px) { .blog-grid-full { grid-template-columns: 1fr; } }
+:root{--red:#c51a1b;--blue:#004874;--blue-dark:#003459;--cream:#faf8f5;--warm-gray:#f2efe9;--text-dark:#1a1a1a;--text-mid:#4a4a4a;--text-light:#888;--border:rgba(0,0,0,0.09);--nav-h:72px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Lato',sans-serif;background:var(--cream);color:var(--text-dark)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-h);background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 2rem;width:100%;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--blue);text-decoration:none}
+.nav-logo span{color:var(--red)}
+.nav-back{font-size:.875rem;color:var(--text-mid);text-decoration:none;font-weight:500}
+.nav-back:hover{color:var(--red)}
+.page-hero{background:var(--blue-dark);color:#fff;padding:calc(var(--nav-h)+4rem) 2rem 4rem}
+.page-hero-inner{max-width:1200px;margin:0 auto}
+.page-label{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:1rem}
+.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;line-height:1.2}
+.page-sub{font-size:1rem;color:rgba(255,255,255,.65);margin-top:1rem;max-width:500px;line-height:1.7}
+.blog-page{max-width:1200px;margin:0 auto;padding:4rem 2rem}
+.blog-filters{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:3rem}
+.filter-btn{background:var(--warm-gray);border:1px solid var(--border);border-radius:100px;padding:.5rem 1.25rem;font-size:.8125rem;font-weight:600;cursor:pointer;font-family:'Lato',sans-serif;transition:all .2s;color:var(--text-mid)}
+.filter-btn.active,.filter-btn:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+.blog-grid-full{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.blog-card{background:#fff;border-radius:10px;border:1px solid var(--border);overflow:hidden;text-decoration:none;color:inherit;transition:box-shadow .2s,transform .2s;display:block}
+.blog-card:hover{box-shadow:0 12px 40px rgba(0,0,0,.08);transform:translateY(-3px)}
+.blog-card-thumb{height:180px;position:relative;overflow:hidden;background:var(--blue-dark)}
+.blog-card-thumb img{width:100%;height:100%;object-fit:cover}
+.bt1{background:linear-gradient(135deg,#003459,#004874)}
+.bt2{background:linear-gradient(135deg,#8b0000,#c51a1b)}
+.bt3{background:linear-gradient(135deg,#1a3a00,#2d6b00)}
+.blog-card-tag{position:absolute;bottom:10px;left:10px;background:rgba(0,0,0,.5);color:rgba(255,255,255,.9);font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:.25rem .625rem;border-radius:100px;backdrop-filter:blur(4px)}
+.blog-card-body{padding:1.5rem}
+.blog-card-meta{font-size:.75rem;color:var(--text-light);margin-bottom:.5rem}
+.blog-card-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;line-height:1.35;color:var(--blue);margin-bottom:.625rem}
+.blog-card-excerpt{font-size:.8125rem;line-height:1.75;color:var(--text-mid)}
+.blog-card-link{display:inline-block;font-size:.8rem;font-weight:700;color:var(--red);margin-top:1rem;text-decoration:none}
+#blogLoading{color:var(--text-light);padding:3rem 0;text-align:center;font-size:.9rem}
+#noPosts{display:none;text-align:center;padding:4rem;color:var(--text-light)}
+footer{background:#0d1e2e;color:rgba(255,255,255,.5);padding:2rem;text-align:center;font-size:.8125rem}
+footer a{color:rgba(255,255,255,.35);text-decoration:none}
+@media(max-width:900px){.blog-grid-full{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.blog-grid-full{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
 <nav>
   <div class="nav-inner">
-    <a href="/" class="nav-logo">
-      <div class="nav-logo-text"><span>C</span>ommunication <span>A</span>dvisory</div>
-    </a>
+    <a href="/" class="nav-logo"><span>C</span>ommunication <span>A</span>dvisory</a>
     <a href="/" class="nav-back">← Back to site</a>
   </div>
 </nav>
@@ -114,7 +68,7 @@
 
 <div class="blog-page">
   <div class="blog-filters" id="filterRow">
-    <button class="filter-btn active" onclick="filterPosts('all', this)">All</button>
+    <button class="filter-btn active" onclick="filterPosts('all',this)">All</button>
   </div>
   <div id="blogLoading">Loading articles…</div>
   <div class="blog-grid-full" id="blogGridFull"></div>
@@ -126,120 +80,102 @@
 </footer>
 
 <script>
-  function parseFrontmatter(text) {
-    const match = text.match(/^---\n([\s\S]*?)\n---/);
-    if (!match) return { body: text };
-    const fm = {};
-    match[1].split('\n').forEach(line => {
-      const m = line.match(/^([\w_]+):\s*(.*)$/);
-      if (m) fm[m[1].trim()] = m[2].trim().replace(/^["']|["']$/g, '');
-    });
-    fm.body = text.slice(match[0].length).trim();
-    return fm;
+function parseFrontmatter(text) {
+  const m = text.match(/^---\n([\s\S]*?)\n---/);
+  if (!m) return { body: text };
+  const fm = {};
+  m[1].split('\n').forEach(line => {
+    const lm = line.match(/^([\w_]+):\s*(.*)$/);
+    if (lm) fm[lm[1].trim()] = lm[2].trim().replace(/^["']|["']$/g, '');
+  });
+  fm.body = text.slice(m[0].length).trim();
+  return fm;
+}
+
+function formatDate(d) {
+  if (!d) return '';
+  try { return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}); }
+  catch(e) { return d; }
+}
+
+const thumbClasses = ['bt1','bt2','bt3'];
+let allPosts = [];
+
+function renderGrid(posts) {
+  const grid = document.getElementById('blogGridFull');
+  const noPosts = document.getElementById('noPosts');
+  if (!posts.length) { grid.innerHTML=''; noPosts.style.display='block'; return; }
+  noPosts.style.display = 'none';
+  grid.innerHTML = posts.map((post, i) => {
+    const thumb = post.image && post.image !== '""'
+      ? `<img src="${post.image}" alt="${post.title||''}">`
+      : `<div class="${thumbClasses[i%3]}" style="width:100%;height:100%;"></div>`;
+    return `<a href="/post.html?slug=${post.slug}" class="blog-card">
+      <div class="blog-card-thumb">
+        ${thumb}
+        <span class="blog-card-tag">${post.category||'Insight'}</span>
+      </div>
+      <div class="blog-card-body">
+        <div class="blog-card-meta">${formatDate(post.date)}${post.read_time?' · '+post.read_time:''}</div>
+        <div class="blog-card-title">${post.title||''}</div>
+        <div class="blog-card-excerpt">${post.excerpt||''}</div>
+        <span class="blog-card-link">Read Article →</span>
+      </div>
+    </a>`;
+  }).join('');
+}
+
+function filterPosts(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGrid(cat === 'all' ? allPosts : allPosts.filter(p => (p.category||'').toLowerCase() === cat.toLowerCase()));
+}
+
+function buildFilters(posts) {
+  const cats = [...new Set(posts.map(p => p.category).filter(Boolean))];
+  const row = document.getElementById('filterRow');
+  cats.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.textContent = cat;
+    btn.onclick = () => filterPosts(cat, btn);
+    row.appendChild(btn);
+  });
+}
+
+async function loadPosts() {
+  let slugs = [];
+  // Try dynamic API first
+  try { const r = await fetch('/api/posts'); if(r.ok) slugs = await r.json(); } catch(e) {}
+  // Fallback to static index
+  if (!slugs.length) {
+    try { const r = await fetch('/_posts/index.json'); if(r.ok) slugs = await r.json(); } catch(e) {}
   }
+  // Hardcoded fallback
+  if (!slugs.length) slugs = [
+    '2025-05-01-when-one-news-cycle-can-fracture-credibility',
+    '2025-04-01-bangladesh-inflection-point',
+    '2025-03-01-leaders-voice-matters'
+  ];
 
-  function formatDate(d) {
-    if (!d) return '';
-    try { return new Date(d).toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'}); }
-    catch(e) { return d; }
-  }
-
-  const thumbClasses = ['bt1','bt2','bt3'];
-  let allPosts = [];
-  let activeFilter = 'all';
-
-  function renderGrid(posts) {
-    const grid = document.getElementById('blogGridFull');
-    const noPosts = document.getElementById('noPosts');
-    if (!posts.length) {
-      grid.innerHTML = '';
-      noPosts.style.display = 'block';
-      return;
-    }
-    noPosts.style.display = 'none';
-    grid.innerHTML = posts.map((post, i) => {
-      const thumb = post.image && post.image !== '""'
-        ? `<img src="${post.image}" alt="${post.title||''}">`
-        : `<div class="${thumbClasses[i % 3]}" style="width:100%;height:100%;"></div>`;
-      return `
-        <a href="/post/${post.slug}" class="blog-card">
-          <div class="blog-card-thumb">
-            ${thumb}
-            <span class="blog-card-tag">${post.category||'Insight'}</span>
-          </div>
-          <div class="blog-card-body">
-            <div class="blog-card-meta">${formatDate(post.date)} · ${post.read_time||'5 min read'}</div>
-            <div class="blog-card-title">${post.title||''}</div>
-            <div class="blog-card-excerpt">${post.excerpt||''}</div>
-            <span class="blog-card-link">Read Article →</span>
-          </div>
-        </a>`;
-    }).join('');
-  }
-
-  function filterPosts(cat, btn) {
-    activeFilter = cat;
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const filtered = cat === 'all' ? allPosts : allPosts.filter(p => (p.category||'').toLowerCase() === cat.toLowerCase());
-    renderGrid(filtered);
-  }
-
-  function buildFilters(posts) {
-    const cats = [...new Set(posts.map(p => p.category).filter(Boolean))];
-    const row = document.getElementById('filterRow');
-    cats.forEach(cat => {
-      const btn = document.createElement('button');
-      btn.className = 'filter-btn';
-      btn.textContent = cat;
-      btn.onclick = () => filterPosts(cat, btn);
-      row.appendChild(btn);
-    });
-  }
-
-  async function loadPosts() {
-    const loading = document.getElementById('blogLoading');
-    // Dynamic API — auto-discovers all posts, no manual index.json needed
-    let slugs = [];
+  const posts = (await Promise.all(slugs.map(async slug => {
     try {
-      const apiRes = await fetch('/api/posts');
-      if (apiRes.ok) slugs = await apiRes.json();
-    } catch(e) {}
+      const r = await fetch(`/_posts/${slug}.md`);
+      if (!r.ok) return null;
+      const fm = parseFrontmatter(await r.text());
+      fm.slug = slug;
+      return fm;
+    } catch(e) { return null; }
+  }))).filter(Boolean);
 
-    if (!slugs.length) {
-      try {
-        const idx = await fetch('/_posts/index.json');
-        if (idx.ok) slugs = await idx.json();
-      } catch(e) {}
-    }
+  posts.sort((a,b) => new Date(b.date||0) - new Date(a.date||0));
+  allPosts = posts;
+  document.getElementById('blogLoading').style.display = 'none';
+  buildFilters(posts);
+  renderGrid(posts);
+}
 
-    if (!slugs.length) {
-      slugs = [
-        '2025-05-01-when-one-news-cycle-can-fracture-credibility',
-        '2025-04-01-bangladesh-inflection-point',
-        '2025-03-01-leaders-voice-matters'
-      ];
-    }
-
-    const posts = [];
-    await Promise.all(slugs.map(async slug => {
-      try {
-        const res = await fetch(`/_posts/${slug}.md`);
-        if (!res.ok) return;
-        const fm = parseFrontmatter(await res.text());
-        fm.slug = slug;
-        posts.push(fm);
-      } catch(e) {}
-    }));
-
-    posts.sort((a,b) => new Date(b.date||0) - new Date(a.date||0));
-    allPosts = posts;
-    loading.style.display = 'none';
-    buildFilters(posts);
-    renderGrid(posts);
-  }
-
-  loadPosts();
+loadPosts();
 </script>
 </body>
 </html>

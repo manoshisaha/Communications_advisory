@@ -4,109 +4,60 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title id="pageTitle">Article – Communication Advisory</title>
+<link rel="icon" href="/assets/CA_logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --red: #c51a1b; --blue: #004874; --blue-dark: #003459;
-    --cream: #faf8f5; --warm-gray: #f2efe9;
-    --text-dark: #1a1a1a; --text-mid: #4a4a4a; --text-light: #888;
-    --border: rgba(0,0,0,0.09); --nav-h: 72px;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Lato', sans-serif; background: var(--cream); color: var(--text-dark); }
-
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    height: var(--nav-h); background: rgba(255,255,255,0.97);
-    backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
-    display: flex; align-items: center;
-  }
-  .nav-inner {
-    max-width: 800px; margin: 0 auto; padding: 0 2rem; width: 100%;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 700; color: var(--blue); text-decoration: none; }
-  .nav-logo span { color: var(--red); }
-  .nav-back { font-size: 0.875rem; color: var(--text-mid); text-decoration: none; font-weight: 500; }
-  .nav-back:hover { color: var(--red); }
-
-  .post-hero {
-    padding-top: calc(var(--nav-h) + 3rem);
-    background: var(--blue-dark); color: #fff;
-    padding-bottom: 3rem;
-  }
-  .post-hero-inner { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
-  .post-category {
-    font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--red); font-weight: 700; margin-bottom: 1rem; display: block;
-  }
-  .post-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.8rem, 4vw, 2.75rem);
-    font-weight: 700; line-height: 1.2; margin-bottom: 1.5rem;
-  }
-  .post-meta { font-size: 0.8125rem; color: rgba(255,255,255,0.55); }
-
-  .post-image {
-    max-width: 800px; margin: 0 auto;
-  }
-  .post-image img { width: 100%; display: block; max-height: 420px; object-fit: cover; }
-
-  .post-body-wrap { max-width: 800px; margin: 0 auto; padding: 3rem 2rem 5rem; }
-  .post-body {
-    font-size: 1.0625rem; line-height: 1.85; color: var(--text-mid);
-    text-align: justify; text-justify: inter-word;
-  }
-  .post-body p {
-    margin-bottom: 1.25rem; text-align: justify;
-  }
-  .post-body a {
-    color: var(--red); text-decoration: underline; font-weight: 500;
-  }
-  .post-body a:hover { color: var(--red-dark); }
-  .post-body img {
-    max-width: 100%; border-radius: 8px; margin: 1.5rem 0; display: block;
-  }
-  .post-body h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.5rem; font-weight: 700; color: var(--blue);
-    margin: 2.5rem 0 1rem;
-  }
-  .post-body h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem; font-weight: 600; color: var(--blue);
-    margin: 2rem 0 0.75rem;
-  }
-  .post-body p { margin-bottom: 1.25rem; }
-  .post-body strong { font-weight: 700; color: var(--text-dark); }
-  .post-body em { font-style: italic; }
-  .post-body ul, .post-body ol { margin: 1rem 0 1.25rem 1.5rem; }
-  .post-body li { margin-bottom: 0.5rem; }
-  .post-body blockquote {
-    border-left: 3px solid var(--red); padding-left: 1.5rem;
-    font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
-    font-style: italic; color: var(--blue); margin: 2rem 0;
-  }
-
-  .post-cta {
-    background: var(--blue); color: #fff; border-radius: 10px;
-    padding: 2.5rem; margin-top: 3rem; text-align: center;
-  }
-  .post-cta h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; margin-bottom: 0.75rem; }
-  .post-cta p { font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; }
-  .post-cta a {
-    background: var(--red); color: #fff; text-decoration: none;
-    padding: 0.75rem 2rem; border-radius: 4px; font-weight: 700; font-size: 0.9rem;
-    display: inline-block; transition: background 0.2s;
-  }
-  .post-cta a:hover { background: #a01415; }
-
-  #postLoading { text-align: center; padding: 5rem 2rem; color: var(--text-light); }
-  #postNotFound { text-align: center; padding: 5rem 2rem; display: none; }
-
-  footer { background: #0d1e2e; color: rgba(255,255,255,0.5); padding: 2rem; text-align: center; font-size: 0.8125rem; }
-  footer a { color: rgba(255,255,255,0.35); text-decoration: none; }
+:root{--red:#c51a1b;--red-dark:#a01415;--blue:#004874;--blue-dark:#003459;--cream:#faf8f5;--warm-gray:#f2efe9;--text-dark:#1a1a1a;--text-mid:#4a4a4a;--text-light:#888;--border:rgba(0,0,0,0.09);--nav-h:72px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Lato',sans-serif;background:var(--cream);color:var(--text-dark)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-h);background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center}
+.nav-inner{max-width:800px;margin:0 auto;padding:0 2rem;width:100%;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--blue);text-decoration:none}
+.nav-logo span{color:var(--red)}
+.nav-back{font-size:.875rem;color:var(--text-mid);text-decoration:none;font-weight:500;display:flex;align-items:center;gap:4px}
+.nav-back:hover{color:var(--red)}
+#loadingState{display:flex;align-items:center;justify-content:center;min-height:60vh;padding-top:var(--nav-h)}
+.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--red);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#errorState{display:none;text-align:center;padding:6rem 2rem;padding-top:calc(var(--nav-h)+4rem)}
+#errorState h2{font-family:'Cormorant Garamond',serif;font-size:1.75rem;color:var(--blue);margin-bottom:1rem}
+#errorState a{color:var(--red);font-weight:600;text-decoration:none}
+#postContent{display:none}
+.post-hero{padding-top:calc(var(--nav-h)+3rem);background:var(--blue-dark);color:#fff;padding-bottom:3rem}
+.post-hero-inner{max-width:800px;margin:0 auto;padding:0 2rem}
+.post-category{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:1rem;display:block}
+.post-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.75rem);font-weight:700;line-height:1.2;margin-bottom:1.5rem}
+.post-meta{font-size:.8125rem;color:rgba(255,255,255,.55)}
+.post-image{max-width:800px;margin:0 auto}
+.post-image img{width:100%;display:block;max-height:420px;object-fit:cover}
+.post-body-wrap{max-width:800px;margin:0 auto;padding:3rem 2rem 5rem}
+.post-body{font-size:1.0625rem;line-height:1.85;color:var(--text-mid);text-align:justify;text-justify:inter-word}
+.post-body p{margin-bottom:1.25rem;text-align:justify}
+.post-body h2{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;color:var(--blue);margin:2.5rem 0 1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.post-body h3{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--blue);margin:2rem 0 .75rem}
+.post-body h4{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;color:var(--blue);margin:1.5rem 0 .5rem}
+.post-body a{color:var(--red);text-decoration:underline;font-weight:500}
+.post-body a:hover{color:var(--red-dark)}
+.post-body strong{font-weight:700;color:var(--text-dark)}
+.post-body em{font-style:italic}
+.post-body ul,.post-body ol{margin:1rem 0 1.25rem 1.5rem;line-height:1.8}
+.post-body li{margin-bottom:.4rem}
+.post-body blockquote{border-left:3px solid var(--red);padding-left:1.5rem;font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic;color:var(--blue);margin:2rem 0}
+.post-body pre{background:var(--warm-gray);border-radius:6px;padding:1.25rem;overflow-x:auto;margin:1.5rem 0;font-size:.875rem;line-height:1.6}
+.post-body code{background:var(--warm-gray);padding:2px 6px;border-radius:3px;font-size:.875em}
+.post-body figure{margin:2rem 0}
+.post-body figure img{width:100%;border-radius:8px;display:block}
+.post-body figcaption{font-size:.8rem;color:var(--text-light);text-align:center;margin-top:.5rem}
+.post-body hr{border:none;border-top:1px solid var(--border);margin:2rem 0}
+.post-cta{background:var(--blue);color:#fff;border-radius:10px;padding:2.5rem;margin-top:3rem;text-align:center}
+.post-cta h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;margin-bottom:.75rem}
+.post-cta p{font-size:.9rem;color:rgba(255,255,255,.7);margin-bottom:1.5rem}
+.post-cta a{background:var(--red);color:#fff;text-decoration:none;padding:.75rem 2rem;border-radius:4px;font-weight:700;font-size:.9rem;display:inline-block}
+.post-cta a:hover{background:var(--red-dark)}
+footer{background:#0d1e2e;color:rgba(255,255,255,.5);padding:2rem;text-align:center;font-size:.8125rem}
+footer a{color:rgba(255,255,255,.35);text-decoration:none}
 </style>
 </head>
 <body>
@@ -118,13 +69,15 @@
   </div>
 </nav>
 
-<div id="postLoading">Loading article…</div>
-<div id="postNotFound">
-  <h2 style="font-family:'Cormorant Garamond',serif;color:var(--blue);font-size:1.5rem;margin-bottom:1rem;">Article not found</h2>
-  <a href="/blog.html" style="color:var(--red);font-weight:700;">← Back to all articles</a>
+<div id="loadingState"><div class="spinner"></div></div>
+
+<div id="errorState">
+  <h2>Article not found</h2>
+  <p style="color:var(--text-light);margin-bottom:1.5rem">This article may have been moved or doesn't exist.</p>
+  <a href="/blog.html">← Back to all articles</a>
 </div>
 
-<div id="postContent" style="display:none;">
+<div id="postContent">
   <div class="post-hero">
     <div class="post-hero-inner">
       <span class="post-category" id="postCategory"></span>
@@ -137,7 +90,7 @@
     <div class="post-body" id="postBody"></div>
     <div class="post-cta">
       <h3>Ready to have this conversation?</h3>
-      <p>Every engagement begins with understanding your specific context. All initial conversations are confidential.</p>
+      <p>Every engagement begins with understanding your specific context. All conversations are confidential.</p>
       <a href="/#contact">Get in Touch</a>
     </div>
   </div>
@@ -148,144 +101,105 @@
 </footer>
 
 <script>
-  function parseFrontmatter(text) {
-    const match = text.match(/^---\n([\s\S]*?)\n---/);
-    if (!match) return { body: text };
-    const fm = {};
-    match[1].split('\n').forEach(line => {
-      const m = line.match(/^([\w_]+):\s*(.*)$/);
-      if (m) fm[m[1].trim()] = m[2].trim().replace(/^["']|["']$/g, '');
-    });
-    fm.body = text.slice(match[0].length).trim();
-    return fm;
+function parseFrontmatter(text) {
+  const m = text.match(/^---\n([\s\S]*?)\n---/);
+  if (!m) return { body: text };
+  const fm = {};
+  m[1].split('\n').forEach(line => {
+    const lm = line.match(/^([\w_]+):\s*(.*)$/);
+    if (lm) fm[lm[1].trim()] = lm[2].trim().replace(/^["']|["']$/g, '');
+  });
+  fm.body = text.slice(m[0].length).trim();
+  return fm;
+}
+
+function mdToHtml(md) {
+  if (!md) return '';
+  let h = md;
+  // Code blocks first
+  h = h.replace(/```[\w]*\n?([\s\S]*?)```/g, (_, c) =>
+    `<pre><code>${c.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</code></pre>`);
+  h = h.replace(/`([^`\n]+)`/g, '<code>$1</code>');
+  // Headings
+  h = h.replace(/^#### (.+)$/gm, '<h4>$1</h4>');
+  h = h.replace(/^### (.+)$/gm,  '<h3>$1</h3>');
+  h = h.replace(/^## (.+)$/gm,   '<h2>$1</h2>');
+  h = h.replace(/^# (.+)$/gm,    '<h1>$1</h1>');
+  // HR
+  h = h.replace(/^---+$/gm, '<hr>');
+  // Images BEFORE links
+  h = h.replace(/!\[([^\]]*)\]\(([^)"]+)(?:\s+"[^"]*")?\)/g,
+    '<figure><img src="$2" alt="$1"><figcaption>$1</figcaption></figure>');
+  // Links
+  h = h.replace(/\[([^\]]+)\]\(([^)]+)\)/g,
+    '<a href="$2" target="_blank" rel="noopener">$1</a>');
+  // Bold/italic
+  h = h.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+  h = h.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  h = h.replace(/\*([^*\n]+)\*/g,  '<em>$1</em>');
+  h = h.replace(/__(.+?)__/g, '<strong>$1</strong>');
+  // Blockquote
+  h = h.replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>');
+  // Lists
+  h = h.replace(/((?:^[*\-+] .+\n?)+)/gm, m =>
+    '<ul>' + m.trim().split('\n').map(l => `<li>${l.replace(/^[*\-+] /,'')}</li>`).join('') + '</ul>');
+  h = h.replace(/((?:^\d+\. .+\n?)+)/gm, m =>
+    '<ol>' + m.trim().split('\n').map(l => `<li>${l.replace(/^\d+\. /,'')}</li>`).join('') + '</ol>');
+  // Paragraphs
+  return h.split(/\n\n+/).map(b => {
+    b = b.trim();
+    if (!b) return '';
+    if (/^<(h[1-6]|ul|ol|blockquote|pre|figure|hr)/.test(b)) return b;
+    return '<p>' + b.replace(/\n/g,'<br>') + '</p>';
+  }).join('\n');
+}
+
+function formatDate(d) {
+  if (!d) return '';
+  try { return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}); }
+  catch(e) { return d; }
+}
+
+async function loadPost() {
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('slug');
+
+  if (!slug) {
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('errorState').style.display = 'block';
+    return;
   }
 
-  // Full Markdown → HTML converter
-  // Handles: headings, bold, italic, links, images, blockquotes,
-  //          ordered + unordered lists, horizontal rules, line breaks,
-  //          inline code, code blocks, paragraphs
-  function mdToHtml(md) {
-    if (!md) return '';
-    let html = md;
+  try {
+    const res = await fetch(`/_posts/${slug}.md`);
+    if (!res.ok) throw new Error('not found');
+    const text = await res.text();
+    const post = parseFrontmatter(text);
 
-    // Escape any raw HTML that isn't intended (protect against XSS from CMS)
-    // But we DO want to allow intentional HTML from the CMS rich text editor
-    // so only escape bare < that aren't part of a tag
-    // (Decap CMS rich text already outputs clean HTML, so pass it through)
+    // Update page
+    document.getElementById('pageTitle').textContent = (post.title || 'Article') + ' – Communication Advisory';
+    document.getElementById('postCategory').textContent = post.category || 'Insight';
+    document.getElementById('postTitle').textContent = post.title || '';
+    document.getElementById('postMeta').textContent =
+      formatDate(post.date) + (post.read_time ? ' · ' + post.read_time : '');
 
-    // Code blocks (``` ... ```) — process first before anything else
-    html = html.replace(/```[\w]*\n?([\s\S]*?)```/g, (_, code) => {
-      return `<pre style="background:var(--warm-gray);border-radius:6px;padding:1.25rem;overflow-x:auto;margin:1.5rem 0;font-size:0.875rem;line-height:1.6;"><code>${code.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</code></pre>`;
-    });
-
-    // Inline code
-    html = html.replace(/`([^`]+)`/g, '<code style="background:var(--warm-gray);padding:2px 6px;border-radius:3px;font-size:0.875em;">$1</code>');
-
-    // Headings
-    html = html.replace(/^#### (.+)$/gm, '<h4 style="font-family:\'Cormorant Garamond\',serif;font-size:1.1rem;font-weight:700;color:var(--blue);margin:1.5rem 0 0.5rem;">$1</h4>');
-    html = html.replace(/^### (.+)$/gm, '<h3 style="font-family:\'Cormorant Garamond\',serif;font-size:1.25rem;font-weight:700;color:var(--blue);margin:2rem 0 0.75rem;">$1</h3>');
-    html = html.replace(/^## (.+)$/gm, '<h2 style="font-family:\'Cormorant Garamond\',serif;font-size:1.5rem;font-weight:700;color:var(--blue);margin:2.5rem 0 1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);">$1</h2>');
-    html = html.replace(/^# (.+)$/gm, '<h1 style="font-family:\'Cormorant Garamond\',serif;font-size:2rem;font-weight:700;color:var(--blue);margin:2.5rem 0 1rem;">$1</h1>');
-
-    // Horizontal rule
-    html = html.replace(/^---+$/gm, '<hr style="border:none;border-top:1px solid var(--border);margin:2rem 0;">');
-
-    // Images: ![alt](url) or ![alt](url "title")
-    html = html.replace(/!\[([^\]]*)\]\(([^)"]+)(?:\s+"[^"]*")?\)/g,
-      '<figure style="margin:2rem 0;"><img src="$2" alt="$1" style="width:100%;border-radius:8px;display:block;"><figcaption style="font-size:0.8rem;color:var(--text-light);text-align:center;margin-top:0.5rem;">$1</figcaption></figure>');
-
-    // Links: [text](url) — must come AFTER images
-    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g,
-      '<a href="$2" target="_blank" rel="noopener" style="color:var(--red);text-decoration:underline;font-weight:500;">$1</a>');
-
-    // Bold + italic
-    html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
-    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    html = html.replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
-    html = html.replace(/__(.+?)__/g, '<strong>$1</strong>');
-    html = html.replace(/_([^_\n]+)_/g, '<em>$1</em>');
-
-    // Blockquotes
-    html = html.replace(/^> (.+)$/gm, '<blockquote style="border-left:3px solid var(--red);padding-left:1.5rem;font-family:\'Cormorant Garamond\',serif;font-size:1.2rem;font-style:italic;color:var(--blue);margin:2rem 0;">$1</blockquote>');
-
-    // Unordered lists — collect consecutive lines
-    html = html.replace(/((?:^[*\-+] .+\n?)+)/gm, (match) => {
-      const items = match.trim().split('\n')
-        .map(l => `<li style="margin-bottom:0.4rem;">${l.replace(/^[*\-+] /, '')}</li>`)
-        .join('');
-      return `<ul style="margin:1rem 0 1.25rem 1.5rem;line-height:1.8;">${items}</ul>`;
-    });
-
-    // Ordered lists
-    html = html.replace(/((?:^\d+\. .+\n?)+)/gm, (match) => {
-      const items = match.trim().split('\n')
-        .map(l => `<li style="margin-bottom:0.4rem;">${l.replace(/^\d+\. /, '')}</li>`)
-        .join('');
-      return `<ol style="margin:1rem 0 1.25rem 1.5rem;line-height:1.8;">${items}</ol>`;
-    });
-
-    // Paragraphs — split on double newlines
-    const blocks = html.split(/\n\n+/);
-    html = blocks.map(block => {
-      block = block.trim();
-      if (!block) return '';
-      // Don't wrap block elements in <p>
-      if (/^<(h[1-6]|ul|ol|li|blockquote|pre|figure|hr|div)/.test(block)) return block;
-      // Replace single newlines with <br> within a paragraph
-      block = block.replace(/\n/g, '<br>');
-      return `<p>${block}</p>`;
-    }).join('\n');
-
-    return html;
-  }
-
-  function formatDate(d) {
-    if (!d) return '';
-    try { return new Date(d).toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'}); }
-    catch(e) { return d; }
-  }
-
-  async function loadPost() {
-    const params = new URLSearchParams(window.location.search);
-    const slug = params.get('slug');
-    const loading = document.getElementById('postLoading');
-    const notFound = document.getElementById('postNotFound');
-    const content = document.getElementById('postContent');
-
-    if (!slug) { loading.style.display='none'; notFound.style.display='block'; return; }
-
-    try {
-      const res = await fetch(`/_posts/${slug}.md`);
-      if (!res.ok) throw new Error('Not found');
-      const text = await res.text();
-      const post = parseFrontmatter(text);
-
-      // Update page title
-      document.getElementById('pageTitle').textContent = (post.title||'Article') + ' – Communication Advisory';
-      document.getElementById('postCategory').textContent = post.category || 'Insight';
-      document.getElementById('postTitle').textContent = post.title || '';
-      document.getElementById('postMeta').textContent =
-        formatDate(post.date) + (post.read_time ? ' · ' + post.read_time : '');
-
-      // Hero image
-      if (post.image && post.image !== '""') {
-        document.getElementById('postImageWrap').innerHTML =
-          `<img src="${post.image}" alt="${post.title||''}">`;
-      }
-
-      // Body — mdToHtml handles all paragraph wrapping
-      const bodyHtml = mdToHtml(post.body);
-      document.getElementById('postBody').innerHTML = bodyHtml;
-
-      loading.style.display = 'none';
-      content.style.display = 'block';
-    } catch(e) {
-      loading.style.display = 'none';
-      notFound.style.display = 'block';
+    if (post.image && post.image !== '""' && post.image !== "''") {
+      document.getElementById('postImageWrap').innerHTML =
+        `<img src="${post.image}" alt="${post.title||''}" style="width:100%;display:block;max-height:420px;object-fit:cover;">`;
     }
-  }
 
-  loadPost();
+    document.getElementById('postBody').innerHTML = mdToHtml(post.body);
+
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('postContent').style.display = 'block';
+
+  } catch(e) {
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('errorState').style.display = 'block';
+  }
+}
+
+loadPost();
 </script>
 </body>
 </html>

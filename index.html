@@ -1660,30 +1660,17 @@
   // Fetch the post index (list of slugs) then fetch each post
   async function loadBlogPosts() {
     try {
-      // Use dynamic API endpoint — auto-discovers all posts from GitHub
-      // Falls back to static index.json, then to known posts
       let slugs = [];
-      try {
-        const apiRes = await fetch('/api/posts');
-        if (apiRes.ok) slugs = await apiRes.json();
-      } catch(e) {}
-
-      // Fallback: static index.json
+      // Dynamic endpoint — auto-discovers ALL posts, no index.json needed
+      try { const r = await fetch('/api/posts'); if(r.ok) slugs = await r.json(); } catch(e) {}
       if (!slugs.length) {
-        try {
-          const indexRes = await fetch('/_posts/index.json');
-          if (indexRes.ok) slugs = await indexRes.json();
-        } catch(e) {}
+        try { const r = await fetch('/_posts/index.json'); if(r.ok) slugs = await r.json(); } catch(e) {}
       }
-
-      // Final fallback: hardcoded known posts
-      if (!slugs.length) {
-        slugs = [
-          '2025-05-01-when-one-news-cycle-can-fracture-credibility',
-          '2025-04-01-bangladesh-inflection-point',
-          '2025-03-01-leaders-voice-matters'
-        ];
-      }
+      if (!slugs.length) slugs = [
+        '2025-05-01-when-one-news-cycle-can-fracture-credibility',
+        '2025-04-01-bangladesh-inflection-point',
+        '2025-03-01-leaders-voice-matters'
+      ];
 
       const posts = [];
       await Promise.all(slugs.map(async slug => {

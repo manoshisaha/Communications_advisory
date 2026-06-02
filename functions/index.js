@@ -143,9 +143,10 @@ export async function onRequest(context) {
         return `<div class="gallery-item ${g[i % g.length]}">${imgTag}<div class="gallery-caption"><div class="gallery-caption-title">${esc(item.title||'')}</div><div class="gallery-caption-sub">${esc(item.subtitle||'')}</div></div></div>`;
       };
       const rendered = items.map(renderItem).join('\n      ');
+      // Replace ENTIRE gallery-track content (including fallback static items)
       html = html.replace(
-        /(<div class="gallery-track" id="galleryTrack">)([\s\S]*?)(<\/div>)/,
-        `$1\n      ${rendered}\n      <!-- loop -->\n      ${rendered}\n    $3`
+        /(<div class="gallery-track" id="galleryTrack">)([\s\S]*?)(<\/div>\s*<\/div>\s*<\/section>)/,
+        `$1\n      ${rendered}\n      <!-- loop -->\n      ${rendered}\n    </div>\n  </div>\n</section>`
       );
     }
   }

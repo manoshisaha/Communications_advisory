@@ -11,122 +11,118 @@
 :root{--red:#c51a1b;--red-dark:#a01415;--blue:#004874;--blue-dark:#003459;--cream:#faf8f5;--warm-gray:#f2efe9;--text-dark:#1a1a1a;--text-mid:#4a4a4a;--text-light:#888;--border:rgba(0,0,0,0.09)}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{font-family:'Lato',sans-serif;background:var(--cream);color:var(--text-dark)}
-.topbar{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between}
-.topbar-logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:var(--blue);text-decoration:none}
-.topbar-logo span{color:var(--red)}
-.topbar-back{font-size:.875rem;font-weight:600;color:var(--text-mid);text-decoration:none;display:flex;align-items:center;gap:6px;padding:.5rem 1rem;border:1px solid var(--border);border-radius:100px;transition:all .2s}
-.topbar-back:hover{border-color:var(--red);color:var(--red)}
-#loadingBar{background:var(--blue-dark);color:rgba(255,255,255,.6);text-align:center;padding:4rem 2rem;display:flex;align-items:center;justify-content:center;gap:10px;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase}
+.topbar{background:#fff;border-bottom:1px solid var(--border);padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:var(--blue);text-decoration:none}
+.logo span{color:var(--red)}
+.back{font-size:.875rem;font-weight:600;color:var(--text-mid);text-decoration:none;padding:.5rem 1rem;border:1px solid var(--border);border-radius:100px;transition:all .2s}
+.back:hover{border-color:var(--red);color:var(--red)}
+#loading{background:var(--blue-dark);padding:4rem 2rem;display:flex;align-items:center;justify-content:center;gap:10px;color:rgba(255,255,255,.6);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;min-height:200px}
 .dot{width:7px;height:7px;border-radius:50%;background:var(--red);animation:pulse 1.2s infinite}
 .dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
-@keyframes pulse{0%,100%{opacity:.25}50%{opacity:1}}
-#notFound{display:none;text-align:center;padding:5rem 2rem}
-#notFound h2{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--blue);margin-bottom:1rem}
-#notFound a{color:var(--red);font-weight:600;text-decoration:none}
-#articleWrap{display:none}
-.article-banner{background:var(--blue-dark);padding:3rem 2rem 3.5rem;color:#fff}
-.article-banner-inner{max-width:760px;margin:0 auto}
-.article-cat{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);background:rgba(197,26,27,.15);border:1px solid rgba(197,26,27,.3);padding:.3rem .875rem;border-radius:100px;margin-bottom:1.5rem}
-.article-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;line-height:1.25;color:#fff;margin-bottom:1.25rem}
-.article-meta{font-size:.8125rem;color:rgba(255,255,255,.5)}
-.article-image{max-width:760px;margin:0 auto;padding:0 2rem}
-.article-image img{width:100%;display:block;border-radius:0 0 10px 10px;max-height:400px;object-fit:cover}
-.article-body-wrap{max-width:760px;margin:0 auto;padding:3rem 2rem 6rem}
-.article-body{font-size:1.0625rem;line-height:1.9;color:var(--text-mid);text-align:justify;text-justify:inter-word}
-.article-body p{margin-bottom:1.5rem}
-.article-body h2{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;color:var(--blue);margin:2.5rem 0 1rem;padding-bottom:.625rem;border-bottom:2px solid var(--red)}
-.article-body h3{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;color:var(--blue);margin:2rem 0 .75rem}
-.article-body h4{font-size:1rem;font-weight:700;color:var(--text-dark);margin:1.5rem 0 .5rem}
-.article-body a{color:var(--red);text-decoration:underline;font-weight:500;text-underline-offset:3px}
-.article-body a:hover{color:var(--red-dark)}
-.article-body strong{font-weight:700;color:var(--text-dark)}
-.article-body em{font-style:italic}
-.article-body blockquote{border-left:4px solid var(--red);padding:.5rem 0 .5rem 1.5rem;margin:2rem 0;font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-style:italic;color:var(--blue);line-height:1.6}
-.article-body ul,.article-body ol{margin:1rem 0 1.5rem 1.75rem;line-height:1.9}
-.article-body li{margin-bottom:.375rem}
-.article-body pre{background:var(--warm-gray);border-radius:6px;padding:1.25rem;overflow-x:auto;margin:1.5rem 0;font-size:.875rem;line-height:1.6}
-.article-body code{background:var(--warm-gray);padding:2px 6px;border-radius:3px;font-size:.875em}
-.article-body figure{margin:2rem 0}
-.article-body figure img{width:100%;border-radius:8px;display:block}
-.article-body figcaption{font-size:.8rem;color:var(--text-light);text-align:center;margin-top:.5rem;font-style:italic}
-.article-body hr{border:none;border-top:1px solid var(--border);margin:2.5rem 0}
-.article-cta{background:var(--blue);color:#fff;border-radius:12px;padding:2.5rem;margin-top:3rem;text-align:center}
-.article-cta h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;margin-bottom:.75rem}
-.article-cta p{font-size:.9rem;color:rgba(255,255,255,.7);margin-bottom:1.5rem;line-height:1.7}
-.article-cta a{display:inline-block;background:var(--red);color:#fff;text-decoration:none;padding:.875rem 2.5rem;border-radius:4px;font-weight:700;font-size:.9375rem;transition:background .2s}
-.article-cta a:hover{background:var(--red-dark)}
+@keyframes pulse{0%,100%{opacity:.2}50%{opacity:1}}
+#error{display:none;text-align:center;padding:5rem 2rem}
+#error h2{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--blue);margin-bottom:1rem}
+#error a{color:var(--red);font-weight:600;text-decoration:none}
+#article{display:none}
+.banner{background:var(--blue-dark);padding:3rem 2rem 3.5rem}
+.banner-inner{max-width:760px;margin:0 auto}
+.cat{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);background:rgba(197,26,27,.15);border:1px solid rgba(197,26,27,.3);padding:.3rem .875rem;border-radius:100px;margin-bottom:1.5rem}
+.title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.75rem,4vw,2.75rem);font-weight:700;line-height:1.25;color:#fff;margin-bottom:1.25rem}
+.meta{font-size:.8125rem;color:rgba(255,255,255,.5)}
+.hero-img{max-width:760px;margin:0 auto;padding:0 2rem}
+.hero-img img{width:100%;display:block;border-radius:0 0 10px 10px;max-height:400px;object-fit:cover}
+.body-wrap{max-width:760px;margin:0 auto;padding:3rem 2rem 6rem}
+.body{font-size:1.0625rem;line-height:1.9;color:var(--text-mid);text-align:justify;text-justify:inter-word}
+.body p{margin-bottom:1.5rem}
+.body h2{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;color:var(--blue);margin:2.5rem 0 1rem;padding-bottom:.625rem;border-bottom:2px solid var(--red)}
+.body h3{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;color:var(--blue);margin:2rem 0 .75rem}
+.body h4{font-size:1rem;font-weight:700;color:var(--text-dark);margin:1.5rem 0 .5rem}
+.body a{color:var(--red);text-decoration:underline;font-weight:500;text-underline-offset:3px}
+.body a:hover{color:var(--red-dark)}
+.body strong{font-weight:700;color:var(--text-dark)}
+.body em{font-style:italic}
+.body ul,.body ol{margin:1rem 0 1.5rem 1.75rem;line-height:1.9}
+.body li{margin-bottom:.375rem}
+.body blockquote{border-left:4px solid var(--red);padding:.5rem 0 .5rem 1.5rem;margin:2rem 0;font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-style:italic;color:var(--blue)}
+.body pre{background:var(--warm-gray);border-radius:6px;padding:1.25rem;overflow-x:auto;margin:1.5rem 0;font-size:.875rem;line-height:1.6}
+.body code{background:var(--warm-gray);padding:2px 6px;border-radius:3px;font-size:.875em}
+.body figure{margin:2rem 0}
+.body figure img{width:100%;border-radius:8px;display:block}
+.body figcaption{font-size:.8rem;color:var(--text-light);text-align:center;margin-top:.5rem;font-style:italic}
+.body hr{border:none;border-top:1px solid var(--border);margin:2.5rem 0}
+.cta{background:var(--blue);color:#fff;border-radius:12px;padding:2.5rem;margin-top:3rem;text-align:center}
+.cta h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;margin-bottom:.75rem}
+.cta p{font-size:.9rem;color:rgba(255,255,255,.7);margin-bottom:1.5rem;line-height:1.7}
+.cta a{display:inline-block;background:var(--red);color:#fff;text-decoration:none;padding:.875rem 2.5rem;border-radius:4px;font-weight:700;transition:background .2s}
+.cta a:hover{background:var(--red-dark)}
 footer{background:#0d1e2e;color:rgba(255,255,255,.5);padding:1.5rem 2rem;text-align:center;font-size:.8rem}
 footer a{color:rgba(255,255,255,.35);text-decoration:none}
 </style>
 </head>
 <body>
-
 <div class="topbar">
-  <a href="/" class="topbar-logo"><span>C</span>ommunication <span>A</span>dvisory</a>
-  <a href="/blog.html" class="topbar-back">← All Articles</a>
+  <a href="/" class="logo"><span>C</span>ommunication <span>A</span>dvisory</a>
+  <a href="/blog.html" class="back">← All Articles</a>
 </div>
-
-<div id="loadingBar">
-  <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-  Loading article
-</div>
-
-<div id="notFound">
-  <h2>Article not found</h2>
-  <p style="color:var(--text-light);margin-bottom:1.5rem">This article may have been moved.</p>
-  <a href="/blog.html">← Back to all articles</a>
-</div>
-
-<div id="articleWrap">
-  <div class="article-banner">
-    <div class="article-banner-inner">
-      <div class="article-cat" id="articleCat">Insight</div>
-      <h1 class="article-title" id="articleTitle"></h1>
-      <div class="article-meta" id="articleMeta"></div>
-    </div>
-  </div>
-  <div class="article-image" id="articleImageWrap"></div>
-  <div class="article-body-wrap">
-    <div class="article-body" id="articleBody"></div>
-    <div class="article-cta">
+<div id="loading"><div class="dot"></div><div class="dot"></div><div class="dot"></div>&nbsp;Loading</div>
+<div id="error"><h2>Article not found</h2><p style="color:var(--text-light);margin-bottom:1.5rem">This article may have been moved.</p><a href="/blog.html">← Back to all articles</a></div>
+<div id="article">
+  <div class="banner"><div class="banner-inner">
+    <div class="cat" id="pCat">Insight</div>
+    <h1 class="title" id="pTitle"></h1>
+    <div class="meta" id="pMeta"></div>
+  </div></div>
+  <div class="hero-img" id="pImg"></div>
+  <div class="body-wrap">
+    <div class="body" id="pBody"></div>
+    <div class="cta">
       <h3>Ready to have this conversation?</h3>
-      <p>Every engagement begins with understanding your context. All initial conversations are confidential.</p>
+      <p>Every engagement begins with understanding your context. All conversations are confidential.</p>
       <a href="/#contact">Get in Touch</a>
     </div>
   </div>
 </div>
-
-<footer>
-  <a href="/">communicationsadvisory.com</a> &nbsp;·&nbsp; © 2025 Communication Advisory
-</footer>
-
+<footer><a href="/">communicationsadvisory.com</a> &nbsp;·&nbsp; © 2025 Communication Advisory</footer>
 <script>
-function parseFrontmatter(t){const m=t.match(/^---\n([\s\S]*?)\n---/);if(!m)return{body:t};const f={};m[1].split('\n').forEach(l=>{const lm=l.match(/^([\w_]+):\s*(.*)$/);if(lm)f[lm[1].trim()]=lm[2].trim().replace(/^["']|["']$/g,'')});f.body=t.slice(m[0].length).trim();return f}
-function mdToHtml(md){if(!md)return'';let h=md;h=h.replace(/```[\w]*\n?([\s\S]*?)```/g,(_,c)=>`<pre><code>${c.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</code></pre>`);h=h.replace(/`([^`\n]+)`/g,'<code>$1</code>');h=h.replace(/^#### (.+)$/gm,'<h4>$1</h4>');h=h.replace(/^### (.+)$/gm,'<h3>$1</h3>');h=h.replace(/^## (.+)$/gm,'<h2>$1</h2>');h=h.replace(/^# (.+)$/gm,'<h1>$1</h1>');h=h.replace(/^---+$/gm,'<hr>');h=h.replace(/!\[([^\]]*)\]\(([^)"]+)\)/g,'<figure><img src="$2" alt="$1"><figcaption>$1</figcaption></figure>');h=h.replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');h=h.replace(/\*\*\*(.+?)\*\*\*/g,'<strong><em>$1</em></strong>');h=h.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');h=h.replace(/\*([^*\n]+)\*/g,'<em>$1</em>');h=h.replace(/__(.+?)__/g,'<strong>$1</strong>');h=h.replace(/^> (.+)$/gm,'<blockquote>$1</blockquote>');h=h.replace(/((?:^[*\-+] .+\n?)+)/gm,m=>'<ul>'+m.trim().split('\n').map(l=>`<li>${l.replace(/^[*\-+] /,'')}</li>`).join('')+'</ul>');h=h.replace(/((?:^\d+\. .+\n?)+)/gm,m=>'<ol>'+m.trim().split('\n').map(l=>`<li>${l.replace(/^\d+\. /,'')}</li>`).join('')+'</ol>');return h.split(/\n\n+/).map(b=>{b=b.trim();if(!b)return'';if(/^<(h[1-6]|ul|ol|blockquote|pre|figure|hr)/.test(b))return b;return'<p>'+b.replace(/\n/g,'<br>')+'</p>'}).join('\n')}
-function fmtDate(d){if(!d)return'';try{return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}catch(e){return d}}
-async function loadPost(){
-  const slug=new URLSearchParams(window.location.search).get('slug');
-  const loading=document.getElementById('loadingBar');
-  const notFound=document.getElementById('notFound');
-  const wrap=document.getElementById('articleWrap');
-  if(!slug){loading.style.display='none';notFound.style.display='block';return}
+function fm(t){const m=t.match(/^---\n([\s\S]*?)\n---/);if(!m)return{body:t};const f={};m[1].split('\n').forEach(l=>{const lm=l.match(/^([\w_]+):\s*(.*)$/);if(lm)f[lm[1].trim()]=lm[2].trim().replace(/^["']|["']$/g,'')});f.body=t.slice(m[0].length).trim();return f}
+function md(s){if(!s)return'';let h=s;
+h=h.replace(/```[\w]*\n?([\s\S]*?)```/g,(_,c)=>`<pre><code>${c.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</code></pre>`);
+h=h.replace(/`([^`\n]+)`/g,'<code>$1</code>');
+h=h.replace(/^#### (.+)$/gm,'<h4>$1</h4>');
+h=h.replace(/^### (.+)$/gm,'<h3>$1</h3>');
+h=h.replace(/^## (.+)$/gm,'<h2>$1</h2>');
+h=h.replace(/^# (.+)$/gm,'<h1>$1</h1>');
+h=h.replace(/^---+$/gm,'<hr>');
+h=h.replace(/!\[([^\]]*)\]\(([^)"]+)\)/g,'<figure><img src="$2" alt="$1"><figcaption>$1</figcaption></figure>');
+h=h.replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+h=h.replace(/\*\*\*(.+?)\*\*\*/g,'<strong><em>$1</em></strong>');
+h=h.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+h=h.replace(/\*([^*\n]+)\*/g,'<em>$1</em>');
+h=h.replace(/__(.+?)__/g,'<strong>$1</strong>');
+h=h.replace(/^> (.+)$/gm,'<blockquote>$1</blockquote>');
+h=h.replace(/((?:^[*\-+] .+\n?)+)/gm,m=>'<ul>'+m.trim().split('\n').map(l=>`<li>${l.replace(/^[*\-+] /,'')}</li>`).join('')+'</ul>');
+h=h.replace(/((?:^\d+\. .+\n?)+)/gm,m=>'<ol>'+m.trim().split('\n').map(l=>`<li>${l.replace(/^\d+\. /,'')}</li>`).join('')+'</ol>');
+return h.split(/\n\n+/).map(b=>{b=b.trim();if(!b)return'';if(/^<(h[1-6]|ul|ol|blockquote|pre|figure|hr)/.test(b))return b;return'<p>'+b.replace(/\n/g,'<br>')+'</p>'}).join('\n')}
+function dt(d){try{return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}catch(e){return d||''}}
+async function run(){
+  const slug=new URLSearchParams(location.search).get('slug');
+  if(!slug){document.getElementById('loading').style.display='none';document.getElementById('error').style.display='block';return}
   try{
-    const res=await fetch('/_posts/'+slug+'.md');
-    if(!res.ok)throw new Error();
-    const post=parseFrontmatter(await res.text());
-    document.getElementById('pageTitle').textContent=(post.title||'Article')+' – Communication Advisory';
-    document.getElementById('articleCat').textContent=post.category||'Insight';
-    document.getElementById('articleTitle').textContent=post.title||'';
-    document.getElementById('articleMeta').textContent=fmtDate(post.date)+(post.read_time?' · '+post.read_time:'');
-    if(post.image&&post.image!=='""'&&post.image!=="''"){
-      document.getElementById('articleImageWrap').innerHTML='<img src="'+post.image+'" alt="'+(post.title||'')+'">';
-    }
-    document.getElementById('articleBody').innerHTML=mdToHtml(post.body);
-    loading.style.display='none';
-    wrap.style.display='block';
-  }catch(e){loading.style.display='none';notFound.style.display='block'}
+    const r=await fetch('/_posts/'+slug+'.md');
+    if(!r.ok)throw 0;
+    const p=fm(await r.text());
+    document.getElementById('pageTitle').textContent=(p.title||'Article')+' – Communication Advisory';
+    document.getElementById('pCat').textContent=p.category||'Insight';
+    document.getElementById('pTitle').textContent=p.title||'';
+    document.getElementById('pMeta').textContent=dt(p.date)+(p.read_time?' · '+p.read_time:'');
+    if(p.image&&p.image!=='""'&&p.image!=="''")
+      document.getElementById('pImg').innerHTML='<img src="'+p.image+'" alt="'+(p.title||'')+'">';
+    document.getElementById('pBody').innerHTML=md(p.body);
+    document.getElementById('loading').style.display='none';
+    document.getElementById('article').style.display='block';
+  }catch(e){document.getElementById('loading').style.display='none';document.getElementById('error').style.display='block'}
 }
-loadPost();
+run();
 </script>
 </body>
 </html>

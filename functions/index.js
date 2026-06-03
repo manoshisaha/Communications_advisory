@@ -1,6 +1,6 @@
 // functions/index.js
-// Cloudflare Pages Function — injects CMS data server-side
-// Handles: hero.yml, settings.yml, logos.yml, gallery.yml
+// Cloudflare Pages Function
+// Injects CMS data into homepage: hero, settings, logos, gallery
 
 export async function onRequest(context) {
   const { request, next } = context;
@@ -14,7 +14,7 @@ export async function onRequest(context) {
   const response = await next();
   let html = await response.text();
 
-  async function fetchFile(path) {
+  async function get(path) {
     try {
       const r = await fetch(new URL(path, url.origin).toString());
       return r.ok ? await r.text() : null;
@@ -27,8 +27,9 @@ export async function onRequest(context) {
       .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
-  function extractVal(text, key) {
+  function val(text, key) {
     if (!text) return null;
+    // Block scalar
     const bm = text.match(new RegExp(`^${key}:\\s*[|>]-?\\s*$`, 'm'));
     if (bm) {
       const after = text.slice(text.indexOf(bm[0]) + bm[0].length + 1);
@@ -58,61 +59,58 @@ export async function onRequest(context) {
     return (eol > 0 ? rest.slice(0, eol) : rest).trim();
   }
 
-  function parseList(text, listKey) {
+  function list(text, key) {
     if (!text) return [];
-    const idx = text.indexOf(listKey + ':');
+    const idx = text.indexOf(key + ':');
     if (idx < 0) return [];
-    const listText = text.slice(idx);
-    let blocks = listText.split(/\n  - /);
-    if (blocks.length <= 1) blocks = listText.split(/\n- /);
+    const chunk = text.slice(idx);
+    // Decap CMS uses 2-space indented lists
+    let blocks = chunk.split(/\n  - /);
+    if (blocks.length <= 1) blocks = chunk.split(/\n- /);
     const items = [];
     for (let i = 1; i < blocks.length; i++) {
       const b = blocks[i];
       const item = {};
-      ['name','title','subtitle','image','logo','url'].forEach(field => {
-        const m = b.match(new RegExp(`(?:^|\\n)\\s*${field}:\\s*(.+)`));
+      ['name','title','subtitle','image','logo','url'].forEach(f => {
+        const m = b.match(new RegExp(`(?:^|\\n)\\s*${f}:\\s*(.+)`));
         if (m) {
-          const v = m[1].trim().replace(/^["']|["']$/g, '').trim();
-          if (v && v !== '""' && v !== "''") item[field] = v;
+          const v = m[1].trim().replace(/^["']|["']$/g,'').trim();
+          if (v && v !== '""' && v !== "''") item[f] = v;
         }
       });
-      if (Object.keys(item).length > 0) items.push(item);
+      if (Object.keys(item).length) items.push(item);
     }
     return items;
   }
 
   // ── HERO ────────────────────────────────────────────
-  const heroYml = await fetchFile('/_data/hero.yml');
-  if (heroYml) {
-    const h = extractVal(heroYml, 'headline');
-    const s = extractVal(heroYml, 'subheading');
-    const p = extractVal(heroYml, 'btn_primary');
-    const b = extractVal(heroYml, 'btn_secondary');
-    if (h) html = html.replace(/(<h1[^>]*id="heroHeadline"[^>]*>)([\s\S]*?)(<\/h1>)/, `$1${h}$3`);
-    if (s) html = html.replace(/(<p[^>]*id="heroSubheading"[^>]*>)([\s\S]*?)(<\/p>)/, `$1${esc(s)}$3`);
-    if (p) html = html.replace(/(<a[^>]*id="heroBtnPrimary"[^>]*>)([\s\S]*?)(<\/a>)/, `$1${esc(p)}$3`);
-    if (b) html = html.replace(/(<a[^>]*id="heroBtnSecondary"[^>]*>)([\s\S]*?)(<\/a>)/, `$1${esc(b)}$3`);
+  const hero = await get('/_data/hero.yml');
+  if (hero) {
+    const h=val(hero,'headline'), s=val(hero,'subheading'),
+          p=val(hero,'btn_primary'), b=val(hero,'btn_secondary');
+    if(h) html=html.replace(/(<h1[^>]*id="heroHeadline"[^>]*>)([\s\S]*?)(<\/h1>)/,`$1${h}$3`);
+    if(s) html=html.replace(/(<p[^>]*id="heroSubheading"[^>]*>)([\s\S]*?)(<\/p>)/,`$1${esc(s)}$3`);
+    if(p) html=html.replace(/(<a[^>]*id="heroBtnPrimary"[^>]*>)([\s\S]*?)(<\/a>)/,`$1${esc(p)}$3`);
+    if(b) html=html.replace(/(<a[^>]*id="heroBtnSecondary"[^>]*>)([\s\S]*?)(<\/a>)/,`$1${esc(b)}$3`);
   }
 
   // ── SETTINGS ────────────────────────────────────────
-  const settYml = await fetchFile('/_data/settings.yml');
-  if (settYml) {
-    const email = extractVal(settYml, 'email');
-    const li    = extractVal(settYml, 'linkedin');
-    const tw    = extractVal(settYml, 'twitter');
-    const fb    = extractVal(settYml, 'facebook');
-    if (email) html = html.replace(/commsadvisoryinfo@gmail\.com/g, esc(email));
-    if (li && li !== '""') html = html.replace(/(<a[^>]*id="footerLinkedIn"[^>]*)href="[^"]*"/, `$1href="${esc(li)}"`);
-    if (tw && tw !== '""') html = html.replace(/(<a[^>]*id="footerTwitter"[^>]*)href="[^"]*"/, `$1href="${esc(tw)}"`);
-    if (fb && fb !== '""') html = html.replace(/(<a[^>]*id="footerFacebook"[^>]*)href="[^"]*"/, `$1href="${esc(fb)}"`);
+  const sett = await get('/_data/settings.yml');
+  if (sett) {
+    const email=val(sett,'email'), li=val(sett,'linkedin'),
+          tw=val(sett,'twitter'), fb=val(sett,'facebook');
+    if(email) html=html.replace(/commsadvisoryinfo@gmail\.com/g,esc(email));
+    if(li&&li!=='""') html=html.replace(/(<a[^>]*id="footerLinkedIn"[^>]*)href="[^"]*"/,`$1href="${esc(li)}"`);
+    if(tw&&tw!=='""') html=html.replace(/(<a[^>]*id="footerTwitter"[^>]*)href="[^"]*"/,`$1href="${esc(tw)}"`);
+    if(fb&&fb!=='""') html=html.replace(/(<a[^>]*id="footerFacebook"[^>]*)href="[^"]*"/,`$1href="${esc(fb)}"`);
   }
 
   // ── LOGOS ───────────────────────────────────────────
-  const logosYml = await fetchFile('/_data/logos.yml');
-  if (logosYml) {
-    const logos = parseList(logosYml, 'partners');
-    if (logos.length) {
-      const logoHtml = logos.map(p => {
+  const logos = await get('/_data/logos.yml');
+  if (logos) {
+    const items = list(logos,'partners');
+    if (items.length) {
+      const logoHtml = items.map(p => {
         const inner = p.logo
           ? `<img src="${esc(p.logo)}" alt="${esc(p.name||'')}" style="max-width:100%;max-height:48px;object-fit:contain;filter:grayscale(80%);opacity:0.7;transition:filter .2s,opacity .2s;" onmouseover="this.style.filter='grayscale(0%)';this.style.opacity='1'" onmouseout="this.style.filter='grayscale(80%)';this.style.opacity='0.7'">`
           : `<div class="logo-item-text">${esc(p.name||'')}</div>`;
@@ -128,38 +126,49 @@ export async function onRequest(context) {
   }
 
   // ── GALLERY ─────────────────────────────────────────
-  const galYml = await fetchFile('/_data/gallery.yml');
-  if (galYml) {
-    const items = parseList(galYml, 'items');
+  // Replaces gallery items one by one matching by index position
+  // This avoids any HTML structure issues
+  const gal = await get('/_data/gallery.yml');
+  if (gal) {
+    const items = list(gal,'items');
     if (items.length) {
       const g = ['g1','g2','g3','g4','g5','g6','g7','g8'];
-      const renderItem = (item, i) => {
-        const imgTag = item.image
-          ? `<img src="${esc(item.image)}" alt="${esc(item.title||'')}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.8;">`
-          : '';
-        return `<div class="gallery-item ${g[i % g.length]}">${imgTag}<div class="gallery-caption"><div class="gallery-caption-title">${esc(item.title||'')}</div><div class="gallery-caption-sub">${esc(item.subtitle||'')}</div></div></div>`;
-      };
-      const rendered = items.map(renderItem).join('\n      ');
-      const doubled = rendered + '\n      <!-- loop -->\n      ' + rendered;
 
-      // Simple string replacement — find the placeholder and replace the whole track
-      const trackStart = '<div class="gallery-track" id="galleryTrack">';
-      const trackStartIdx = html.indexOf(trackStart);
-      if (trackStartIdx !== -1) {
-        const afterStart = html.indexOf('>', trackStartIdx) + 1;
-        // Find the closing </div> of gallery-track
-        let depth = 1;
-        let i = afterStart;
-        while (i < html.length && depth > 0) {
-          if (html.slice(i, i+4) === '</di') depth--;
-          else if (html.slice(i, i+4) === '<div') depth++;
-          if (depth > 0) i++;
+      // Build new gallery track content
+      const renderItem = (item, i) => {
+        const imgStyle = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.8;';
+        const imgTag = item.image
+          ? `<img src="${esc(item.image)}" alt="${esc(item.title||'')}" style="${imgStyle}">`
+          : '';
+        return `<div class="gallery-item ${g[i%g.length]}">${imgTag}<div class="gallery-caption"><div class="gallery-caption-title">${esc(item.title||'')}</div><div class="gallery-caption-sub">${esc(item.subtitle||'')}</div></div></div>`;
+      };
+
+      const single = items.map(renderItem).join('\n      ');
+      const doubled = single + '\n      ' + single;
+
+      // Replace the entire content of the gallery track
+      const TRACK_OPEN = '<div class="gallery-track" id="galleryTrack">';
+      const TRACK_CLOSE = '</div>\n  </div>\n</section>';
+
+      const trackIdx = html.indexOf(TRACK_OPEN);
+      if (trackIdx !== -1) {
+        // Find the wrap end - look for </div>\n  </div>\n</section> after the track
+        const searchFrom = trackIdx + TRACK_OPEN.length;
+        // Find closing pattern: </div> that closes gallery-track-wrap then </section>
+        const wrapCloseIdx = html.indexOf('</div>\n  </div>\n</section>', searchFrom);
+        if (wrapCloseIdx !== -1) {
+          html = html.slice(0, trackIdx + TRACK_OPEN.length) +
+            '\n      ' + doubled + '\n    ' +
+            html.slice(wrapCloseIdx);
+        } else {
+          // Fallback: find </div>\n</section>
+          const altClose = html.indexOf('</div>\n</section>', searchFrom);
+          if (altClose !== -1) {
+            html = html.slice(0, trackIdx + TRACK_OPEN.length) +
+              '\n      ' + doubled + '\n    ' +
+              html.slice(altClose);
+          }
         }
-        // i is now at the < of </div>
-        const closeTag = html.indexOf('</div>', i);
-        html = html.slice(0, afterStart) +
-          '\n      ' + doubled + '\n    ' +
-          html.slice(closeTag);
       }
     }
   }

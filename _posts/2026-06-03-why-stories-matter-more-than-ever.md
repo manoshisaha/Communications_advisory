@@ -1,6 +1,6 @@
 ---
 title: Why Stories Matter More Than Ever
-category: Comms
+category: Crisis Comms
 date: 2026-06-03T15:56:00.000Z
 read_time: 5 min read
 excerpt: Story helps people connect with information in a way that facts alone

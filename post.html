@@ -19,7 +19,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-h);backgrou
 .nav-logo span{color:var(--red)}
 .nav-back{font-size:.875rem;color:var(--text-mid);text-decoration:none;font-weight:500;display:flex;align-items:center;gap:4px}
 .nav-back:hover{color:var(--red)}
-#loadingState{display:flex;align-items:center;justify-content:center;min-height:60vh;padding-top:var(--nav-h)}
+#loadingState{display:flex;align-items:center;justify-content:center;height:100vh;position:fixed;top:0;left:0;right:0;background:var(--cream);z-index:50}
 .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--red);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 #errorState{display:none;text-align:center;padding:6rem 2rem;padding-top:calc(var(--nav-h)+4rem)}

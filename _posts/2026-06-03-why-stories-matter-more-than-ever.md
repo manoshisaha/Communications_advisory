@@ -7,6 +7,7 @@ excerpt: Story helps people connect with information in a way that facts alone
   often cannot. Facts tell us what happened; stories help us understand why it
   matters. They provide context, emotion, and meaning. They turn complex issues
   into experiences that people can relate to and remember.
+image: /assets/blog/storytelling.jpg
 featured: false
 ---
 A few months ago, I was reviewing a project report that documented years of hard work. It contained everything one would expect: baseline figures, indicators, outputs, outcomes, lessons learned, and dozens of pages of carefully compiled evidence. The programme had achieved remarkable results. Yet as I reached the final page, I found myself wondering how many people would actually remember any of it.

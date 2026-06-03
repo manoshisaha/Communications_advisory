@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title id="pageTitle">Article – Communication Advisory</title>
 <link rel="icon" href="/assets/CA_logo.png">
+<script>if(history.scrollRestoration)history.scrollRestoration="manual";window.scrollTo(0,0);</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
@@ -25,7 +26,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-h);backgrou
 #errorState h2{font-family:'Cormorant Garamond',serif;font-size:1.75rem;color:var(--blue);margin-bottom:1rem}
 #errorState a{color:var(--red);font-weight:600;text-decoration:none}
 #postContent{display:none}
-.post-hero{padding-top:calc(var(--nav-h)+5rem);background:var(--blue-dark);color:#fff;padding-bottom:3rem}
+.post-hero{padding-top:calc(var(--nav-h)+6rem);background:var(--blue-dark);color:#fff;padding-bottom:4rem;min-height:280px}
 .post-hero-inner{max-width:800px;margin:0 auto;padding:0 2rem}
 .post-category{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:1rem;display:block}
 .post-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,3vw,2.25rem);font-weight:700;line-height:1.25;margin-bottom:1.5rem;word-break:break-word}
@@ -192,6 +193,7 @@ async function loadPost() {
 
     document.getElementById('loadingState').style.display = 'none';
     document.getElementById('postContent').style.display = 'block';
+    window.scrollTo({top:0,behavior:'instant'});
 
   } catch(e) {
     document.getElementById('loadingState').style.display = 'none';

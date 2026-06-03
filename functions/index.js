@@ -1,11 +1,13 @@
 // functions/index.js
 // Cloudflare Pages Function — injects CMS data server-side
-// hero.yml, settings.yml, logos.yml, gallery.yml
+// Handles: hero.yml, settings.yml, logos.yml, gallery.yml
 
 export async function onRequest(context) {
   const { request, next } = context;
   const url = new URL(request.url);
-  if (request.method !== 'GET' || (url.pathname !== '/' && url.pathname !== '/index.html')) {
+
+  if (request.method !== 'GET' ||
+      (url.pathname !== '/' && url.pathname !== '/index.html')) {
     return next();
   }
 
@@ -56,18 +58,13 @@ export async function onRequest(context) {
     return (eol > 0 ? rest.slice(0, eol) : rest).trim();
   }
 
-  // Parse YAML list — handles Decap CMS indented format "  - "
   function parseList(text, listKey) {
     if (!text) return [];
     const idx = text.indexOf(listKey + ':');
     if (idx < 0) return [];
     const listText = text.slice(idx);
-
-    // Decap CMS uses 2-space indented lists: "\n  - "
     let blocks = listText.split(/\n  - /);
-    // Fallback: non-indented
     if (blocks.length <= 1) blocks = listText.split(/\n- /);
-
     const items = [];
     for (let i = 1; i < blocks.length; i++) {
       const b = blocks[i];
@@ -143,11 +140,27 @@ export async function onRequest(context) {
         return `<div class="gallery-item ${g[i % g.length]}">${imgTag}<div class="gallery-caption"><div class="gallery-caption-title">${esc(item.title||'')}</div><div class="gallery-caption-sub">${esc(item.subtitle||'')}</div></div></div>`;
       };
       const rendered = items.map(renderItem).join('\n      ');
-      // Replace ENTIRE gallery-track content (including fallback static items)
-      html = html.replace(
-        /(<div class="gallery-track" id="galleryTrack">)([\s\S]*?)(<\/div>\s*<\/div>\s*<\/section>)/,
-        `$1\n      ${rendered}\n      <!-- loop -->\n      ${rendered}\n    </div>\n  </div>\n</section>`
-      );
+      const doubled = rendered + '\n      <!-- loop -->\n      ' + rendered;
+
+      // Simple string replacement — find the placeholder and replace the whole track
+      const trackStart = '<div class="gallery-track" id="galleryTrack">';
+      const trackStartIdx = html.indexOf(trackStart);
+      if (trackStartIdx !== -1) {
+        const afterStart = html.indexOf('>', trackStartIdx) + 1;
+        // Find the closing </div> of gallery-track
+        let depth = 1;
+        let i = afterStart;
+        while (i < html.length && depth > 0) {
+          if (html.slice(i, i+4) === '</di') depth--;
+          else if (html.slice(i, i+4) === '<div') depth++;
+          if (depth > 0) i++;
+        }
+        // i is now at the < of </div>
+        const closeTag = html.indexOf('</div>', i);
+        html = html.slice(0, afterStart) +
+          '\n      ' + doubled + '\n    ' +
+          html.slice(closeTag);
+      }
     }
   }
 

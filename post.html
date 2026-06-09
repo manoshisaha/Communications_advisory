@@ -164,26 +164,41 @@ async function run(){
 }
 function setShareLinks(title, url) {
   const enc = encodeURIComponent;
+  // Use /article/slug URL for social sharing — this URL serves full HTML
+  // so Facebook, LinkedIn, WhatsApp can read the article title and thumbnail
+  const slug = new URLSearchParams(window.location.search).get('slug') || '';
+  const shareUrl = slug
+    ? 'https://communicationsadvisory.com/article/' + slug
+    : url;
   document.getElementById('shareLinkedIn').href =
-    'https://www.linkedin.com/sharing/share-offsite/?url=' + enc(url);
+    'https://www.linkedin.com/sharing/share-offsite/?url=' + enc(shareUrl);
   document.getElementById('shareFacebook').href =
-    'https://www.facebook.com/sharer/sharer.php?u=' + enc(url);
+    'https://www.facebook.com/sharer/sharer.php?u=' + enc(shareUrl);
   document.getElementById('shareTwitter').href =
-    'https://twitter.com/intent/tweet?url=' + enc(url) + '&text=' + enc(title);
+    'https://twitter.com/intent/tweet?url=' + enc(shareUrl) + '&text=' + enc(title);
   document.getElementById('shareWhatsApp').href =
-    'https://wa.me/?text=' + enc(title + ' ' + url);
+    'https://wa.me/?text=' + enc(title + ' ' + shareUrl);
 }
 
 function copyUrl() {
-  const url = window.location.href;
-  navigator.clipboard.writeText(url).then(() => {
+  // Copy the /article/ URL so recipients also get a proper preview
+  const slug = new URLSearchParams(window.location.search).get('slug') || '';
+  const copyTarget = slug
+    ? 'https://communicationsadvisory.com/article/' + slug
+    : window.location.href;
+
+function copyUrl() {
+  const slug = new URLSearchParams(window.location.search).get('slug') || '';
+  const copyTarget = slug
+    ? 'https://communicationsadvisory.com/article/' + slug
+    : window.location.href;
+  navigator.clipboard.writeText(copyTarget).then(() => {
     const label = document.getElementById('copyLabel');
     label.textContent = 'Copied!';
     setTimeout(() => label.textContent = 'Copy Link', 2000);
   }).catch(() => {
-    // Fallback for older browsers
     const ta = document.createElement('textarea');
-    ta.value = url;
+    ta.value = copyTarget;
     document.body.appendChild(ta);
     ta.select();
     document.execCommand('copy');

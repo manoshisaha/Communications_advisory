@@ -181,13 +181,6 @@ function setShareLinks(title, url) {
 }
 
 function copyUrl() {
-  // Copy the /article/ URL so recipients also get a proper preview
-  const slug = new URLSearchParams(window.location.search).get('slug') || '';
-  const copyTarget = slug
-    ? 'https://communicationsadvisory.com/article/' + slug
-    : window.location.href;
-
-function copyUrl() {
   const slug = new URLSearchParams(window.location.search).get('slug') || '';
   const copyTarget = slug
     ? 'https://communicationsadvisory.com/article/' + slug

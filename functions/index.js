@@ -1,6 +1,6 @@
 // functions/index.js
 // Cloudflare Pages Function
-// Injects CMS data into homepage: hero, settings, logos, gallery
+// Injects CMS data server-side: hero, settings, logos, gallery
 
 export async function onRequest(context) {
   const { request, next } = context;
@@ -27,36 +27,64 @@ export async function onRequest(context) {
       .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
-  function val(text, key) {
+  // Extracts a YAML value by key — handles ALL formats Decap CMS produces:
+  // 1. Plain single-line:   key: value
+  // 2. Plain multi-line:    key: line one\n  continuation (2-space indent)
+  // 3. Quoted single-line:  key: "value"
+  // 4. Quoted multi-line:   key: "line one\n  continuation"
+  // 5. Block scalar:        key: |\n  line one\n  line two
+  function extractVal(text, key) {
     if (!text) return null;
-    // Block scalar
-    const bm = text.match(new RegExp(`^${key}:\\s*[|>]-?\\s*$`, 'm'));
-    if (bm) {
-      const after = text.slice(text.indexOf(bm[0]) + bm[0].length + 1);
-      return after.split('\n')
-        .filter(l => l.startsWith('  ') || l.trim() === '')
-        .map(l => l.replace(/^  /, '').trim())
-        .filter(Boolean).join(' ');
-    }
-    const km = text.match(new RegExp(`^${key}:\\s*`, 'm'));
-    if (!km) return null;
-    const rest = text.slice(text.indexOf(km[0]) + km[0].length);
-    const q = rest[0];
-    if (q === '"') {
-      let i = 1, r = '';
-      while (i < rest.length) {
-        if (rest[i] === '\\' && i+1 < rest.length) { r += rest[i+1]; i += 2; }
-        else if (rest[i] === '"') break;
-        else { r += rest[i]; i++; }
+
+    const lines = text.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+      const km = lines[i].match(new RegExp(`^${key}:\\s*(.*)?$`));
+      if (!km) continue;
+
+      let raw = (km[1] || '').trim();
+
+      // Block scalar: | or |-
+      if (raw === '|' || raw === '|-' || raw === '>') {
+        const block = [];
+        i++;
+        while (i < lines.length && (lines[i].startsWith('  ') || lines[i].trim() === '')) {
+          block.push(lines[i].replace(/^  /, '').trim());
+          i++;
+        }
+        return block.filter(Boolean).join(' ');
       }
-      return r.replace(/\n\s*/g, ' ').trim();
+
+      // Quoted string (single or double)
+      if (raw.startsWith('"') || raw.startsWith("'")) {
+        const q = raw[0];
+        let inner = raw.slice(1);
+        // Check if closing quote is on same line
+        if (inner.endsWith(q)) {
+          return inner.slice(0, -1);
+        }
+        // Multi-line quoted — collect until closing quote
+        i++;
+        while (i < lines.length) {
+          const chunk = lines[i].trim();
+          if (chunk.endsWith(q)) {
+            inner += ' ' + chunk.slice(0, -1);
+            break;
+          }
+          inner += ' ' + chunk;
+          i++;
+        }
+        return inner.trim();
+      }
+
+      // Plain value — may continue on next lines with 2-space indent
+      let result = raw;
+      while (i + 1 < lines.length && lines[i + 1].startsWith('  ')) {
+        i++;
+        result += ' ' + lines[i].trim();
+      }
+      return result.trim();
     }
-    if (q === "'") {
-      const e = rest.indexOf("'", 1);
-      return e > 0 ? rest.slice(1, e).replace(/\n\s*/g, ' ').trim() : null;
-    }
-    const eol = rest.indexOf('\n');
-    return (eol > 0 ? rest.slice(0, eol) : rest).trim();
+    return null;
   }
 
   function list(text, key) {
@@ -64,7 +92,6 @@ export async function onRequest(context) {
     const idx = text.indexOf(key + ':');
     if (idx < 0) return [];
     const chunk = text.slice(idx);
-    // Decap CMS uses 2-space indented lists
     let blocks = chunk.split(/\n  - /);
     if (blocks.length <= 1) blocks = chunk.split(/\n- /);
     const items = [];
@@ -86,29 +113,33 @@ export async function onRequest(context) {
   // ── HERO ────────────────────────────────────────────
   const hero = await get('/_data/hero.yml');
   if (hero) {
-    const h=val(hero,'headline'), s=val(hero,'subheading'),
-          p=val(hero,'btn_primary'), b=val(hero,'btn_secondary');
-    if(h) html=html.replace(/(<h1[^>]*id="heroHeadline"[^>]*>)([\s\S]*?)(<\/h1>)/,`$1${h}$3`);
-    if(s) html=html.replace(/(<p[^>]*id="heroSubheading"[^>]*>)([\s\S]*?)(<\/p>)/,`$1${esc(s)}$3`);
-    if(p) html=html.replace(/(<a[^>]*id="heroBtnPrimary"[^>]*>)([\s\S]*?)(<\/a>)/,`$1${esc(p)}$3`);
-    if(b) html=html.replace(/(<a[^>]*id="heroBtnSecondary"[^>]*>)([\s\S]*?)(<\/a>)/,`$1${esc(b)}$3`);
+    const h = extractVal(hero, 'headline');
+    const s = extractVal(hero, 'subheading');
+    const p = extractVal(hero, 'btn_primary');
+    const b = extractVal(hero, 'btn_secondary');
+    if (h) html = html.replace(/(<h1[^>]*id="heroHeadline"[^>]*>)([\s\S]*?)(<\/h1>)/, `$1${h}$3`);
+    if (s) html = html.replace(/(<p[^>]*id="heroSubheading"[^>]*>)([\s\S]*?)(<\/p>)/, `$1${esc(s)}$3`);
+    if (p) html = html.replace(/(<a[^>]*id="heroBtnPrimary"[^>]*>)([\s\S]*?)(<\/a>)/, `$1${esc(p)}$3`);
+    if (b) html = html.replace(/(<a[^>]*id="heroBtnSecondary"[^>]*>)([\s\S]*?)(<\/a>)/, `$1${esc(b)}$3`);
   }
 
   // ── SETTINGS ────────────────────────────────────────
   const sett = await get('/_data/settings.yml');
   if (sett) {
-    const email=val(sett,'email'), li=val(sett,'linkedin'),
-          tw=val(sett,'twitter'), fb=val(sett,'facebook');
-    if(email) html=html.replace(/commsadvisoryinfo@gmail\.com/g,esc(email));
-    if(li&&li!=='""') html=html.replace(/(<a[^>]*id="footerLinkedIn"[^>]*)href="[^"]*"/,`$1href="${esc(li)}"`);
-    if(tw&&tw!=='""') html=html.replace(/(<a[^>]*id="footerTwitter"[^>]*)href="[^"]*"/,`$1href="${esc(tw)}"`);
-    if(fb&&fb!=='""') html=html.replace(/(<a[^>]*id="footerFacebook"[^>]*)href="[^"]*"/,`$1href="${esc(fb)}"`);
+    const email = extractVal(sett, 'email');
+    const li    = extractVal(sett, 'linkedin');
+    const tw    = extractVal(sett, 'twitter');
+    const fb    = extractVal(sett, 'facebook');
+    if (email) html = html.replace(/commsadvisoryinfo@gmail\.com/g, esc(email));
+    if (li && li !== '""') html = html.replace(/(<a[^>]*id="footerLinkedIn"[^>]*)href="[^"]*"/, `$1href="${esc(li)}"`);
+    if (tw && tw !== '""') html = html.replace(/(<a[^>]*id="footerTwitter"[^>]*)href="[^"]*"/, `$1href="${esc(tw)}"`);
+    if (fb && fb !== '""') html = html.replace(/(<a[^>]*id="footerFacebook"[^>]*)href="[^"]*"/, `$1href="${esc(fb)}"`);
   }
 
   // ── LOGOS ───────────────────────────────────────────
   const logos = await get('/_data/logos.yml');
   if (logos) {
-    const items = list(logos,'partners');
+    const items = list(logos, 'partners');
     if (items.length) {
       const logoHtml = items.map(p => {
         const inner = p.logo
@@ -126,15 +157,11 @@ export async function onRequest(context) {
   }
 
   // ── GALLERY ─────────────────────────────────────────
-  // Replaces gallery items one by one matching by index position
-  // This avoids any HTML structure issues
   const gal = await get('/_data/gallery.yml');
   if (gal) {
-    const items = list(gal,'items');
+    const items = list(gal, 'items');
     if (items.length) {
       const g = ['g1','g2','g3','g4','g5','g6','g7','g8'];
-
-      // Build new gallery track content
       const renderItem = (item, i) => {
         const imgStyle = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.8;';
         const imgTag = item.image
@@ -142,32 +169,16 @@ export async function onRequest(context) {
           : '';
         return `<div class="gallery-item ${g[i%g.length]}">${imgTag}<div class="gallery-caption"><div class="gallery-caption-title">${esc(item.title||'')}</div><div class="gallery-caption-sub">${esc(item.subtitle||'')}</div></div></div>`;
       };
-
-      const single = items.map(renderItem).join('\n      ');
-      const doubled = single + '\n      ' + single;
-
-      // Replace the entire content of the gallery track
-      const TRACK_OPEN = '<div class="gallery-track" id="galleryTrack">';
-      const TRACK_CLOSE = '</div>\n  </div>\n</section>';
-
-      const trackIdx = html.indexOf(TRACK_OPEN);
+      const rendered = items.map(renderItem).join('\n      ');
+      const OPEN = '<div class="gallery-track" id="galleryTrack">';
+      const trackIdx = html.indexOf(OPEN);
       if (trackIdx !== -1) {
-        // Find the wrap end - look for </div>\n  </div>\n</section> after the track
-        const searchFrom = trackIdx + TRACK_OPEN.length;
-        // Find closing pattern: </div> that closes gallery-track-wrap then </section>
-        const wrapCloseIdx = html.indexOf('</div>\n  </div>\n</section>', searchFrom);
-        if (wrapCloseIdx !== -1) {
-          html = html.slice(0, trackIdx + TRACK_OPEN.length) +
-            '\n      ' + doubled + '\n    ' +
-            html.slice(wrapCloseIdx);
-        } else {
-          // Fallback: find </div>\n</section>
-          const altClose = html.indexOf('</div>\n</section>', searchFrom);
-          if (altClose !== -1) {
-            html = html.slice(0, trackIdx + TRACK_OPEN.length) +
-              '\n      ' + doubled + '\n    ' +
-              html.slice(altClose);
-          }
+        const contentStart = trackIdx + OPEN.length;
+        const closeIdx = html.indexOf('</div>\n  </div>\n</section>', contentStart);
+        if (closeIdx !== -1) {
+          html = html.slice(0, contentStart) +
+            '\n      ' + rendered + '\n      ' + rendered + '\n    ' +
+            html.slice(closeIdx);
         }
       }
     }

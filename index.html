@@ -890,11 +890,12 @@
 </div>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" style="position:relative;overflow:hidden;">
+<canvas id="heroCanvas" style="position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
   <div class="hero-bg"></div>
   <div class="hero-pattern"></div>
   <div class="hero-accent"></div>
-  <div class="hero-inner">
+  <div class="hero-inner" style="position:relative;z-index:1;">
     <div class="hero-left">
       <h1 id="heroHeadline">Turning <em>Evidence</em> into<br>Impactful Stories</h1>
       <p class="hero-sub" id="heroSubheading">We work at the place where business strategy meets public trust — helping corporate leaders, institutions, and policymakers communicate with the precision, confidence, and credibility that the moment demands.</p>
@@ -924,46 +925,46 @@
           <div class="practice-item-bar"></div>
           <div class="practice-item-inner">
             <span class="practice-item-num">01</span>
-            <div class="practice-item-title" id="practice1Title">Strategic Communications Advisory</div>
-            <div class="practice-item-hook" id="practice1Hook">We build the five-year communication architecture — not just the next press release.</div>
+            <div class="practice-item-title">Strategic Communications Advisory</div>
+            <div class="practice-item-hook">We build the five-year communication architecture — not just the next press release.</div>
           </div>
-
+          <div class="practice-item-arrow">→</div>
         </div>
         <div class="practice-item" onclick="setPractice(this)">
           <div class="practice-item-bar"></div>
           <div class="practice-item-inner">
             <span class="practice-item-num">02</span>
-            <div class="practice-item-title" id="practice2Title">Reputation & Crisis Management</div>
-            <div class="practice-item-hook" id="practice2Hook">Crises don't announce themselves. We make sure you're ready when they arrive.</div>
+            <div class="practice-item-title">Reputation & Crisis Management</div>
+            <div class="practice-item-hook">Crises don't announce themselves. We make sure you're ready when they arrive.</div>
           </div>
-
+          <div class="practice-item-arrow">→</div>
         </div>
         <div class="practice-item" onclick="setPractice(this)">
           <div class="practice-item-bar"></div>
           <div class="practice-item-inner">
             <span class="practice-item-num">03</span>
-            <div class="practice-item-title" id="practice3Title">Public Affairs & Policy Communication</div>
-            <div class="practice-item-hook" id="practice3Hook">Your position only matters if it's heard — and trusted — by the right people.</div>
+            <div class="practice-item-title">Public Affairs & Policy Communication</div>
+            <div class="practice-item-hook">Your position only matters if it's heard — and trusted — by the right people.</div>
           </div>
-
+          <div class="practice-item-arrow">→</div>
         </div>
         <div class="practice-item" onclick="setPractice(this)">
           <div class="practice-item-bar"></div>
           <div class="practice-item-inner">
             <span class="practice-item-num">04</span>
-            <div class="practice-item-title" id="practice4Title">Corporate Positioning & Leadership Branding</div>
-            <div class="practice-item-hook" id="practice4Hook">Institutions are only as credible as the leader who represents them.</div>
+            <div class="practice-item-title">Corporate Positioning & Leadership Branding</div>
+            <div class="practice-item-hook">Institutions are only as credible as the leader who represents them.</div>
           </div>
-
+          <div class="practice-item-arrow">→</div>
         </div>
         <div class="practice-item" onclick="setPractice(this)">
           <div class="practice-item-bar"></div>
           <div class="practice-item-inner">
             <span class="practice-item-num">05</span>
-            <div class="practice-item-title" id="practice5Title">Digital & Media Strategy</div>
-            <div class="practice-item-hook" id="practice5Hook">Digital Bangladesh is now. Audiences are fragmented. Misinformation is fast.</div>
+            <div class="practice-item-title">Digital & Media Strategy</div>
+            <div class="practice-item-hook">Digital Bangladesh is now. Audiences are fragmented. Misinformation is fast.</div>
           </div>
-
+          <div class="practice-item-arrow">→</div>
         </div>
       </div>
     </div>
@@ -1560,49 +1561,16 @@
   // Updated via /admin — no code changes needed
   // ══════════════════════════════════════════════════════
 
-  // Robust YAML parser — handles all formats Decap CMS produces
-  // plain, single-quoted, double-quoted (including multi-line), block scalar |
   function parseYml(text) {
     const result = {};
     const lines = text.split('\n');
-    let i = 0;
-    while (i < lines.length) {
-      const km = lines[i].match(/^([\w_]+):\s*(.*)?$/);
-      if (!km) { i++; continue; }
-      const key = km[1];
-      let raw = (km[2] || '').trim();
-      // Block scalar
-      if (raw === '|' || raw === '|-' || raw === '>') {
-        const block = [];
-        i++;
-        while (i < lines.length && (lines[i].startsWith('  ') || lines[i].trim() === '')) {
-          block.push(lines[i].replace(/^  /, '').trim());
-          i++;
-        }
-        result[key] = block.filter(Boolean).join(' ');
-        continue;
+    lines.forEach(line => {
+      const m = line.match(/^([\w_]+):\s*(.*)$/);
+      if (m) {
+        let val = m[2].trim().replace(/^["']|["']$/g, '');
+        result[m[1]] = val;
       }
-      // Quoted string — collect until closing quote found
-      if (raw.startsWith('"') || raw.startsWith("'")) {
-        const q = raw[0];
-        let inner = raw.slice(1);
-        if (inner.endsWith(q) && inner.length > 0) {
-          result[key] = inner.slice(0, -1);
-        } else {
-          i++;
-          while (i < lines.length) {
-            const chunk = lines[i].trim();
-            if (chunk.endsWith(q)) { inner += ' ' + chunk.slice(0, -1); break; }
-            inner += ' ' + chunk;
-            i++;
-          }
-          result[key] = inner.trim();
-        }
-      } else {
-        result[key] = raw;
-      }
-      i++;
-    }
+    });
     return result;
   }
 
@@ -1795,36 +1763,98 @@
   }
 
   // Run all loaders
-  // Load practice panel from _data/practice.yml
-  async function loadPractice() {
-    try {
-      const res = await fetch('/_data/practice.yml');
-      if (!res.ok) return;
-      const d = parseYml(await res.text());
-      const set = (id, val) => {
-        if (!val) return;
-        const el = document.getElementById(id);
-        if (el) el.textContent = val;
-      };
-      set('practice1Title', d.p1_title); set('practice1Hook', d.p1_hook);
-      set('practice2Title', d.p2_title); set('practice2Hook', d.p2_hook);
-      set('practice3Title', d.p3_title); set('practice3Hook', d.p3_hook);
-      set('practice4Title', d.p4_title); set('practice4Hook', d.p4_hook);
-      set('practice5Title', d.p5_title); set('practice5Hook', d.p5_hook);
-    } catch(e) {}
-  }
-
   loadHero();
   loadSettings();
   loadAbout();
   loadMission();
-  loadPractice();
   loadBlogPosts();
 
   // Nav shadow on scroll
   window.addEventListener('scroll', () => {
     document.querySelector('nav').style.boxShadow = window.scrollY > 20 ? '0 2px 20px rgba(0,0,0,0.08)' : 'none';
   });
+</script>
+
+<script>
+(function(){
+  const canvas = document.getElementById('heroCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const hero = canvas.closest('section') || canvas.parentElement;
+
+  function resize() {
+    canvas.width = hero.offsetWidth;
+    canvas.height = hero.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const COLORS = ['#004874','#005a8e','#c51a1b','#003459','#1a6fa8','#e84040'];
+  const COUNT = 90;
+  const nodes = Array.from({length: COUNT}, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    vx: (Math.random() - 0.5) * 0.45,
+    vy: (Math.random() - 0.5) * 0.45,
+    r: Math.random() * 2.2 + 0.8,
+    color: COLORS[Math.floor(Math.random() * COLORS.length)],
+    pulse: Math.random() * Math.PI * 2,
+    bright: Math.random() < 0.14
+  }));
+
+  function draw() {
+    canvas.width = hero.offsetWidth;
+    canvas.height = hero.offsetHeight;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x;
+        const dy = nodes[i].y - nodes[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 130) {
+          const alpha = (1 - dist/130) * 0.3;
+          const isRed = nodes[i].color === '#c51a1b' || nodes[j].color === '#c51a1b'
+                     || nodes[i].color === '#e84040' || nodes[j].color === '#e84040';
+          ctx.beginPath();
+          ctx.strokeStyle = isRed ? `rgba(197,26,27,${alpha})` : `rgba(0,100,160,${alpha})`;
+          ctx.lineWidth = 0.55;
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    nodes.forEach(n => {
+      n.pulse += 0.035;
+      const pr = n.r + Math.sin(n.pulse) * (n.bright ? 1.4 : 0.4);
+      if (n.bright) {
+        const isRed = n.color === '#c51a1b' || n.color === '#e84040';
+        const glow = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, pr * 7);
+        glow.addColorStop(0, isRed ? 'rgba(197,26,27,0.55)' : 'rgba(0,120,200,0.55)');
+        glow.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.beginPath();
+        ctx.fillStyle = glow;
+        ctx.arc(n.x, n.y, pr * 7, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.beginPath();
+      ctx.fillStyle = n.bright ? '#ffffff' : n.color;
+      ctx.arc(n.x, n.y, pr, 0, Math.PI * 2);
+      ctx.fill();
+      n.x += n.vx;
+      n.y += n.vy;
+      if (n.x < -10) n.x = canvas.width + 10;
+      if (n.x > canvas.width + 10) n.x = -10;
+      if (n.y < -10) n.y = canvas.height + 10;
+      if (n.y > canvas.height + 10) n.y = -10;
+    });
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
 </script>
 </body>
 </html>
